@@ -46,8 +46,11 @@ CTestTestfile.cmake
 _deps
 
 ### CLion template
-# whole directory .idea
+# ignore just whole directory .idea
 .idea/
 
 # CMake
 cmake-build-*/
+
+### VScode template
+.vscode/
