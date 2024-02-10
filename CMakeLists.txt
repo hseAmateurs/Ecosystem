@@ -10,8 +10,8 @@ add_executable(Ecosystem ${SOURCE})
 
 if(WIN32)
     set(SFML_ROOT ${CMAKE_SOURCE_DIR}/sfml)
+    set(SFML_STATIC_LIBRARIES TRUE)
 endif()
-set(SFML_STATIC_LIBRARIES TRUE)
 
 find_package(SFML 2.6.1 COMPONENTS graphics window system REQUIRED)
 
