@@ -13,65 +13,14 @@ int main() {
     std::vector<Cell> macroCells;
     std::vector<Cell> neutroCells;
 
-
-    std::ifstream file("data.csv");
-    std::string line;
-    std::vector<float> radii;
-    std::vector<int> sizes;
-    std::vector<float> speeds;
-    std::vector<sf::Color> colors;
-    std::vector<float> posXs;
-    std::vector<float> posYs;
-    std::vector<int> counts;
-
-    while (std::getline(file, line))
-    {
-        std::stringstream ss(line);
-        std::string token;
-
-        std::getline(ss, token, ',');
-        float radius = std::stof(token);
-        radii.push_back(radius);
-
-        std::getline(ss, token, ',');
-        int size = std::stoi(token);
-        sizes.push_back(size);
-
-        std::getline(ss, token, ',');
-        float speed = std::stof(token);
-        speeds.push_back(speed);
-
-        std::getline(ss, token, ',');
-        int r, g, b, a;
-        std::stringstream(token) >> std::hex >> r;
-        std::getline(ss, token, ',');
-        std::stringstream(token) >> std::hex >> g;
-        std::getline(ss, token, ',');
-        std::stringstream(token) >> std::hex >> b;
-        std::getline(ss, token, ',');
-        std::stringstream(token) >> std::hex >> a;
-        sf::Color color(r, g, b, a);
-        colors.push_back(color);
-
-        std::getline(ss, token, ',');
-        float posX = std::stof(token);
-        posXs.push_back(posX);
-
-        std::getline(ss, token, ',');
-        float posY = std::stof(token);
-        posYs.push_back(posY);
-
-        std::getline(ss, token, ',');
-        int count = std::stoi(token);
-        counts.push_back(count);
-    }
+    std::vector<float> radiusArr;
+    std::vector<int> sizeArr;
+    std::vector<float> speedArr;
+    std::vector<float> posXArr;
+    std::vector<float> posYArr;
 
 
-
-
-
-
-
+    
 
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");
@@ -86,10 +35,11 @@ int main() {
 
         window.clear(sf::Color(255,255,255));
 
-        //Cell cell1(radii.at(0), sizes.at(0), speeds.at(0), colors.at(0), posXs.at(0), posYs.at(0));
+        //Cell cell1(radius1, size1, speed1, sf::Color::Red, posX1, posY1);
+        Cell cell2(30, 10, 30, sf::Color::Red, 300, 400);
 
         //cell1.setPosition(1000, 700);
-        //cell1.draw(window);
+        cell2.draw((window));
 
 
         window.display();
