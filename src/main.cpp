@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "cell.h"
+#include "globalFunc.h"
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 
 int main() {
-    // Простой пример для проверки работы
-
     std::vector<Cell> cells;
     std::vector<Cell> bodyCells;
     std::vector<Cell> macroCells;
@@ -74,26 +73,17 @@ int main() {
 
 
 
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");
-
-
-    while (window.isOpen()) {
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");    
+    while (window.isOpen()) { 
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
         window.clear(sf::Color(255,255,255));
-
-        //Cell cell1(radii.at(0), sizes.at(0), speeds.at(0), colors.at(0), posXs.at(0), posYs.at(0));
-
-        //cell1.setPosition(1000, 700);
-        //cell1.draw(window);
-
-
+        createCells(cells,555,1600,900,10,3,1,sf::Color::Red,window); // общая функция, будет сделана перегрузка
+        // параметры функции, которые сейчас магические цифры, находятся в globalFunc.h
         window.display();
     }
-
     return 0;
 }
