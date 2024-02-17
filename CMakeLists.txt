@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 # Исходные файлы
 set(SOURCE_FILES
         src/main.cpp
+        src/globalFunc.h
+        src/globalFunc.cpp
         src/cell.h
         src/cell.cpp)
 
