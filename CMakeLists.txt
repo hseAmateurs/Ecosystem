@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Исходные файлы
 set(SOURCE_FILES
-        src/main.cpp)
+        src/main.cpp
+        src/cell.h
+        src/cell.cpp)
 
 # Название исполняемого файла
 add_executable(Ecosystem ${SOURCE_FILES})
