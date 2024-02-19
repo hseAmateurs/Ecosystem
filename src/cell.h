@@ -9,12 +9,18 @@ class Cell
 {
 public:
     Cell(float radius, int size, float speed, const sf::Color& color, float posX, float posY);
-    void setPosition(float x, float y) {shape.setPosition(x, y);}
+    void setPosition(float x, float y);
+    void setTargetPosition(float windowWidth, float windowHeight);
     void draw(sf::RenderWindow& window) {window.draw(shape);}
     //void setRadius(float radius) {shape.setRadius(radius);}
+    void update(sf::Time deltaTime);
 private:
     float speed;
     sf::CircleShape shape;
+    sf::Vector2f velocity;
+    sf::Vector2f targetPosition;
+    sf::Time interval;
+    sf::Clock timer;
 
 };
 

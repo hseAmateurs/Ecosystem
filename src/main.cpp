@@ -6,13 +6,16 @@
 #include <fstream>
 #include <iostream>
 
+//#define SPAWNALL
+#define SPAWN4TYPES
+
 int main() {
     // Простой пример для проверки работы
 
-    std::vector<Cell> cells;
-    std::vector<Cell> bodyCells;
-    std::vector<Cell> macroCells;
-    std::vector<Cell> neutroCells;
+    std::vector<PatogenCell> patogenCells;
+    std::vector<BodyCell> bodyCells;
+    std::vector<MacroCell> macroCells;
+    std::vector<NeutroCell> neutroCells;
 
     std::vector<float> radiusArr;
     std::vector<int> sizeArr;
@@ -23,10 +26,31 @@ int main() {
 
 
 
-
+    sf::Clock clock;
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");
     csvInput("data.csv", radiusArr, sizeArr, speedArr, countArr);
+
+#ifdef SPAWNALL
+    createPatogenCells(patogenCells,countArr[0],1600,900,radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255),window);
+    createBodyCells(bodyCells, countArr[1], 1600, 900, radiusArr[1], sizeArr[1], speedArr[1], sf::Color::Red, window);
+    createMacroCells(macroCells, countArr[2], 1600, 900, radiusArr[2], sizeArr[2], speedArr[2], sf::Color::Yellow, window);
+    createNeutroCells(neutroCells, countArr[3], 1600, 900, radiusArr[3], sizeArr[3], speedArr[3], sf::Color::Green, window);
+#endif
+
+
+#ifdef SPAWN4TYPES
+    createPatogenCells(patogenCells,1,1600,900,radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255),window);
+    createBodyCells(bodyCells, 1, 1600, 900, radiusArr[1], sizeArr[1], speedArr[1], sf::Color::Red, window);
+    createMacroCells(macroCells, 1, 1600, 900, radiusArr[2], sizeArr[2], speedArr[2], sf::Color::Yellow, window);
+    createNeutroCells(neutroCells, 1, 1600, 900, radiusArr[3], sizeArr[3], speedArr[3], sf::Color::Green, window);
+
+    PatogenCell cell1(radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255), 100, 100);
+    cell1.setTargetPosition(1600, 900);
+#endif
+
+
+
 
 
 
@@ -39,16 +63,13 @@ int main() {
                 window.close();
         }
 
+        sf::Time deltaTime = clock.restart();
+
+
+        cell1.update(deltaTime);
         window.clear(sf::Color(255,255,255));
 
-        //Cell cell1(radius1, size1, speed1, sf::Color::Red, posX1, posY1);
-        //Cell cell2(30, 10, 30, sf::Color::Red, 300, 400);
-
-        //cell1.setPosition(1000, 700);
-        //cell2.draw((window));
-        //createCells(cells,555,1600,900,10,3,1,sf::Color::Red,window);
-        createCells(cells,countArr[0],1600,900,radiusArr[0],sizeArr[0],speedArr[0],sf::Color::Red,window);
-
+        cell1.draw(window);
 
         window.display();
     }
