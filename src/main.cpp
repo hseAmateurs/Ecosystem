@@ -24,7 +24,23 @@ int main() {
     std::vector<float> posYArr;
     std::vector<int> countArr;
 
+    sf::CircleShape circle1(10);
+    circle1.setFillColor(sf::Color::Black);
+    circle1.setPosition(0, 0);
 
+    sf::CircleShape circle2(10);
+    circle2.setFillColor(sf::Color::Black);
+    circle2.setPosition(900, 1600);
+
+
+    sf::CircleShape circle3(10);
+    circle3.setFillColor(sf::Color::Black);
+    circle3.setPosition(0, 0);
+
+
+    sf::CircleShape circle4(10);
+    circle4.setFillColor(sf::Color::Black);
+    circle4.setPosition(0, 0);
 
     sf::Clock clock;
 
@@ -70,6 +86,8 @@ int main() {
 
 
         window.clear(sf::Color(255,255,255));
+
+        //window.draw(circle1);
 
         for (int i = 0; i < countArr[0]; ++i)
         {

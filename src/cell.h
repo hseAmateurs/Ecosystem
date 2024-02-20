@@ -15,6 +15,7 @@ public:
     //void setRadius(float radius) {shape.setRadius(radius);}
     void update(sf::Time deltaTime);
     void setRandomVelocity(); // установка случайного вектора движения
+    void reflectionСontrol();
 private:
     float speed;
     sf::CircleShape shape;

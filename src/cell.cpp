@@ -45,9 +45,22 @@ void Cell::update(sf::Time deltaTime)
 
         timer.restart();
     }
+    reflectionСontrol();
 
     shape.move(velocity * deltaTime.asSeconds());
 
+}
+
+void Cell::reflectionСontrol()
+{
+    if (shape.getPosition().x <= -100 ||
+        shape.getPosition().y <= -100 ||
+        shape.getPosition().x >= 1700 ||
+        shape.getPosition().y >= 1000 ||
+        (shape.getPosition().y - 900.f)*(shape.getPosition().y - 900.f) + (shape.getPosition().x - 1600.f)*(shape.getPosition().x - 1600.f)<=400000)
+    {
+        velocity = -1.f * velocity;
+    }
 }
 
 
