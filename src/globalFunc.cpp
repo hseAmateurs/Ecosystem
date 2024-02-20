@@ -96,7 +96,7 @@ void csvInput(const std::string& fileName,
         std::stringstream ss(line);
         std::string token;
         std::vector<std::string> tokens;
-        std::cout<<line<<"lox"<<std::endl;
+        //std::cout<<line<<"lox"<<std::endl;
 
         while (std::getline(ss, token, ';'))
             tokens.push_back(token);
