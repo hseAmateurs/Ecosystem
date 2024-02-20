@@ -24,12 +24,28 @@ int main() {
     std::vector<float> posYArr;
     std::vector<int> countArr;
 
+    sf::CircleShape circle1(10);
+    circle1.setFillColor(sf::Color::Black);
+    circle1.setPosition(0, 0);
 
+    sf::CircleShape circle2(10);
+    circle2.setFillColor(sf::Color::Black);
+    circle2.setPosition(900, 1600);
+
+
+    sf::CircleShape circle3(10);
+    circle3.setFillColor(sf::Color::Black);
+    circle3.setPosition(0, 0);
+
+
+    sf::CircleShape circle4(10);
+    circle4.setFillColor(sf::Color::Black);
+    circle4.setPosition(0, 0);
 
     sf::Clock clock;
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");
-    csvInput("data.csv", radiusArr, sizeArr, speedArr, countArr);
+    csvInput("../data.csv", radiusArr, sizeArr, speedArr, countArr);
 
 #ifdef SPAWNALL
     createPatogenCells(patogenCells,countArr[0],1600,900,radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255),window);

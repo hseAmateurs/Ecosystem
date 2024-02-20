@@ -21,6 +21,7 @@ public:
     void setRandomVelocity(); // установка случайного вектора движения
     void customMove(sf::Vector2f velocity);
     float customGetRadius();
+    void reflectionControl();
 private:
     float speed;
     sf::CircleShape shape;
@@ -41,6 +42,7 @@ void Cell::update(std::vector<patogen>& patogens, std::vector<body>& bodys, std:
         randomMoveInterval = sf::seconds(randomSeconds);
         timer.restart();
     }
+    reflectionControl();
     for (auto& otherCell : neutros){
         if (&otherCell != this){ // collision with itself
             if (&otherCell != this && shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){

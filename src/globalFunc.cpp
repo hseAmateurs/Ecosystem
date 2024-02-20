@@ -13,8 +13,11 @@
 void createPatogenCells(std::vector<PatogenCell>& cellVector,int count,int windowWidth,int windowHeight,float radius,int size,float speed,sf::Color color,sf::RenderWindow& window){
     srand(time(0)); // возможно придётся перенести в какое-нибудь место в main
     for(int i=0;i<count;++i){
-        float posX=rand()%(windowWidth-2*static_cast<int>(radius));
-        float posY=rand()%(windowHeight-2*static_cast<int>(radius)); // this will be a problem later on. i don't care.
+        float posX, posY;
+        do {
+            posX=rand()%(windowWidth-2*static_cast<int>(radius));
+            posY=rand()%(windowHeight-2*static_cast<int>(radius));
+        } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) < 400030); // this will be a problem later on. i don't care.
         PatogenCell cell(radius, size, speed, color, posX, posY);
         cellVector.push_back(cell);
     }
@@ -28,9 +31,14 @@ void createPatogenCells(std::vector<PatogenCell>& cellVector,int count,int windo
 
 void createBodyCells(std::vector<BodyCell>& cellVector,int count,int windowWidth,int windowHeight,float radius,int size,float speed,sf::Color color,sf::RenderWindow& window){
     srand(time(0)); // возможно придётся перенести в какое-нибудь место в main
+
     for(int i=0;i<count;++i){
-        float posX=rand()%(windowWidth-2*static_cast<int>(radius));
-        float posY=rand()%(windowHeight-2*static_cast<int>(radius)); // this will be a problem later on. i don't care.
+        float posX, posY;
+        do {
+            posX=rand()%(windowWidth-2*static_cast<int>(radius));
+            posY=rand()%(windowHeight-2*static_cast<int>(radius));
+        } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) < 400030);
+         // this will be a problem later on. i don't care.
         BodyCell cell(radius, size, speed, color, posX, posY);
         cellVector.push_back(cell);
     }
@@ -43,8 +51,11 @@ void createBodyCells(std::vector<BodyCell>& cellVector,int count,int windowWidth
 void createMacroCells(std::vector<MacroCell>& cellVector,int count,int windowWidth,int windowHeight,float radius,int size,float speed,sf::Color color,sf::RenderWindow& window){
     srand(time(0)); // возможно придётся перенести в какое-нибудь место в main
     for(int i=0;i<count;++i){
-        float posX=rand()%(windowWidth-2*static_cast<int>(radius));
-        float posY=rand()%(windowHeight-2*static_cast<int>(radius)); // this will be a problem later on. i don't care.
+        float posX, posY;
+        do {
+            posX=rand()%(windowWidth-2*static_cast<int>(radius));
+            posY=rand()%(windowHeight-2*static_cast<int>(radius));
+        } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) < 400030); // this will be a problem later on. i don't care.
         MacroCell cell(radius, size, speed, color, posX, posY);
         cellVector.push_back(cell);
     }
@@ -57,8 +68,11 @@ void createMacroCells(std::vector<MacroCell>& cellVector,int count,int windowWid
 void createNeutroCells(std::vector<NeutroCell>& cellVector,int count,int windowWidth,int windowHeight,float radius,int size,float speed,sf::Color color,sf::RenderWindow& window){
     srand(time(0)); // возможно придётся перенести в какое-нибудь место в main
     for(int i=0;i<count;++i){
-        float posX=rand()%(windowWidth-2*static_cast<int>(radius));
-        float posY=rand()%(windowHeight-2*static_cast<int>(radius)); // this will be a problem later on. i don't care.
+        float posX, posY;
+        do {
+            posX=rand()%(windowWidth-2*static_cast<int>(radius));
+            posY=rand()%(windowHeight-2*static_cast<int>(radius));
+        } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) < 400030); // this will be a problem later on. i don't care.
         NeutroCell cell(radius, size, speed, color, posX, posY);
         cellVector.push_back(cell);
     }
