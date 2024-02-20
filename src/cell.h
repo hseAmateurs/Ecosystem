@@ -14,6 +14,7 @@ public:
     void draw(sf::RenderWindow& window) {window.draw(shape);}
     //void setRadius(float radius) {shape.setRadius(radius);}
     void update(sf::Time deltaTime);
+    void setRandomVelocity(); // установка случайного вектора движения
 private:
     float speed;
     sf::CircleShape shape;
@@ -21,6 +22,7 @@ private:
     sf::Vector2f targetPosition;
     sf::Time interval;
     sf::Clock timer;
+    sf::Time randomMoveInterval;
 
 };
 

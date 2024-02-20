@@ -6,8 +6,8 @@
 #include <fstream>
 #include <iostream>
 
-//#define SPAWNALL
-#define SPAWN4TYPES
+#define SPAWNALL
+//#define SPAWN4TYPES
 
 int main() {
     // Простой пример для проверки работы
@@ -46,7 +46,7 @@ int main() {
     createNeutroCells(neutroCells, 1, 1600, 900, radiusArr[3], sizeArr[3], speedArr[3], sf::Color::Green, window);
 
     PatogenCell cell1(radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255), 100, 100);
-    cell1.setTargetPosition(1600, 900);
+    //cell1.setTargetPosition(1600, 900);
 #endif
 
 
@@ -66,10 +66,35 @@ int main() {
         sf::Time deltaTime = clock.restart();
 
 
-        cell1.update(deltaTime);
+
+
+
         window.clear(sf::Color(255,255,255));
 
-        cell1.draw(window);
+        for (int i = 0; i < countArr[0]; ++i)
+        {
+            patogenCells.at(i).update(deltaTime);
+            patogenCells.at(i).draw(window);
+        }
+
+        for (int i = 0; i < countArr[2]; ++i)
+        {
+            macroCells.at(i).update(deltaTime);
+            macroCells.at(i).draw(window);
+        }
+
+        for (int i = 0; i < countArr[3]; ++i)
+        {
+            neutroCells.at(i).update(deltaTime);
+            neutroCells.at(i).draw(window);
+        }
+
+        for (int i = 0; i < countArr[1]; ++i)
+        {
+            bodyCells.at(i).update(deltaTime);
+            bodyCells.at(i).draw(window);
+        }
+
 
         window.display();
     }
