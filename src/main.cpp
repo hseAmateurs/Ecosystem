@@ -1,10 +1,26 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <cmath>
+#include "cell.h"
+#include "Neutrophil.h"
+#include "Macrophage.h"
+#include "Antibody.h"
+#include "Virus.h"
 
 int main() {
+    setbuf(stdout, 0);
     // Простой пример для проверки работы
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode({1600, 900}), "SFML Island", sf::Style::Titlebar | sf::Style::Close);
+    window.setVerticalSyncEnabled(true);
+
+
+    Cell cell({400, 300}, 100);
+    Neutrophil neutrophil({1200,300}, 100);
+    Macrophage macrophage({400, 600,}, 100);
+    Antibody antibody({1200, 600}, 50);
+    Virus virus({800,450}, 120, 360);
+
+    sf::Clock clock;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -13,9 +29,23 @@ int main() {
                 window.close();
         }
 
+        sf::Time elapsed = clock.restart();
+        virus.update(elapsed);
+        cell.update(elapsed);
+        neutrophil.update(elapsed);
+        macrophage.update(elapsed);
+        antibody.update(elapsed);
+
+
+
         window.clear();
-        window.draw(shape);
+        window.draw(virus);
+        window.draw(cell);
+        window.draw(neutrophil);
+        window.draw(macrophage);
+        window.draw(antibody);
         window.display();
+        sf::Time time = clock.restart();
     }
 
     return 0;
