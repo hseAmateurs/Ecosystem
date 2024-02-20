@@ -29,7 +29,7 @@ int main() {
     sf::Clock clock;
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem");
-    csvInput("data.csv", radiusArr, sizeArr, speedArr, countArr);
+    csvInput("../data.csv", radiusArr, sizeArr, speedArr, countArr);
 
 #ifdef SPAWNALL
     createPatogenCells(patogenCells,countArr[0],1600,900,radiusArr[0],sizeArr[0],speedArr[0],sf::Color(139, 0, 255),window);
