@@ -45,75 +45,49 @@ void Cell::update(std::vector<patogen>& patogens, std::vector<body>& bodys, std:
     reflectionControl();
     for (auto& otherCell : neutros){
         if (&otherCell != this){ // collision with itself
-            if (&otherCell != this && shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
-                // otherCell.velocity=otherCell.velocity*(-1.0f);
-                // velocity=velocity*(-1.0f);
-                otherCell.setRandomVelocity();
-                setRandomVelocity();
-            }
-                // shape.move(velocity*deltaTime.asSeconds());
-                //otherCell.customMove(otherCell.velocity*deltaTime.asSeconds());
+            sf::Vector2f otherPosition = otherCell.shape.getPosition();
+            sf::Vector2f direction = otherPosition - shape.getPosition();
+            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+            if(shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
+                velocity = shape.getPosition()-otherCell.shape.getPosition();
+                otherCell.velocity = otherCell.shape.getPosition()-shape.getPosition();
             }
         }
+    }
     for (auto& otherCell : patogens){
         if (&otherCell != this){ // collision with itself
-            if (&otherCell != this && shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
-                otherCell.setRandomVelocity();
-                setRandomVelocity();
-            }
-                // shape.move(velocity*deltaTime.asSeconds());
-                //otherCell.customMove(otherCell.velocity*deltaTime.asSeconds());
+            sf::Vector2f otherPosition = otherCell.shape.getPosition();
+            sf::Vector2f direction = otherPosition - shape.getPosition();
+            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+            if (shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
+                velocity = shape.getPosition()-otherCell.shape.getPosition();
+                otherCell.velocity = otherCell.shape.getPosition()-shape.getPosition();
             }
         }
+    }
     for (auto& otherCell : bodys){
         if (&otherCell != this){ // collision with itself
-            if (&otherCell != this && shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
-                otherCell.setRandomVelocity();
-                setRandomVelocity();
-            }
-                // shape.move(velocity*deltaTime.asSeconds());
-                //otherCell.customMove(otherCell.velocity*deltaTime.asSeconds());
+            sf::Vector2f otherPosition = otherCell.shape.getPosition();
+            sf::Vector2f direction = otherPosition - shape.getPosition();
+            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+            if (shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
+                velocity = shape.getPosition()-otherCell.shape.getPosition();
+                otherCell.velocity = otherCell.shape.getPosition()-shape.getPosition();
             }
         }
+    }
     for (auto& otherCell : macros){
         if (&otherCell != this){ // collision with itself
-            if (&otherCell != this && shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
-                otherCell.setRandomVelocity();
-                setRandomVelocity();
-            }
-                // shape.move(velocity*deltaTime.asSeconds());
-                //otherCell.customMove(otherCell.velocity*deltaTime.asSeconds());
+            sf::Vector2f otherPosition = otherCell.shape.getPosition();
+            sf::Vector2f direction = otherPosition - shape.getPosition();
+            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+            if (shape.getGlobalBounds().intersects(otherCell.shape.getGlobalBounds())){
+                velocity = shape.getPosition()-otherCell.shape.getPosition();
+                otherCell.velocity = otherCell.shape.getPosition()-shape.getPosition();
             }
         }
+    }
     shape.move(velocity * deltaTime.asSeconds());
 }
-
-
-// template<typename T>
-// void Cell::update(std::vector<T>& cells, sf::Time deltaTime){
-//     if (timer.getElapsedTime() > randomMoveInterval)
-//     {
-//         setRandomVelocity();
-//         float randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-//         randomMoveInterval = sf::seconds(randomSeconds);
-//         timer.restart();
-//     }
-//     for (auto& otherCell : cells){
-//             if (&otherCell != this){ // collision with itself
-//                 sf::Vector2f direction = otherCell.shape.getPosition() - shape.getPosition();
-//                 float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-//                 if (distance < shape.getRadius() + otherCell.shape.getRadius()){
-//                     otherCell.setRandomVelocity();
-//                     setRandomVelocity();
-//                     shape.move(velocity*deltaTime.asSeconds());
-//                     otherCell.shape.move(otherCell.velocity*deltaTime.asSeconds());
-//                 }
-//             }
-//         }
-//     shape.move(velocity * deltaTime.asSeconds());
-// }
-
-
-
 
 #endif //ECOSYSTEM_CELL_H
