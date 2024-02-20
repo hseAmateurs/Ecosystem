@@ -1,7 +1,3 @@
-//
-// Created by vivan on 18.02.2024.
-//
-
 #include <cmath>
 #include "CellMath.h"
 

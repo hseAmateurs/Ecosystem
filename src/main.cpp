@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <cmath>
 #include "cell.h"
 #include "Neutrophil.h"
 #include "Macrophage.h"
@@ -8,17 +7,16 @@
 #include "Virus.h"
 
 int main() {
-    setbuf(stdout, 0);
-    // Простой пример для проверки работы
+    setbuf(stdout, nullptr);
+
     sf::RenderWindow window(sf::VideoMode({1600, 900}), "SFML Island", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
-
 
     Cell cell({400, 300}, 100);
     Neutrophil neutrophil({1200,300}, 100);
     Macrophage macrophage({400, 600,}, 100);
     Antibody antibody({1200, 600}, 50);
-    Virus virus({800,450}, 120, 360);
+    Virus virus({800,450}, 100, 720);
 
     sf::Clock clock;
 
@@ -35,7 +33,6 @@ int main() {
         neutrophil.update(elapsed);
         macrophage.update(elapsed);
         antibody.update(elapsed);
-
 
 
         window.clear();

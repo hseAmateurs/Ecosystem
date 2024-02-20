@@ -1,8 +1,5 @@
-//
-// Created by vivan on 20.02.2024.
-//
-
 #include "Neutrophil.h"
+
 
 float getOffsetNeutrophil(float angle, AnimationParameters* parameters) {
     return

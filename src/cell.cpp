@@ -1,9 +1,6 @@
 #include "cell.h"
 #include "CellMath.h"
 #include <cmath>
-#include <stdlib.h>
-#include <iostream>
-
 
 float getOffsetStaticCell(float angle, AnimationParameters* parameters) {
     return

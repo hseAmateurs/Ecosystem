@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 
+
 typedef struct AnimationParameters{
     // static functions
     float(*getOffset)(float angle, AnimationParameters* parameters);
@@ -20,13 +21,7 @@ typedef struct AnimationParameters{
     // dynamic variables
     float delta;
     float currentPulsationAspect;
-
-
-
-
 }AnimationParameters;
-
-
 
 
 class Cell : public sf::Drawable, public sf::Transformable {
@@ -47,13 +42,6 @@ protected:
     int pointsCount;
     sf::Color color;
     AnimationParameters Animation;
-
 };
-
-
-
-
-
-
 
 #endif //ECOSYSTEM_CELL_H

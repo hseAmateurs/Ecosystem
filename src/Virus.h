@@ -1,7 +1,3 @@
-//
-// Created by vivan on 20.02.2024.
-//
-
 #ifndef ECOSYSTEM_VIRUS_H
 #define ECOSYSTEM_VIRUS_H
 

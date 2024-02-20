@@ -1,9 +1,5 @@
-//
-// Created by vivan on 20.02.2024.
-//
-
-
 #include "Macrophage.h"
+
 
 float getOffsetMacrophage(float angle, AnimationParameters* parameters) {
     return

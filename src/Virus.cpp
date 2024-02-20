@@ -1,8 +1,5 @@
-//
-// Created by vivan on 20.02.2024.
-//
-
 #include "Virus.h"
+
 
 float getOffsetVirus(float angle, AnimationParameters* parameters);
 void updatePulsationAspectVirus(AnimationParameters* parameters);
