@@ -1,7 +1,3 @@
-//
-// Created by vivan on 20.02.2024.
-//
-
 #include "Antibody.h"
 
 
