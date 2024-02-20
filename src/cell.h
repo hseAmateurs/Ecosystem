@@ -16,6 +16,7 @@ public:
     //void setRadius(float radius) {shape.setRadius(radius);}
     template<typename T>
     void update(std::vector<T>& cells, sf::Time deltaTime);
+    void setRandomVelocity(); // установка случайного вектора движения
 private:
     float speed;
     sf::CircleShape shape;
@@ -23,6 +24,7 @@ private:
     sf::Vector2f targetPosition;
     sf::Time interval;
     sf::Clock timer;
+    sf::Time randomMoveInterval;
 
 };
 

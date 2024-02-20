@@ -65,20 +65,37 @@ int main() {
 
         sf::Time deltaTime = clock.restart();
 
-        for(int i=0;i<50;++i){
-            patogenCells.at(i).update(patogenCells, deltaTime);
-            //bodyCells.at(i).update(deltaTime);
-            //macroCells.at(i).update(deltaTime);
-            //neutroCells.at(i).update(deltaTime);
-        }
+
+
+
+
         window.clear(sf::Color(255,255,255));
-        for(int i=0;i<50;++i){
+
+        for (int i = 0; i < countArr[0]; ++i)
+        {
+            patogenCells.at(i).update(deltaTime);
             patogenCells.at(i).draw(window);
-            //bodyCells.at(i).draw(window);
-            //macroCells.at(i).draw(window);
-            //neutroCells.at(i).draw(window);
         }
-        //cell1.update(deltaTime);
+
+        for (int i = 0; i < countArr[2]; ++i)
+        {
+            macroCells.at(i).update(deltaTime);
+            macroCells.at(i).draw(window);
+        }
+
+        for (int i = 0; i < countArr[3]; ++i)
+        {
+            neutroCells.at(i).update(deltaTime);
+            neutroCells.at(i).draw(window);
+        }
+
+        for (int i = 0; i < countArr[1]; ++i)
+        {
+            bodyCells.at(i).update(deltaTime);
+            bodyCells.at(i).draw(window);
+        }
+
+
         window.display();
     }
 
