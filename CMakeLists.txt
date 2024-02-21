@@ -5,7 +5,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Исходные файлы
 set(SOURCE_FILES
-        src/main.cpp)
+        src/main.cpp
+        src/cell.h
+        src/cell.cpp
+        src/CellMath.cpp
+        src/CellMath.h
+        src/Neutrophil.cpp
+        src/Neutrophil.h
+        src/Macrophage.cpp
+        src/Macrophage.h
+        src/Antibody.cpp
+        src/Antibody.h
+        src/Virus.cpp
+        src/Virus.h)
 
 # Название исполняемого файла
 add_executable(Ecosystem ${SOURCE_FILES})
