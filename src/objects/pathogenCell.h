@@ -1,7 +1,7 @@
 #include "cell.h"
 
-#ifndef ECOSYSTEM_PATOGENCELL_H
-#define ECOSYSTEM_PATOGENCELL_H
+#ifndef ECOSYSTEM_PATHOGENCELL_H
+#define ECOSYSTEM_PATHOGENCELL_H
 
 
 class PathogenCell : public Cell {
@@ -14,4 +14,4 @@ public:
 };
 
 
-#endif //ECOSYSTEM_PATOGENCELL_H
+#endif //ECOSYSTEM_PATHOGENCELL_H

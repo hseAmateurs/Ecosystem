@@ -36,6 +36,7 @@ set(UTILS
         src/utils/initialization.cpp
         src/utils/drawing.h
         src/utils/drawing.cpp
+        src/utils/utils.h
 )
 
 # Исходные файлы

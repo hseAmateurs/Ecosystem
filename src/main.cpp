@@ -13,6 +13,8 @@ void drawing(const vector<T> &cells, sf::RenderWindow &window) {
     }
 }
 
+using namespace utils;
+
 int main() {
     setbuf(stdout, nullptr);
 

@@ -9,8 +9,8 @@
 #include <fstream>
 
 
-vector<CellParam> readCSV(const std::string &fileName) {
-    vector<CellParam> config;
+vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
+    vector<utils::CellParam> config;
 
     std::ifstream file(fileName);
     std::string line;
@@ -19,7 +19,7 @@ vector<CellParam> readCSV(const std::string &fileName) {
     std::vector<std::string> tokens;
 
     int cellType = 0;
-    CellParam param;
+    utils::CellParam param;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
 
@@ -60,9 +60,9 @@ vector<CellParam> readCSV(const std::string &fileName) {
     return config;
 }
 
-Field initField(const vector<CellParam> &config, sf::RenderWindow &window) {
+utils::Field utils::initField(const vector<utils::CellParam> &config, sf::RenderWindow &window) {
     srand(time(0));
-    Field field;
+    utils::Field field;
 
     size_t configSize = config.size();
     for (int i = 0; i < configSize; ++i) {
@@ -88,7 +88,7 @@ Field initField(const vector<CellParam> &config, sf::RenderWindow &window) {
 }
 
 template<class T>
-vector<T> createCells(const CellParam &param, sf::RenderWindow &window) {
+vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &window) {
     vector<T> cells;
 
     sf::Vector2u windowSize = window.getSize();
