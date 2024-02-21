@@ -1,10 +1,10 @@
 #ifndef ECOSYSTEM_MACROPHAGE_H
 #define ECOSYSTEM_MACROPHAGE_H
 
-#include "cell.h"
+#include "primaryCell.h"
 
 namespace texture {
-    class Macrophage : public Cell {
+    class Macrophage : public PrimaryCell {
 
     public:
 

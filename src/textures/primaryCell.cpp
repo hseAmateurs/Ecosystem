@@ -1,15 +1,15 @@
 #include <cmath>
-#include "cell.h"
+#include "primaryCell.h"
 
 
-float texture::Cell::getOffset(const float& angle) const {
+float texture::PrimaryCell::getOffset(const float& angle) const {
     return
             sinf((angle + parameters.delta) * parameters.wavePeriod)
             *
             parameters.currentPulsationAspect;
 }
 
-void texture::Cell::updatePulsationAspect() {
+void texture::PrimaryCell::updatePulsationAspect() {
     parameters.currentPulsationAspect =
             parameters.pulsationWaveHeight
             +
@@ -22,7 +22,7 @@ void texture::Cell::updatePulsationAspect() {
             parameters.pulsationSpan;
 }
 
-texture::Cell::Cell(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
+texture::PrimaryCell::PrimaryCell(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
         center(center), radius(radius), m_vertices(sf::LineStrip, pointsCount + 1), pointsCount(pointsCount),
         color(color) {
     parameters = {
@@ -32,10 +32,10 @@ texture::Cell::Cell(sf::Vector2f center, float radius, int pointsCount, sf::Colo
             0.024f,
             0.04f,
     };
-    Cell::update();
+    PrimaryCell::update();
 }
 
-void texture::Cell::update() {
+void texture::PrimaryCell::update() {
     parameters.delta += parameters.rotationSpeed;
     updatePulsationAspect();
 
@@ -51,12 +51,12 @@ void texture::Cell::update() {
     }
 }
 
-void texture::Cell::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void texture::PrimaryCell::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.transform *= getTransform();
     states.texture = nullptr;
     target.draw(m_vertices, states);
 }
 
-sf::Vector2f texture::Cell::getRadiusVector(const float& angle, const float& radius) const {
-    return {radius * cosf(angle), radius * sinf(angle)};
+sf::Vector2f texture::PrimaryCell::getRadiusVector(const float& angle, const float& r) const {
+    return {r * cosf(angle), r * sinf(angle)};
 }

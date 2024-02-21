@@ -53,24 +53,19 @@ void Cell::reflectionControl()
     }
 }
 
-
-
-
 // void Cell::update(sf::Time deltaTime)
 // {
 //     if (timer.getElapsedTime() > randomMoveInterval)
 //     {
 //         setRandomVelocity();
-
+//
 //         float randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
 //         randomMoveInterval = sf::seconds(randomSeconds);
-
-
+//
+//
 //         timer.restart();
 //     }
-
+//
 //     shape.move(velocity * deltaTime.asSeconds());
-
+//
 // }
-
-

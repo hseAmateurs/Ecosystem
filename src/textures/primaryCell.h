@@ -1,5 +1,5 @@
-#ifndef ECOSYSTEM_CELL_H
-#define ECOSYSTEM_CELL_H
+#ifndef ECOSYSTEM_PRIMARYCELL_H
+#define ECOSYSTEM_PRIMARYCELL_H
 
 #include <SFML/Graphics.hpp>
 
@@ -19,11 +19,11 @@ namespace texture {
     } AnimationParameters;
 
 
-    class Cell : public sf::Drawable, public sf::Transformable {
+    class PrimaryCell : public sf::Drawable, public sf::Transformable {
 
     public:
 
-        explicit Cell(sf::Vector2f center = {0, 0}, float radius = 100, int pointCount = 180,
+        explicit PrimaryCell(sf::Vector2f center = {0, 0}, float radius = 100, int pointCount = 180,
                       sf::Color color = sf::Color::White);
 
         void update();
@@ -34,11 +34,11 @@ namespace texture {
 
         virtual void updatePulsationAspect();
 
-        virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-
-        AnimationParameters parameters;
+        AnimationParameters parameters{};
 
     private:
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
 
         float radius;
@@ -50,4 +50,4 @@ namespace texture {
     };
 }
 
-#endif //ECOSYSTEM_CELL_H
+#endif //ECOSYSTEM_PRIMARYCELL_H

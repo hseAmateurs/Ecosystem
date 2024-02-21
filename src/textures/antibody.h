@@ -2,10 +2,10 @@
 #define ECOSYSTEM_ANTIBODY_H
 
 
-#include "cell.h"
+#include "primaryCell.h"
 
 namespace texture {
-    class Antibody : public Cell {
+    class Antibody : public PrimaryCell {
 
     public:
         explicit Antibody(sf::Vector2f center = {800, 450}, float radius = 100, int pointCount = 180,

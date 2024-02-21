@@ -5,7 +5,7 @@
 #ifndef ECOSYSTEM_CELLTEXTURES_H
 #define ECOSYSTEM_CELLTEXTURES_H
 
-#include "cell.h"
+#include "primaryCell.h"
 #include "pathogen.h"
 #include "neutrophil.h"
 #include "macrophage.h"

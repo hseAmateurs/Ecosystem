@@ -27,7 +27,7 @@ void texture::Macrophage::updatePulsationAspect() {
 }
 
 texture::Macrophage::Macrophage(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
-        Cell(center, radius, pointsCount, color) {
+        PrimaryCell(center, radius, pointsCount, color) {
     parameters = {
             3,
             0.006f,

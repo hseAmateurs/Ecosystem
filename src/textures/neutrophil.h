@@ -1,10 +1,10 @@
 #ifndef ECOSYSTEM_NEUTROPHIL_H
 #define ECOSYSTEM_NEUTROPHIL_H
 
-#include "cell.h"
+#include "primaryCell.h"
 
 namespace texture {
-    class Neutrophil : public Cell {
+    class Neutrophil : public PrimaryCell {
 
     public:
         explicit Neutrophil(sf::Vector2f center = {800, 450}, float radius = 100, int pointCount = 180,
