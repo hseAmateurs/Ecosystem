@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "utils/initialization.h"
+#include "textures/primaryCell.h"
 
 using namespace utils;
 
@@ -20,7 +21,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
-//    texture::PrimaryCell primaryCell({400, 300}, 100);
+//    texture::PrimaryCell primaryCell({400, 300}, 100, 100, sf::Color::Black);
 //    texture::Neutrophil neutrophil({1200, 300}, 100);
 //    texture::Macrophage macrophage({400, 600,}, 100);
 //    texture::Antibody antibody({1200, 600}, 50);
@@ -36,10 +37,13 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        sf::Time deltaTime = clock.restart();
         window.clear(sf::Color(255, 255, 255));
 
+//        primaryCell.update();
+//        window.draw(primaryCell);
+
+        sf::Time deltaTime = clock.restart();
+        
         for (int i = 0; i < 4; ++i) {
             switch (i) {
                 case PATHOGEN:
