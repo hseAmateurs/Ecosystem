@@ -17,6 +17,19 @@ set(SOURCE_FILES
         src/textures/pathogen.cpp
         src/textures/pathogen.h
         src/textures/cellTextures.h)
+        src/main.cpp
+        src/globalFunc.h
+        src/globalFunc.cpp
+        src/cell.h
+        src/cell.cpp
+        src/patogenCell.cpp
+        src/patogenCell.h
+        src/BodyCell.cpp
+        src/BodyCell.h
+        src/MacroCell.cpp
+        src/MacroCell.h
+        src/NeutroCell.cpp
+        src/NeutroCell.h)
 
 # Название исполняемого файла
 add_executable(Ecosystem ${SOURCE_FILES})
