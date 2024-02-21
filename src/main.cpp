@@ -1,10 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "cell.h"
-#include "Neutrophil.h"
-#include "Macrophage.h"
-#include "Antibody.h"
-#include "Virus.h"
+
+#include "textures/cellTextures.h"
 
 int main() {
     setbuf(stdout, nullptr);
@@ -12,11 +9,11 @@ int main() {
     sf::RenderWindow window(sf::VideoMode({1600, 900}), "SFML Island", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
-    Cell cell({400, 300}, 100);
-    Neutrophil neutrophil({1200,300}, 100);
-    Macrophage macrophage({400, 600,}, 100);
-    Antibody antibody({1200, 600}, 50);
-    Virus virus({800,450}, 100, 720);
+    texture::Cell cell({400, 300}, 100);
+    texture::Neutrophil neutrophil({1200, 300}, 100);
+    texture::Macrophage macrophage({400, 600,}, 100);
+    texture::Antibody antibody({1200, 600}, 50);
+    texture::Pathogen virus({800, 450}, 100, 720);
 
     sf::Clock clock;
 
@@ -28,11 +25,11 @@ int main() {
         }
 
         sf::Time elapsed = clock.restart();
-        virus.update(elapsed);
-        cell.update(elapsed);
-        neutrophil.update(elapsed);
-        macrophage.update(elapsed);
-        antibody.update(elapsed);
+        virus.update();
+        cell.update();
+        neutrophil.update();
+        macrophage.update();
+        antibody.update();
 
 
         window.clear();
