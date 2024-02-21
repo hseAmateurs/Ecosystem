@@ -34,8 +34,6 @@ set(OBJECTS
 set(UTILS
         src/utils/initialization.h
         src/utils/initialization.cpp
-        src/utils/drawing.h
-        src/utils/drawing.cpp
         src/utils/utils.h
 )
 

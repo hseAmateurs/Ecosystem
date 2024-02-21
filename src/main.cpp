@@ -3,17 +3,16 @@
 #include <vector>
 
 #include "utils/initialization.h"
-//#include "utils/drawing.h"
-
-
-template<class T>
-void drawing(const vector<T> &cells, sf::RenderWindow &window) {
-    for (auto cell : cells) {
-        cell.draw(window);
-    }
-}
 
 using namespace utils;
+
+template<class T>
+void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
+    for (auto &cell: cells) {
+        cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+        window.draw(cell);
+    }
+}
 
 int main() {
     setbuf(stdout, nullptr);
@@ -39,27 +38,26 @@ int main() {
         }
 
         sf::Time deltaTime = clock.restart();
-        window.clear(sf::Color(255,255,255));
+        window.clear(sf::Color(255, 255, 255));
 
         for (int i = 0; i < 4; ++i) {
             switch (i) {
                 case PATHOGEN:
-                    drawing(field.pathogens, window);
+                    drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
-                    drawing(field.bodies, window);
+                    drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:
-                    drawing(field.macroes, window);
+                    drawing(field.macroes, field, window, deltaTime);
                     break;
                 case NEUTRO:
-                    drawing(field.neutroes, window);
+                    drawing(field.neutroes, field, window, deltaTime);
                     break;
                 default:
                     std::cerr << "Undefined cell type\n";
             }
         }
-
         window.display();
     }
 

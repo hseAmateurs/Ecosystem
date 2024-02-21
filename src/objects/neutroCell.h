@@ -10,11 +10,11 @@
 
 class NeutroCell : public Cell {
 public:
-    NeutroCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY) :
-            Cell(radius, size,
-                 speed, color,
-                 posX,
-                 posY) { }
+    NeutroCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
+            : Cell(radius, size,
+                   speed, color,
+                   posX,
+                   posY) { }
 };
 
 
