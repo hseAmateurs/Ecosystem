@@ -49,8 +49,10 @@ void Cell::updateCollision(std::vector<T>& cells) {
         sf::Vector2f direction = otherPosition - getPosition();
         float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
-            velocity = getPosition() - otherCell.getPosition();
+            velocity = (getPosition() - otherCell.getPosition());
+            velocity = velocity/std::sqrt(velocity.x*velocity.x + velocity.y * velocity.y)*speed;
             otherCell.velocity = otherCell.getPosition() - getPosition();
+            otherCell.velocity = otherCell.velocity/std::sqrt(otherCell.velocity.x*otherCell.velocity.x + otherCell.velocity.y * otherCell.velocity.y)*otherCell.speed;
         }
     }
 }
