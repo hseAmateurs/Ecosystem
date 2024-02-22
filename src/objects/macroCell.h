@@ -11,9 +11,9 @@
 
 class MacroCell : public Cell {
 public:
-    MacroCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
+    MacroCell(float radius, int size, float speed, float posX, float posY)
             : Cell(radius, size,
-                   speed, color,
+                   speed,
                    posX,
                    posY),
               texture(){ }

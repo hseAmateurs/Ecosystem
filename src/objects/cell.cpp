@@ -2,11 +2,11 @@
 #include "random"
 
 
-Cell::Cell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
+Cell::Cell(float radius, int size, float speed, float posX, float posY)
         : sf::CircleShape(radius), speed(speed),
           velocity(0, 0), interval(sf::seconds(5)),
           randomMoveInterval(sf::seconds(2)) {
-    setFillColor(color);
+    setFillColor(sf::Color(255,255, 255,0));
     setPos(posX, posY);
     targetPosition = sf::Vector2f(posX, posY);
     timer.restart();

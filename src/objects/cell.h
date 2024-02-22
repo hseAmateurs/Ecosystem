@@ -10,7 +10,7 @@
 
 class Cell : public sf::CircleShape {
 public:
-    Cell(float radius, int size, float speed, const sf::Color &color, float posX, float posY);
+    Cell(float radius, int size, float speed, float posX, float posY);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
