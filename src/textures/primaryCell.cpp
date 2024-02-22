@@ -14,9 +14,9 @@ void texture::PrimaryCell::updatePulsationAspect() {
             parameters.pulsationWaveHeight
             +
             (
-                    powf(sinf(parameters.delta * parameters.pulsationSpeed), 2)
+                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 2), 1)
                     +
-                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 4), 4)
+                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 3), 4)
             )
             *
             parameters.pulsationSpan;
@@ -28,9 +28,9 @@ texture::PrimaryCell::PrimaryCell(sf::Vector2f center, float radius, int pointsC
     parameters = {
             10,
             0.006f,
-            1.6f,
-            0.024f,
-            0.04f,
+            4.f,
+            0.03f,
+            0.06f,
     };
     PrimaryCell::update();
 }

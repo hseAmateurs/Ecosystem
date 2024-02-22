@@ -18,7 +18,7 @@ void texture::Macrophage::updatePulsationAspect() {
             parameters.pulsationWaveHeight
             +
             (
-                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 2), 3)
+                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 2), 1)
                     +
                     powf(sinf(parameters.delta * parameters.pulsationSpeed * 3), 2)
             )
@@ -30,9 +30,9 @@ texture::Macrophage::Macrophage(sf::Vector2f center, float radius, int pointsCou
         PrimaryCell(center, radius, pointsCount, color) {
     parameters = {
             3,
-            0.006f,
-            2.5f,
-            0.03f,
+            0.005f,
+            2.4f,
+            0.04f,
             0.3f,
     };
 }

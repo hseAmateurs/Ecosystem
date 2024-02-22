@@ -28,8 +28,8 @@ texture::Neutrophil::Neutrophil(sf::Vector2f center, float radius, int pointsCou
     parameters = {
             13,
             0.012f,
-            1.6f,
+            3.f,
             0.024f,
-            0.07f,
+            0.1f,
     };
 }

@@ -24,7 +24,7 @@ namespace texture {
     public:
 
         explicit PrimaryCell(sf::Vector2f center = {0, 0}, float radius = 15, int pointCount = 180,
-                      sf::Color color = sf::Color::White);
+                      sf::Color color = sf::Color::Magenta);
 
         void update();
 
