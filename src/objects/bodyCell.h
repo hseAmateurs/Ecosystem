@@ -7,13 +7,19 @@
 
 
 #include "cell.h"
+#include "../textures/primaryCell.h"
 
 class BodyCell : public Cell {
 public:
     BodyCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
             : Cell(radius, size,
                    speed, color,
-                   posX, posY) { }
+                   posX, posY){ }
+
+    void drawTexture(sf::RenderWindow& window);
+
+private:
+    texture::PrimaryCell texture;
 };
 
 

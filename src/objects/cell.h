@@ -1,4 +1,4 @@
-#ifndef ECOSYSTEM_CELL_H
+ #ifndef ECOSYSTEM_CELL_H
 #define ECOSYSTEM_CELL_H
 
 #include <SFML/Graphics.hpp>
@@ -25,6 +25,8 @@ public:
     void setRandomVelocity();
 
     void reflectionControl();
+
+
 
 private:
     template<class T>

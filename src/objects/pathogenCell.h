@@ -3,6 +3,7 @@
 
 
 #include "cell.h"
+#include "../textures/pathogen.h"
 
 class PathogenCell : public Cell {
 public:
@@ -10,7 +11,13 @@ public:
             : Cell(radius,
                    size, speed,
                    color, posX,
-                   posY) { }
+                   posY),
+              texture(){ }
+
+    void drawTexture(sf::RenderWindow& window);
+
+private:
+    texture::Pathogen texture;
 };
 
 

@@ -12,6 +12,10 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
     for (auto &cell: cells) {
         cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
+        cell.drawTexture(window);
+
+
+
     }
 }
 
@@ -30,14 +34,14 @@ int main() {
     sf::Clock clock;
     Field field = initField(readCSV("../data.csv"), window);
 
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        window.clear(sf::Color(255, 255, 255));
+        //window.clear(sf::Color(255, 255, 255));
+        window.clear();
 
 //        primaryCell.update();
 //        window.draw(primaryCell);

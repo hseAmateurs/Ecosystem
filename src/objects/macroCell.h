@@ -7,6 +7,7 @@
 
 
 #include "cell.h"
+#include "../textures/macrophage.h"
 
 class MacroCell : public Cell {
 public:
@@ -14,7 +15,14 @@ public:
             : Cell(radius, size,
                    speed, color,
                    posX,
-                   posY) { }
+                   posY),
+              texture(){ }
+
+    void drawTexture(sf::RenderWindow& window);
+
+private:
+    texture::Macrophage texture;
+
 };
 
 

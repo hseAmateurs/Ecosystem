@@ -7,6 +7,7 @@
 
 
 #include "cell.h"
+#include "../textures/neutrophil.h"
 
 class NeutroCell : public Cell {
 public:
@@ -14,7 +15,13 @@ public:
             : Cell(radius, size,
                    speed, color,
                    posX,
-                   posY) { }
+                   posY),
+              texture(){ }
+
+    void drawTexture(sf::RenderWindow& window);
+
+private:
+    texture::Neutrophil texture;
 };
 
 

@@ -57,6 +57,11 @@ void texture::PrimaryCell::draw(sf::RenderTarget &target, sf::RenderStates state
     target.draw(m_vertices, states);
 }
 
+void texture::PrimaryCell::changeCenter(sf::Vector2f newCenter)
+{
+    center = newCenter;
+}
+
 sf::Vector2f texture::PrimaryCell::getRadiusVector(const float& angle, const float& r) const {
     return {r * cosf(angle), r * sinf(angle)};
 }
