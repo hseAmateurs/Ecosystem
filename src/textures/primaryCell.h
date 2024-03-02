@@ -5,7 +5,7 @@
 
 namespace texture {
 
-    typedef struct {
+    struct AnimationParameters {
         // const
         int wavePeriod;
         float rotationSpeed;
@@ -16,7 +16,7 @@ namespace texture {
         // dynamic variables
         float delta;
         float currentPulsationAspect;
-    } AnimationParameters;
+    };
 
 
     class PrimaryCell : public sf::Drawable, public sf::Transformable {

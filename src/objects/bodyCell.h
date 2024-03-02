@@ -11,12 +11,12 @@
 
 class BodyCell : public Cell {
 public:
-    BodyCell(float radius, int size, float speed, float posX, float posY)
+    BodyCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
                    speed,
-                   posX, posY){ }
+                   center, color), texture(center, radius, 180, color) { }
 
-    void drawTexture(sf::RenderWindow& window);
+    void drawTexture(sf::RenderWindow &window) override;
 
 private:
     texture::PrimaryCell texture;

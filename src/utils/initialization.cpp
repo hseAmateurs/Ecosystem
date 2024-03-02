@@ -99,7 +99,7 @@ vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &wi
             posY = rand() % (windowSize.y - 2 * static_cast<int>(param.radius));
         } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) <
                  400030); // this will be a problem later on. i don't care.
-        T cell(param.radius, param.size, param.speed, posX, posY);
+        T cell(param.radius, param.size, param.speed, {posX, posY}, param.color);
         window.draw(cell);
         cells.push_back(cell);
     }

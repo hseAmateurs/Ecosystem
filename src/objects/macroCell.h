@@ -11,18 +11,15 @@
 
 class MacroCell : public Cell {
 public:
-    MacroCell(float radius, int size, float speed, float posX, float posY)
+    MacroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
                    speed,
-                   posX,
-                   posY),
-              texture(){ }
+                   center, color), texture(center, radius, 180, color) { }
 
-    void drawTexture(sf::RenderWindow& window);
+    void drawTexture(sf::RenderWindow &window) override;
 
 private:
     texture::Macrophage texture;
-
 };
 
 

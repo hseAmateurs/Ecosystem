@@ -1,4 +1,4 @@
- #ifndef ECOSYSTEM_CELL_H
+#ifndef ECOSYSTEM_CELL_H
 #define ECOSYSTEM_CELL_H
 
 #include <SFML/Graphics.hpp>
@@ -6,11 +6,9 @@
 #include <ctime>
 #include <cmath>
 
-//#include "../utils/utils.h"
-
 class Cell : public sf::CircleShape {
 public:
-    Cell(float radius, int size, float speed, float posX, float posY);
+    explicit Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
@@ -26,11 +24,12 @@ public:
 
     void reflectionControl();
 
-
+    // Означает, что эта функция должна быть обязательно переопределена в производных классах
+    virtual void drawTexture(sf::RenderWindow &window) = 0;
 
 private:
     template<class T>
-    void updateCollision(std::vector<T>& cells);
+    void updateCollision(std::vector<T> &cells);
 
     float speed;
     sf::Vector2f velocity;
@@ -38,21 +37,23 @@ private:
     sf::Time interval;
     sf::Clock timer;
     sf::Time randomMoveInterval;
-
+    sf::Color color;
 };
 
 template<class T>
-void Cell::updateCollision(std::vector<T>& cells) {
-    for (auto &otherCell : cells) {
+void Cell::updateCollision(std::vector<T> &cells) {
+    for (auto &otherCell: cells) {
         if (&otherCell == this) continue;
         sf::Vector2f otherPosition = otherCell.getPosition();
         sf::Vector2f direction = otherPosition - getPosition();
         float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
             velocity = (getPosition() - otherCell.getPosition());
-            velocity = velocity/std::sqrt(velocity.x*velocity.x + velocity.y * velocity.y)*speed;
+            velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
             otherCell.velocity = otherCell.getPosition() - getPosition();
-            otherCell.velocity = otherCell.velocity/std::sqrt(otherCell.velocity.x*otherCell.velocity.x + otherCell.velocity.y * otherCell.velocity.y)*otherCell.speed;
+            otherCell.velocity = otherCell.velocity / std::sqrt(
+                    otherCell.velocity.x * otherCell.velocity.x + otherCell.velocity.y * otherCell.velocity.y) *
+                                 otherCell.speed;
         }
     }
 }

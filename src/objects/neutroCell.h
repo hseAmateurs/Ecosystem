@@ -11,14 +11,12 @@
 
 class NeutroCell : public Cell {
 public:
-    NeutroCell(float radius, int size, float speed, float posX, float posY)
+    NeutroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
                    speed,
-                   posX,
-                   posY),
-              texture(){ }
+                   center, color), texture(center, radius, 180, color) { }
 
-    void drawTexture(sf::RenderWindow& window);
+    void drawTexture(sf::RenderWindow &window) override;
 
 private:
     texture::Neutrophil texture;

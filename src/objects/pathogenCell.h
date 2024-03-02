@@ -7,14 +7,12 @@
 
 class PathogenCell : public Cell {
 public:
-    PathogenCell(float radius, int size, float speed, float posX, float posY)
-            : Cell(radius,
-                   size, speed,
-                   posX,
-                   posY),
-              texture(){ }
+    PathogenCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
+            : Cell(radius, size,
+                   speed,
+                   center, color), texture(center, radius, 180, color) { }
 
-    void drawTexture(sf::RenderWindow& window);
+    void drawTexture(sf::RenderWindow &window) override;
 
 private:
     texture::Pathogen texture;
