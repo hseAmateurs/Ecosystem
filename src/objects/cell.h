@@ -44,9 +44,6 @@ template<class T>
 void Cell::updateCollision(std::vector<T> &cells) {
     for (auto &otherCell: cells) {
         if (&otherCell == this) continue;
-        sf::Vector2f otherPosition = otherCell.getPosition();
-        sf::Vector2f direction = otherPosition - getPosition();
-        float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
             velocity = (getPosition() - otherCell.getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
