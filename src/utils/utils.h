@@ -35,6 +35,7 @@ namespace utils {
 
     // Конфиги всех клеток
     typedef struct {
+        sf::Font font;
         std::vector<PathogenCell> pathogens;
         std::vector<BodyCell> bodies;
         std::vector<MacroCell> macroes;

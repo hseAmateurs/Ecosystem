@@ -5,8 +5,11 @@
 #include "macroCell.h"
 
 void MacroCell::drawTexture(sf::RenderWindow &window) {
-    sf::Vector2f vect(getRadius(), getRadius());
-    texture.changeCenter(getPosition() + vect);
+    sf::Vector2f radiusOffset(getRadius(), getRadius());
+    texture.changeCenter(getPosition() + radiusOffset);
     texture.update();
     window.draw(texture);
+
+    code.setPosition(getPosition() + radiusOffset);
+    window.draw(code);
 }

@@ -27,6 +27,15 @@ public:
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
     virtual void drawTexture(sf::RenderWindow &window) = 0;
 
+    void setCode(std::string &new_code) { code.setString(new_code); };
+
+    std::string getCode() const { return code.getString(); };
+
+    void setFont(const sf::Font &font) { code.setFont(font); };
+
+protected:
+    sf::Text code;
+
 private:
     template<class T>
     void updateCollision(std::vector<T> &cells);
@@ -38,6 +47,7 @@ private:
     sf::Clock timer;
     sf::Time randomMoveInterval;
     sf::Color color;
+    int size;
 };
 
 template<class T>

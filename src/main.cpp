@@ -4,7 +4,6 @@
 #include <functional>
 
 #include "utils/initialization.h"
-#include "textures/primaryCell.h"
 
 using namespace utils;
 
@@ -15,6 +14,7 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
     for (auto &cell: cells) {
         cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
+        cell.setFont(field.font);
         cell.drawTexture(window);
     }
 }
@@ -56,7 +56,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
-    Field field = initField(readCSV("../data.csv"), window);
+    Field field = initField(readCSV("../data.csv"), "../resources/font/couriercyrps_bold.ttf", window);
 
     // Отключаем контекст окна после инициалазиции поля
     window.setActive(false);
@@ -75,6 +75,7 @@ int main() {
                 window.close();
             }
         }
+        sf::sleep(sf::milliseconds(40));
     }
 
     return 0;

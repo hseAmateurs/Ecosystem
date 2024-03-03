@@ -23,13 +23,13 @@ void texture::Neutrophil::updatePulsationAspect() {
 }
 
 
-texture::Neutrophil::Neutrophil(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
-        PrimaryCell(center, radius, pointsCount, color) {
+texture::Neutrophil::Neutrophil(sf::Vector2f center, float radius, int pointCount, sf::Color color) :
+        PrimaryCell(center, radius, pointCount, color) {
     parameters = {
             13,
-            0.012f,
-            3.f,
-            0.024f,
+            0.008f,
+            3.5f,
+            0.04f,
             0.1f,
     };
 }
