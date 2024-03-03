@@ -8,7 +8,7 @@
 
 class Cell : public sf::CircleShape {
 public:
-     Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
+    Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
@@ -21,25 +21,26 @@ public:
 
     // установка случайного вектора движения
     void setRandomVelocity();
-
+    template<class T>
+    void updateCollision(std::vector<T> &cells);
     void reflectionControl();
 
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
     virtual void drawTexture(sf::RenderWindow &window) = 0;
 
-private:
-    template<class T>
-    void updateCollision(std::vector<T> &cells);
-
-
+protected:
     sf::Vector2f velocity;
+    float speed;
+    sf::Clock timer;
+    sf::Time randomMoveInterval=sf::seconds(0);
+
+private:
     sf::Vector2f targetPosition;
     sf::Time interval;
     sf::Clock timer;
     sf::Time randomMoveInterval;
 
 protected:
-    float speed;
     float radius;
     int size;
     sf::Color color;
@@ -51,9 +52,6 @@ template<class T>
 void Cell::updateCollision(std::vector<T> &cells) {
     for (auto &otherCell: cells) {
         if (&otherCell == this) continue;
-        sf::Vector2f otherPosition = otherCell.getPosition();
-        sf::Vector2f direction = otherPosition - getPosition();
-        float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
             velocity = (getPosition() - otherCell.getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
@@ -65,22 +63,6 @@ void Cell::updateCollision(std::vector<T> &cells) {
     }
 }
 
-template<typename pathogen, typename body, typename macro, typename neutro>
-void Cell::update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                  std::vector<neutro> &neutros, sf::Time deltaTime) {
-    if (timer.getElapsedTime() > randomMoveInterval) {
-        setRandomVelocity();
-        auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-        randomMoveInterval = sf::seconds(randomSeconds);
-        timer.restart();
-    }
-    reflectionControl();
-    updateCollision(neutros);
-    updateCollision(pathogens);
-    updateCollision(bodies);
-    updateCollision(macroes);
 
-    move(velocity * deltaTime.asSeconds());
-}
 
 #endif //ECOSYSTEM_CELL_H

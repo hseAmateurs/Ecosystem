@@ -1,4 +1,5 @@
 #include "cell.h"
+#include "bodyCell.h"
 #include "random"
 
 

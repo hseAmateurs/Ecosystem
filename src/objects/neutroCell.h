@@ -9,6 +9,7 @@
 
 #include "../textures/neutrophil.h"
 #include "hunterCell.h"
+#include "cell.h"
 
 class NeutroCell : public HunterCell {
 public:
@@ -18,6 +19,7 @@ public:
                    center, color), texture(center, radius, 180, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
+    char getName();
 
 private:
     texture::Neutrophil texture;

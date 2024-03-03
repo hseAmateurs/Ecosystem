@@ -6,9 +6,10 @@
 #define ECOSYSTEM_MACROCELL_H
 
 
-
+#include "cell.h"
 #include "../textures/macrophage.h"
 #include "hunterCell.h"
+
 
 class MacroCell : public HunterCell {
 public:
@@ -18,7 +19,7 @@ public:
                    center, color), texture(center, radius, 180, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-
+    char getName();
 private:
     texture::Macrophage texture;
 };

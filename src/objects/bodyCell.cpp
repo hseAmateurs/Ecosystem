@@ -3,8 +3,6 @@
 //
 
 #include "bodyCell.h"
-#include <iostream>
-#include <ctime>
 
 void BodyCell::drawTexture(sf::RenderWindow &window) {
     sf::Vector2f radiusOffset(getRadius(), getRadius());
@@ -37,3 +35,8 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCell
 
     }
 }
+
+char BodyCell::getName(){
+    return 'b';
+}
+
