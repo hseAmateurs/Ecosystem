@@ -6,6 +6,7 @@
 #define ECOSYSTEM_ANIMATIONS_H
 
 #include "cellTexture.h"
+#include <cmath>
 
 namespace texture {
 

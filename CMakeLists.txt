@@ -7,8 +7,14 @@ set(CMAKE_CXX_STANDARD 14)
 set(TEXTURES
         src/textures/cellTexture.h
         src/textures/cellTexture.cpp
-        src/textures/animations.cpp
+        src/textures/animPlasma.cpp
         src/textures/animations.h
+        src/textures/animBody.cpp
+        src/textures/animMacro.cpp
+        src/textures/animPathogen.cpp
+        src/textures/animAntibody.cpp
+        src/textures/animNeutro.cpp
+        src/textures/animBCell.cpp
 )
 
 set(OBJECTS
