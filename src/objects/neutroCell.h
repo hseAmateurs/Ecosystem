@@ -6,13 +6,14 @@
 #define ECOSYSTEM_NEUTROCELL_H
 
 
-#include "cell.h"
-#include "../textures/neutrophil.h"
 
-class NeutroCell : public Cell {
+#include "../textures/neutrophil.h"
+#include "hunterCell.h"
+
+class NeutroCell : public HunterCell {
 public:
     NeutroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+            : HunterCell(radius, size,
                    speed,
                    center, color), texture(center, radius, 180, color) { }
 

@@ -6,13 +6,14 @@
 #define ECOSYSTEM_MACROCELL_H
 
 
-#include "cell.h"
-#include "../textures/macrophage.h"
 
-class MacroCell : public Cell {
+#include "../textures/macrophage.h"
+#include "hunterCell.h"
+
+class MacroCell : public HunterCell {
 public:
     MacroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+            : HunterCell(radius, size,
                    speed,
                    center, color), texture(center, radius, 180, color) { }
 

@@ -29,6 +29,8 @@ set(OBJECTS
         src/objects/macroCell.h
         src/objects/neutroCell.cpp
         src/objects/neutroCell.h
+        src/objects/hunterCell.cpp
+        src/objects/hunterCell.h
 )
 
 set(UTILS
