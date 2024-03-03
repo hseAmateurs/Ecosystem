@@ -60,9 +60,16 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
     return config;
 }
 
-utils::Field utils::initField(const vector<utils::CellParam> &config, sf::RenderWindow &window) {
+utils::Field utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
     srand(time(0));
     utils::Field field;
+
+    sf::Font font;
+    if (!font.loadFromFile(fontPath)) {
+        std::cerr << "Can't load font\n";
+        exit(-1);
+    }
+    field.font = font;
 
     size_t configSize = config.size();
     for (int i = 0; i < configSize; ++i) {

@@ -27,8 +27,8 @@ void texture::Pathogen::updatePulsationAspect() {
 }
 
 
-texture::Pathogen::Pathogen(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
-        PrimaryCell(center, radius, pointsCount, color) {
+texture::Pathogen::Pathogen(sf::Vector2f center, float radius, int pointCount, sf::Color color) :
+        PrimaryCell(center, radius, pointCount, color) {
     parameters = {
             4,
             0.02f,

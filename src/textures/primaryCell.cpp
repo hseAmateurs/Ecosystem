@@ -1,8 +1,9 @@
 #include <cmath>
+#include <iostream>
 #include "primaryCell.h"
 
 
-float texture::PrimaryCell::getOffset(const float& angle) const {
+float texture::PrimaryCell::getOffset(const float &angle) const {
     return
             sinf((angle + parameters.delta) * parameters.wavePeriod)
             *
@@ -32,11 +33,11 @@ texture::PrimaryCell::PrimaryCell(sf::Vector2f center, float radius, int pointsC
             0.03f,
             0.06f,
     };
-    PrimaryCell::update();
+    setRotationDirection(rand() % 2);
 }
 
 void texture::PrimaryCell::update() {
-    parameters.delta += parameters.rotationSpeed;
+    parameters.delta += rotationDirection * parameters.rotationSpeed;
     updatePulsationAspect();
 
     float angle = 0, step = (float)(2 * M_PI / pointsCount);
@@ -45,7 +46,7 @@ void texture::PrimaryCell::update() {
     // look at sf::TriangleFan
     m_vertices[0].position = center;
     m_vertices[0].color = color;
-    for (int i = 1; i <= pointsCount+1; ++i) {
+    for (int i = 1; i <= pointsCount + 1; ++i) {
         sf::Vector2f currentRadiusVector = getRadiusVector(angle, radius);
         offset = getOffset(angle);
         currentRadiusVector *= (1.f + offset);
@@ -61,11 +62,15 @@ void texture::PrimaryCell::draw(sf::RenderTarget &target, sf::RenderStates state
     target.draw(m_vertices, states);
 }
 
-void texture::PrimaryCell::changeCenter(sf::Vector2f newCenter)
-{
+void texture::PrimaryCell::changeCenter(sf::Vector2f newCenter) {
     center = newCenter;
 }
 
-sf::Vector2f texture::PrimaryCell::getRadiusVector(const float& angle, const float& r) const {
+sf::Vector2f texture::PrimaryCell::getRadiusVector(const float &angle, const float &r) const {
     return {r * cosf(angle), r * sinf(angle)};
+}
+
+void texture::PrimaryCell::setRotationDirection(bool isRight) {
+    if(isRight) rotationDirection = 1;
+    else rotationDirection = -1;
 }

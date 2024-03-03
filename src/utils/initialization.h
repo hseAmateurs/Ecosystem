@@ -16,7 +16,7 @@ namespace utils {
     vector <CellParam> readCSV(const std::string &fileName);
 
 // Начальная отрисовка всех клеток на поле
-    Field initField(const vector <CellParam> &config, sf::RenderWindow &window);
+    Field initField(const vector <CellParam> &config, const std::string &fontPath, sf::RenderWindow &window);
 
 // Отрисовка конкретного типа клетки
     template<class T>

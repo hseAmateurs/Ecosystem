@@ -26,8 +26,8 @@ void texture::Antibody::updatePulsationAspect() {
             parameters.pulsationSpan;
 }
 
-texture::Antibody::Antibody(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
-        PrimaryCell(center, radius, pointsCount, color) {
+texture::Antibody::Antibody(sf::Vector2f center, float radius, int pointCount, sf::Color color) :
+        PrimaryCell(center, radius, pointCount, color) {
     parameters = {
             3,
             0.015f,
