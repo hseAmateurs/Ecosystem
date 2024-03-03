@@ -6,9 +6,12 @@
 #include <ctime>
 #include <cmath>
 
+#include "../textures/cellTexture.h"
+
 class Cell : public sf::CircleShape {
 public:
-    explicit Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
+    explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
+                  sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
@@ -35,6 +38,7 @@ public:
 
 protected:
     sf::Text code;
+    texture::CellTexture texture;
 
 private:
     template<class T>

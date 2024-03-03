@@ -5,20 +5,10 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Файлы для работы с текстурой клетки
 set(TEXTURES
-        src/textures/primaryCell.h
-        src/textures/primaryCell.cpp
-        src/textures/neutrophil.cpp
-        src/textures/neutrophil.h
-        src/textures/macrophage.cpp
-        src/textures/macrophage.h
-        src/textures/antibody.cpp
-        src/textures/antibody.h
-        src/textures/pathogen.cpp
-        src/textures/pathogen.h
-        src/textures/brainCell.h
-        src/textures/brainCell.cpp
-        src/textures/plasma.h
-        src/textures/plasma.cpp
+        src/textures/cellTexture.h
+        src/textures/cellTexture.cpp
+        src/textures/animations.cpp
+        src/textures/animations.h
 )
 
 set(OBJECTS

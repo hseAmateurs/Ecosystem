@@ -3,10 +3,12 @@
 #include "random"
 
 
-Cell::Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
+Cell::Cell(texture::AnimationParameters animation, float radius, int size, float speed, sf::Vector2f center,
+           sf::Color color)
         : sf::CircleShape(radius), speed(speed), size(size),
           velocity(0, 0), interval(sf::seconds(5)),
-          randomMoveInterval(sf::seconds(2)), color(color), targetPosition(center) {
+          randomMoveInterval(sf::seconds(2)), color(color), targetPosition(center),
+          texture(animation, center, radius, 180, color) {
     setPos(center.x, center.y);
     timer.restart();
 

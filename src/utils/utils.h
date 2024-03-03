@@ -15,6 +15,8 @@
 #include "../objects/bCell.h"
 #include "../objects/plasmaCell.h"
 
+#include "../textures/cellTexture.h"
+
 namespace utils {
     enum CellType {
         PATHOGEN,
@@ -27,7 +29,7 @@ namespace utils {
     };
 
     // Конфиг любой клетки
-    typedef struct CellParam {
+    struct CellParam {
         CellParam() :
                 radius(0), size(0), speed(0), amount(0), color(sf::Color::Black) { };
 
@@ -36,7 +38,8 @@ namespace utils {
         float speed;
         int amount;
         sf::Color color;
-    } CellParam;
+        texture::AnimationParameters animation;
+    };
 
     // Конфиги всех клеток
     struct Field {

@@ -3,6 +3,7 @@
 //
 
 #include "initialization.h"
+#include "../textures/animations.h"
 
 #include <sstream>
 #include <iostream>
@@ -38,21 +39,27 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
         switch (cellType) {
             case PATHOGEN:
                 config[cellType].color = sf::Color(139, 0, 255);
+                config[cellType].animation = texture::pathogen;
                 break;
             case BODY:
                 config[cellType].color = sf::Color::Red;
+                config[cellType].animation = texture::bodyCell;
                 break;
             case MACRO:
                 config[cellType].color = sf::Color::Yellow;
+                config[cellType].animation = texture::macrophage;
                 break;
             case NEUTRO:
                 config[cellType].color = sf::Color::Green;
+                config[cellType].animation = texture::neutrophil;
                 break;
             case BCELL:
                 config[cellType].color = sf::Color::Cyan;
+                config[cellType].animation = texture::bCell;
                 break;
             case PLASMA:
                 config[cellType].color = sf::Color::Magenta;
+                config[cellType].animation = texture::plasmaCell;
                 break;
             default:
                 std::cerr << "Undefined cell type\n";
@@ -118,7 +125,7 @@ vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &wi
             posY = rand() % (windowSize.y - 2 * static_cast<int>(param.radius));
         } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) <
                  400030); // this will be a problem later on. i don't care.
-        T cell(param.radius, param.size, param.speed, {posX, posY}, param.color);
+        T cell(param.animation, param.radius, param.size, param.speed, {posX, posY}, param.color);
         window.draw(cell);
         cells.push_back(cell);
     }

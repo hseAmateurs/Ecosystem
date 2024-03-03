@@ -7,19 +7,17 @@
 
 
 #include "cell.h"
-#include "../textures/plasma.h"
+#include "../textures/cellTexture.h"
 
 class PlasmaCell : public Cell {
 public:
-    PlasmaCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+    PlasmaCell(texture::AnimationParameters animation, float radius, int size, float speed,
+               sf::Vector2f center, sf::Color color)
+            : Cell(animation, radius, size,
                    speed,
-                   center, color), texture(center, radius, 180, color) { }
+                   center, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-
-private:
-    texture::Plasma texture;
 };
 
 
