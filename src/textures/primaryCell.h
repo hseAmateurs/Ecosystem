@@ -43,6 +43,10 @@ namespace texture {
 
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
 
+        void setRotationDirection(bool isRight);
+
+        int rotationDirection;
+
         float radius;
         sf::Vector2f center;
         sf::VertexArray m_vertices;

@@ -33,11 +33,11 @@ texture::PrimaryCell::PrimaryCell(sf::Vector2f center, float radius, int pointsC
             0.03f,
             0.06f,
     };
-    PrimaryCell::update();
+    setRotationDirection(rand() % 2);
 }
 
 void texture::PrimaryCell::update() {
-    parameters.delta += parameters.rotationSpeed;
+    parameters.delta += rotationDirection * parameters.rotationSpeed;
     updatePulsationAspect();
 
     float angle = 0, step = (float)(2 * M_PI / pointsCount);
@@ -68,4 +68,9 @@ void texture::PrimaryCell::changeCenter(sf::Vector2f newCenter) {
 
 sf::Vector2f texture::PrimaryCell::getRadiusVector(const float &angle, const float &r) const {
     return {r * cosf(angle), r * sinf(angle)};
+}
+
+void texture::PrimaryCell::setRotationDirection(bool isRight) {
+    if(isRight) rotationDirection = 1;
+    else rotationDirection = -1;
 }
