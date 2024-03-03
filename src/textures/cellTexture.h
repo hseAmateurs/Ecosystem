@@ -28,13 +28,13 @@ namespace texture {
 
     public:
 
-        explicit CellTexture(AnimationParameters texture, sf::Vector2f center = {0, 0}, float radius = 15,
+        explicit CellTexture(AnimationParameters animation, sf::Vector2f center = {0, 0}, float radius = 15,
                              int pointsCount = 180,
                              sf::Color color = sf::Color::Magenta)
                 :
                 center(center), radius(radius), m_vertices(sf::TriangleFan, pointsCount + 2),
                 pointsCount(pointsCount),
-                color(color), parameters(texture) { setRotationDirection(rand() % 2); };
+                color(color), parameters(animation) { setRotationDirection(rand() % 2); };
 
         void update();
 
