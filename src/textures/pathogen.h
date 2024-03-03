@@ -7,7 +7,7 @@
 namespace texture {
     class Pathogen : public PrimaryCell {
     public:
-        explicit Pathogen(sf::Vector2f center = {800, 450}, float radius = 100, int pointCount = 180,
+        explicit Pathogen(sf::Vector2f center = {800, 450}, float radius = 10, int pointCount = 360,
                           sf::Color color = sf::Color::Red);
 
     private:

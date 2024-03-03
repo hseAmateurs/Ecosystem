@@ -7,7 +7,7 @@ namespace texture {
     class Neutrophil : public PrimaryCell {
 
     public:
-        explicit Neutrophil(sf::Vector2f center = {800, 450}, float radius = 100, int pointCount = 180,
+        explicit Neutrophil(sf::Vector2f center = {800, 450}, float radius = 7, int pointCount = 180,
                             sf::Color color = sf::Color::Green);
 
     private:

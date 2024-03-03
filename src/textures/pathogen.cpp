@@ -5,7 +5,7 @@
 float texture::Pathogen::getOffset(const float &angle) const {
     return
             (
-                    powf(sinf((angle + parameters.delta) * parameters.wavePeriod * 2), 5)
+                    powf(sinf((angle + parameters.delta) * parameters.wavePeriod * 2), 10)
                     +
                     powf(sinf((angle + parameters.delta) * parameters.wavePeriod * 3), 2)
             )
@@ -18,7 +18,7 @@ void texture::Pathogen::updatePulsationAspect() {
             parameters.pulsationWaveHeight
             +
             (
-                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 1), 2)
+                    powf(sinf(parameters.delta * parameters.pulsationSpeed * 3), 2)
                     +
                     powf(sinf(parameters.delta * parameters.pulsationSpeed * 2), 2)
             )
@@ -30,7 +30,7 @@ void texture::Pathogen::updatePulsationAspect() {
 texture::Pathogen::Pathogen(sf::Vector2f center, float radius, int pointsCount, sf::Color color) :
         PrimaryCell(center, radius, pointsCount, color) {
     parameters = {
-            20,
+            4,
             0.02f,
             2.f,
             0.07f,

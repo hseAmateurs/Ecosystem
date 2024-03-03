@@ -7,13 +7,19 @@
 
 
 #include "cell.h"
+#include "../textures/primaryCell.h"
 
 class BodyCell : public Cell {
 public:
-    BodyCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
+    BodyCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
-                   speed, color,
-                   posX, posY) { }
+                   speed,
+                   center, color), texture(center, radius, 180, color) { }
+
+    void drawTexture(sf::RenderWindow &window) override;
+
+private:
+    texture::PrimaryCell texture;
 };
 
 

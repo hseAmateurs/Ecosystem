@@ -7,14 +7,19 @@
 
 
 #include "cell.h"
+#include "../textures/macrophage.h"
 
 class MacroCell : public Cell {
 public:
-    MacroCell(float radius, int size, float speed, const sf::Color &color, float posX, float posY)
+    MacroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
-                   speed, color,
-                   posX,
-                   posY) { }
+                   speed,
+                   center, color), texture(center, radius, 180, color) { }
+
+    void drawTexture(sf::RenderWindow &window) override;
+
+private:
+    texture::Macrophage texture;
 };
 
 

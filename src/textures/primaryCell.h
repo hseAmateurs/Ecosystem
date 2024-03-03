@@ -5,7 +5,7 @@
 
 namespace texture {
 
-    typedef struct {
+    struct AnimationParameters {
         // const
         int wavePeriod;
         float rotationSpeed;
@@ -16,17 +16,19 @@ namespace texture {
         // dynamic variables
         float delta;
         float currentPulsationAspect;
-    } AnimationParameters;
+    };
 
 
     class PrimaryCell : public sf::Drawable, public sf::Transformable {
 
     public:
 
-        explicit PrimaryCell(sf::Vector2f center = {0, 0}, float radius = 100, int pointCount = 180,
-                      sf::Color color = sf::Color::White);
+        explicit PrimaryCell(sf::Vector2f center = {0, 0}, float radius = 15, int pointCount = 180,
+                      sf::Color color = sf::Color::Magenta);
 
         void update();
+
+        void changeCenter(sf::Vector2f newCenter);
 
     protected:
 
@@ -47,6 +49,8 @@ namespace texture {
 
         int pointsCount;
         sf::Color color;
+
+
     };
 }
 
