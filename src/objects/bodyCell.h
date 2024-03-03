@@ -17,10 +17,40 @@ public:
                    center, color), texture(center, radius, 180, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime);
+    char getName();
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime);
 private:
     texture::PrimaryCell texture;
 };
+
+template<typename pathogen, typename body, typename macro, typename neutro>
+void BodyCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime) {
+                
+}
+
+template<typename pathogen, typename body, typename macro, typename neutro>
+void BodyCell::updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime) {
+    if (timer.getElapsedTime() > randomMoveInterval) {
+        setRandomVelocity();
+        auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
+        randomMoveInterval = sf::seconds(randomSeconds);
+        timer.restart();
+    }
+    reflectionControl();
+    updateCollision(neutros);
+    updateCollision(pathogens);
+    updateCollision(macroes);
+    updateCollision(bodies);
+
+    move(velocity * deltaTime.asSeconds());
+}
 
 
 #endif //ECOSYSTEM_BODYCELL_H

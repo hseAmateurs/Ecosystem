@@ -3,6 +3,7 @@
 #include <vector>
 #include <functional>
 
+
 #include "utils/initialization.h"
 #include "textures/primaryCell.h"
 
@@ -13,7 +14,10 @@ bool isRun = true;
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
     for (auto &cell: cells) {
-        cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+        if(cell.getName()!='b')
+            cell.updateHunters(field.pathogens,field.bodies, field.macroes, field.neutroes, deltaTime);
+        else
+            cell.updateBody(field.pathogens,field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
         cell.drawTexture(window);
     }
