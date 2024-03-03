@@ -37,8 +37,6 @@ protected:
 private:
     sf::Vector2f targetPosition;
     sf::Time interval;
-    sf::Clock timer;
-    sf::Time randomMoveInterval;
 
 protected:
     float radius;
