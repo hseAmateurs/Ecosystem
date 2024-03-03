@@ -15,7 +15,10 @@ set(TEXTURES
         src/textures/antibody.h
         src/textures/pathogen.cpp
         src/textures/pathogen.h
-        src/textures/cellTextures.h
+        src/textures/brainCell.h
+        src/textures/brainCell.cpp
+        src/textures/plasma.h
+        src/textures/plasma.cpp
 )
 
 set(OBJECTS
@@ -29,6 +32,10 @@ set(OBJECTS
         src/objects/macroCell.h
         src/objects/neutroCell.cpp
         src/objects/neutroCell.h
+        src/objects/plasmaCell.h
+        src/objects/plasmaCell.cpp
+        src/objects/bCell.h
+        src/objects/bCell.cpp
 )
 
 set(UTILS

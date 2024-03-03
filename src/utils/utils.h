@@ -12,13 +12,18 @@
 #include "../objects/bodyCell.h"
 #include "../objects/macroCell.h"
 #include "../objects/neutroCell.h"
+#include "../objects/bCell.h"
+#include "../objects/plasmaCell.h"
 
 namespace utils {
     enum CellType {
         PATHOGEN,
         BODY,
         MACRO,
-        NEUTRO
+        NEUTRO,
+        BCELL,
+        PLASMA,
+        COUNT
     };
 
     // Конфиг любой клетки
@@ -34,13 +39,15 @@ namespace utils {
     } CellParam;
 
     // Конфиги всех клеток
-    typedef struct {
+    struct Field {
         sf::Font font;
         std::vector<PathogenCell> pathogens;
         std::vector<BodyCell> bodies;
         std::vector<MacroCell> macroes;
         std::vector<NeutroCell> neutroes;
-    } Field;
+        std::vector<BCell> bCells;
+        std::vector<PlasmaCell> plasmas;
+    };
 }
 
 #endif //ECOSYSTEM_UTILS_H

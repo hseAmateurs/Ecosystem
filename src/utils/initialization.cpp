@@ -48,6 +48,12 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
             case NEUTRO:
                 config[cellType].color = sf::Color::Green;
                 break;
+            case BCELL:
+                config[cellType].color = sf::Color::Cyan;
+                break;
+            case PLASMA:
+                config[cellType].color = sf::Color::Magenta;
+                break;
             default:
                 std::cerr << "Undefined cell type\n";
         }
@@ -85,6 +91,12 @@ utils::Field utils::initField(const vector<utils::CellParam> &config, const std:
                 break;
             case NEUTRO:
                 field.neutroes = createCells<NeutroCell>(config[i], window);
+                break;
+            case BCELL:
+                field.bCells = createCells<BCell>(config[i], window);
+                break;
+            case PLASMA:
+                field.plasmas = createCells<PlasmaCell>(config[i], window);
                 break;
             default:
                 std::cerr << "Undefined cell type\n";

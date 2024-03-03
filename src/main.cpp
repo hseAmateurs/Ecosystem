@@ -28,7 +28,7 @@ void renderingThread(sf::RenderWindow *window, Field *field) {
 
         sf::Time deltaTime = clock.restart();
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < CellType::COUNT; ++i) {
             switch (i) {
                 case PATHOGEN:
                     drawing(field->pathogens, *field, *window, deltaTime);
@@ -41,6 +41,12 @@ void renderingThread(sf::RenderWindow *window, Field *field) {
                     break;
                 case NEUTRO:
                     drawing(field->neutroes, *field, *window, deltaTime);
+                    break;
+                case BCELL:
+                    drawing(field->bCells, *field, *window, deltaTime);
+                    break;
+                case PLASMA:
+                    drawing(field->plasmas, *field, *window, deltaTime);
                     break;
                 default:
                     std::cerr << "Undefined cell type\n";
