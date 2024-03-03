@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <type_traits>
 
 #include "utils/initialization.h"
 #include "textures/primaryCell.h"
@@ -23,17 +24,23 @@ void renderingThread(sf::RenderWindow *window, Field *field) {
     window->setActive(true);
     sf::Clock clock;
 
+
     while (isRun) {
         window->clear(sf::Color(255, 255, 255));
-
         sf::Time deltaTime = clock.restart();
+        std::vector<BodyCell> newCells;
 
         for (int i = 0; i < 4; ++i) {
+
             switch (i) {
                 case PATHOGEN:
                     drawing(field->pathogens, *field, *window, deltaTime);
                     break;
                 case BODY:
+                    newCells.clear();
+                    for (BodyCell &cell : field->bodies)
+                        cell.cellDivision(deltaTime, newCells);
+                    field->bodies.insert(field->bodies.end(), newCells.begin(), newCells.end());
                     drawing(field->bodies, *field, *window, deltaTime);
                     break;
                 case MACRO:
@@ -45,13 +52,18 @@ void renderingThread(sf::RenderWindow *window, Field *field) {
                 default:
                     std::cerr << "Undefined cell type\n";
             }
+
         }
+
         window->display();
     }
+
+
 }
 
 int main() {
     setbuf(stdout, nullptr);
+    srand(time(0));
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);

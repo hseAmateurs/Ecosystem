@@ -3,7 +3,7 @@
 
 
 Cell::Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-        : sf::CircleShape(radius), speed(speed),
+        : sf::CircleShape(radius),radius(radius), size(size),  speed(speed), center(center),
           velocity(0, 0), interval(sf::seconds(5)),
           randomMoveInterval(sf::seconds(2)), color(color), targetPosition(center) {
     setPos(center.x, center.y);

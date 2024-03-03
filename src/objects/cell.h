@@ -8,7 +8,7 @@
 
 class Cell : public sf::CircleShape {
 public:
-    explicit Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
+     Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
@@ -31,13 +31,20 @@ private:
     template<class T>
     void updateCollision(std::vector<T> &cells);
 
-    float speed;
+
     sf::Vector2f velocity;
     sf::Vector2f targetPosition;
     sf::Time interval;
     sf::Clock timer;
     sf::Time randomMoveInterval;
+
+protected:
+    float speed;
+    float radius;
+    int size;
     sf::Color color;
+    sf::Vector2f center;
+
 };
 
 template<class T>
