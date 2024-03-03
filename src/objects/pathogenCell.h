@@ -2,13 +2,14 @@
 #define ECOSYSTEM_PATHOGENCELL_H
 
 
-#include "cell.h"
-#include "../textures/pathogen.h"
 
-class PathogenCell : public Cell {
+#include "../textures/pathogen.h"
+#include "hunterCell.h"
+
+class PathogenCell : public HunterCell {
 public:
     PathogenCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+            : HunterCell(radius, size,
                    speed,
                    center, color), texture(center, radius, 180, color) { }
 
