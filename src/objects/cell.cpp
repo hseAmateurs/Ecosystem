@@ -16,7 +16,7 @@ Cell::Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color c
     code.setOrigin(fontSize / 3.f,
                    fontSize / 1.5f);
 
-    code.setString(std::string{(char)(rand() % 31 + '@')});
+    setCode(rand() % 31 + '@');
 }
 
 void Cell::setTargetPosition(float windowWidth, float windowHeight) {
