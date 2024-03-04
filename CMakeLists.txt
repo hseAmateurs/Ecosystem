@@ -32,6 +32,8 @@ set(OBJECTS
         src/objects/plasmaCell.cpp
         src/objects/bCell.h
         src/objects/bCell.cpp
+        src/objects/hunterCell.cpp
+        src/objects/hunterCell.h
 )
 
 set(UTILS
