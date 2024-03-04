@@ -13,7 +13,6 @@ public:
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
 
-    void setTargetPosition(float windowWidth, float windowHeight);
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,

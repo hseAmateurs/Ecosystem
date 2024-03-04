@@ -24,34 +24,31 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
     }
 }
 
-void renderingThread(sf::RenderWindow *window, Field *field) {
-    window->setActive(true);
+void renderingThread(sf::RenderWindow &window, Field &field) {
+    window.setActive(true);
     sf::Clock clock;
 
 
     while (isRun) {
-        window->clear(sf::Color(255, 255, 255));
+        window.clear(sf::Color(255, 255, 255));
         sf::Time deltaTime = clock.restart();
-        std::vector<BodyCell> newCells;
 
         for (int i = 0; i < 4; ++i) {
 
             switch (i) {
                 case PATHOGEN:
-                    drawing(field->pathogens, *field, *window, deltaTime);
+                    drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
-                    newCells.clear();
-                    for (BodyCell &cell : field->bodies)
-                        cell.cellDivision(deltaTime, newCells);
-                    field->bodies.insert(field->bodies.end(), newCells.begin(), newCells.end());
-                    drawing(field->bodies, *field, *window, deltaTime);
+                    for (BodyCell &cell : field.bodies)
+                        cell.cellDivision(deltaTime, field.bodies);
+                    drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:
-                    drawing(field->macroes, *field, *window, deltaTime);
+                    drawing(field.macroes, field, window, deltaTime);
                     break;
                 case NEUTRO:
-                    drawing(field->neutroes, *field, *window, deltaTime);
+                    drawing(field.neutroes, field, window, deltaTime);
                     break;
                 default:
                     std::cerr << "Undefined cell type\n";
@@ -59,7 +56,7 @@ void renderingThread(sf::RenderWindow *window, Field *field) {
 
         }
 
-        window->display();
+        window.display();
     }
 
 
@@ -78,7 +75,7 @@ int main() {
     window.setActive(false);
 
     // Запускаем поток рендринга
-    sf::Thread thread(std::bind(&renderingThread, &window, &field));
+    sf::Thread thread(std::bind(&renderingThread, std::ref(window), std::ref(field)));
     thread.launch();
 
     while (window.isOpen()) {

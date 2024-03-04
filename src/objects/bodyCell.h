@@ -14,7 +14,7 @@ public:
     BodyCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
             : Cell(radius, size,
                    speed,
-                   center, color), texture(center, radius, 180, color), lifeTime(sf::Time::Zero) { }
+                   center, color), texture(center, radius, 180, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
 
     void drawTexture(sf::RenderWindow &window) override;
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);
@@ -54,6 +54,7 @@ void BodyCell::updateBody(std::vector<pathogen> &pathogens, std::vector<body> &b
     updateCollision(pathogens);
     updateCollision(macroes);
     updateCollision(bodies);
+
 
     move(velocity * deltaTime.asSeconds());
 }
