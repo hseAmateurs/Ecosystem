@@ -13,7 +13,3 @@ void PathogenCell::drawTexture(sf::RenderWindow &window) {
     code.setPosition(getPosition() + radiusOffset);
     window.draw(code);
 }
-
-char PathogenCell::getName(){
-    return 'p';
-}

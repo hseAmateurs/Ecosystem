@@ -10,15 +10,11 @@
 
 class Cell : public sf::CircleShape {
 public:
-    Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
+    explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
                   sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
-
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime);
 
     // установка случайного вектора движения
     void setRandomVelocity();

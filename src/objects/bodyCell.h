@@ -15,34 +15,30 @@ public:
              sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
+                   center, color), lifeTime(sf::seconds(1)) { }
 
     void drawTexture(sf::RenderWindow &window) override;
+
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);
 
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime);
-    char getName();
+                    std::vector<neutro> &neutros, sf::Time deltaTime);
+
+    char getName() const { return 'b'; };
+
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime);
+                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+
 private:
     sf::Time lifeTime;
-
-
 };
 
 template<typename pathogen, typename body, typename macro, typename neutro>
-void BodyCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime) {
-
-}
-
-template<typename pathogen, typename body, typename macro, typename neutro>
 void BodyCell::updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime) {
+                          std::vector<neutro> &neutros, sf::Time deltaTime) {
     if (timer.getElapsedTime() > randomMoveInterval) {
         setRandomVelocity();
         auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5

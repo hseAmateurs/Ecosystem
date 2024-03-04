@@ -11,7 +11,3 @@ void NeutroCell::drawTexture(sf::RenderWindow &window) {
     texture.update();
     window.draw(texture);
 }
-
-char NeutroCell::getName(){
-    return 'n';
-}

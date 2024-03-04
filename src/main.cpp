@@ -12,10 +12,10 @@ bool isRun = true;
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
     for (auto &cell: cells) {
-        if(cell.getName()!='b')
-            cell.updateHunters(field.pathogens,field.bodies, field.macroes, field.neutroes, deltaTime);
+        if (cell.getName() == 'p' || cell.getName() == 'n' || cell.getName() == 'm')
+            cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         else
-            cell.updateBody(field.pathogens,field.bodies, field.macroes, field.neutroes, deltaTime);
+            cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
         cell.setFont(field.font);
         cell.drawTexture(window);
@@ -37,7 +37,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
-                    for (BodyCell &cell : field.bodies)
+                    for (BodyCell &cell: field.bodies)
                         cell.cellDivision(deltaTime, field.bodies);
                     drawing(field.bodies, field, window, deltaTime);
                     break;

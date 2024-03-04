@@ -18,7 +18,7 @@ public:
                    center, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-    char getName();
+    char getName() const override { return 'n'; };
 };
 
 
