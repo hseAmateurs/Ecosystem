@@ -15,7 +15,7 @@
 #include "../objects/bCell.h"
 #include "../objects/plasmaCell.h"
 
-#include "../textures/cellTexture.h"
+#include "../textures/animations.h"
 
 namespace utils {
     enum CellType {
@@ -31,7 +31,7 @@ namespace utils {
     // Конфиг любой клетки
     struct CellParam {
         CellParam() :
-                radius(0), size(0), speed(0), amount(0), color(sf::Color::Black) { };
+                radius(0), size(0), speed(0), amount(0), color(sf::Color::Black), animation(texture::bodyCell) { };
 
         float radius;
         int size;

@@ -3,7 +3,6 @@
 //
 
 #include "initialization.h"
-#include "../textures/animations.h"
 
 #include <sstream>
 #include <iostream>
