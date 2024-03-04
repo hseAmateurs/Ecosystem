@@ -3,19 +3,17 @@
 
 
 #include "cell.h"
-#include "../textures/pathogen.h"
+#include "../textures/cellTexture.h"
 
 class PathogenCell : public Cell {
 public:
-    PathogenCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+    PathogenCell(texture::AnimationParameters animation, float radius, int size, float speed,
+                 sf::Vector2f center, sf::Color color)
+            : Cell(animation, radius, size,
                    speed,
-                   center, color), texture(center, radius, 180, color) { }
+                   center, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-
-private:
-    texture::Pathogen texture;
 };
 
 

@@ -7,19 +7,17 @@
 
 
 #include "cell.h"
-#include "../textures/neutrophil.h"
+#include "../textures/cellTexture.h"
 
 class NeutroCell : public Cell {
 public:
-    NeutroCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+    NeutroCell(texture::AnimationParameters animation, float radius, int size, float speed,
+               sf::Vector2f center, sf::Color color)
+            : Cell(animation, radius, size,
                    speed,
-                   center, color), texture(center, radius, 180, color) { }
+                   center, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-
-private:
-    texture::Neutrophil texture;
 };
 
 

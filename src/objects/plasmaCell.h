@@ -2,17 +2,17 @@
 // Created by Денис Громачихин on 19.02.2024.
 //
 
-#ifndef ECOSYSTEM_MACROCELL_H
-#define ECOSYSTEM_MACROCELL_H
+#ifndef ECOSYSTEM_PLASMACELL_H
+#define ECOSYSTEM_PLASMACELL_H
 
 
 #include "cell.h"
 #include "../textures/cellTexture.h"
 
-class MacroCell : public Cell {
+class PlasmaCell : public Cell {
 public:
-    MacroCell(texture::AnimationParameters animation, float radius, int size, float speed,
-              sf::Vector2f center, sf::Color color)
+    PlasmaCell(texture::AnimationParameters animation, float radius, int size, float speed,
+               sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
                    center, color) { }
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //ECOSYSTEM_MACROCELL_H
+#endif //ECOSYSTEM_NEUTROCELL_H
