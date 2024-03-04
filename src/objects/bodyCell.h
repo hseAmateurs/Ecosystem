@@ -15,7 +15,7 @@ public:
              sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), lifeTime(sf::seconds(1)) { }
+                   center, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
 
     void drawTexture(sf::RenderWindow &window) override;
 

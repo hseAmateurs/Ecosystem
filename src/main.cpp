@@ -25,6 +25,7 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
 void renderingThread(sf::RenderWindow &window, Field &field) {
     window.setActive(true);
     sf::Clock clock;
+    std::vector<BodyCell> newCells;
 
     while (isRun) {
         window.clear(sf::Color::White);
@@ -37,8 +38,10 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
-                    for (BodyCell &cell: field.bodies)
-                        cell.cellDivision(deltaTime, field.bodies);
+                    newCells.clear();
+                    for (BodyCell &cell : field.bodies)
+                        cell.cellDivision(deltaTime, newCells);
+                    field.bodies.insert(field.bodies.end(), newCells.begin(), newCells.end());
                     drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:

@@ -14,7 +14,7 @@ void BodyCell::drawTexture(sf::RenderWindow &window) {
 
 void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells) {
     lifeTime += deltaTime;
-    sf::Time randomTime = sf::seconds(5);
+    sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
     if (lifeTime.asSeconds() >= randomTime.asSeconds()) {
         BodyCell newCell(texture::bodyCell, radius, size, speed, center, color);
