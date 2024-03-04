@@ -5,17 +5,16 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Файлы для работы с текстурой клетки
 set(TEXTURES
-        src/textures/primaryCell.h
-        src/textures/primaryCell.cpp
-        src/textures/neutrophil.cpp
-        src/textures/neutrophil.h
-        src/textures/macrophage.cpp
-        src/textures/macrophage.h
-        src/textures/antibody.cpp
-        src/textures/antibody.h
-        src/textures/pathogen.cpp
-        src/textures/pathogen.h
-        src/textures/cellTextures.h
+        src/textures/cellTexture.h
+        src/textures/cellTexture.cpp
+        src/textures/animPlasma.cpp
+        src/textures/animations.h
+        src/textures/animBody.cpp
+        src/textures/animMacro.cpp
+        src/textures/animPathogen.cpp
+        src/textures/animAntibody.cpp
+        src/textures/animNeutro.cpp
+        src/textures/animBCell.cpp
 )
 
 set(OBJECTS
@@ -29,6 +28,10 @@ set(OBJECTS
         src/objects/macroCell.h
         src/objects/neutroCell.cpp
         src/objects/neutroCell.h
+        src/objects/plasmaCell.h
+        src/objects/plasmaCell.cpp
+        src/objects/bCell.h
+        src/objects/bCell.cpp
         src/objects/hunterCell.cpp
         src/objects/hunterCell.h
 )

@@ -9,6 +9,9 @@ void PathogenCell::drawTexture(sf::RenderWindow &window) {
     texture.changeCenter(getPosition() + radiusOffset);
     texture.update();
     window.draw(texture);
+
+    code.setPosition(getPosition() + radiusOffset);
+    window.draw(code);
 }
 
 char PathogenCell::getName(){

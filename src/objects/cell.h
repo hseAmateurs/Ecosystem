@@ -6,13 +6,15 @@
 #include <ctime>
 #include <cmath>
 
+#include "../textures/cellTexture.h"
+
 class Cell : public sf::CircleShape {
 public:
-    Cell(float radius, int size, float speed, sf::Vector2f center, sf::Color color);
+    Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
+                  sf::Color color);
 
     // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
     void setPos(float x, float y);
-
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
@@ -20,29 +22,35 @@ public:
 
     // установка случайного вектора движения
     void setRandomVelocity();
-    template<class T>
-    void updateCollision(std::vector<T> &cells);
+
     void reflectionControl();
 
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
     virtual void drawTexture(sf::RenderWindow &window) = 0;
 
-protected:
-    sf::Vector2f velocity;
-    float speed;
-    sf::Clock timer;
-    sf::Time randomMoveInterval=sf::seconds(0);
+    void setCode(const char &new_code) { code.setString(new_code); };
 
-private:
-    sf::Vector2f targetPosition;
-    sf::Time interval;
+    char getCode() const { return code.getString()[0]; };
+
+    void setFont(const sf::Font &font) { code.setFont(font); };
 
 protected:
+    template<class T>
+    void updateCollision(std::vector<T> &cells);
+
+    sf::Text code;
+    texture::CellTexture texture;
     float radius;
     int size;
     sf::Color color;
     sf::Vector2f center;
+    sf::Vector2f velocity;
+    float speed;
+    sf::Clock timer;
+    sf::Time randomMoveInterval;
 
+private:
+    sf::Time interval;
 };
 
 template<class T>
@@ -59,7 +67,5 @@ void Cell::updateCollision(std::vector<T> &cells) {
         }
     }
 }
-
-
 
 #endif //ECOSYSTEM_CELL_H

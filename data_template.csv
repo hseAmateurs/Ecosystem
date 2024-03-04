@@ -1,1 +1,7 @@
-radius;size;speed;color
+radius;size;speed;amount
+PATHOGEN
+BODY
+MACRO
+NEUTRO
+BCELL
+PLASMA

@@ -2,23 +2,22 @@
 // Created by Денис Громачихин on 19.02.2024.
 //
 
-#ifndef ECOSYSTEM_NEUTROCELL_H
-#define ECOSYSTEM_NEUTROCELL_H
+#ifndef ECOSYSTEM_PLASMACELL_H
+#define ECOSYSTEM_PLASMACELL_H
 
 
-#include "hunterCell.h"
+#include "cell.h"
 #include "../textures/cellTexture.h"
 
-class NeutroCell : public HunterCell {
+class PlasmaCell : public Cell {
 public:
-    NeutroCell(texture::AnimationParameters animation, float radius, int size, float speed,
+    PlasmaCell(texture::AnimationParameters animation, float radius, int size, float speed,
                sf::Vector2f center, sf::Color color)
-            : HunterCell(animation, radius, size,
+            : Cell(animation, radius, size,
                    speed,
                    center, color) { }
 
     void drawTexture(sf::RenderWindow &window) override;
-    char getName();
 };
 
 
