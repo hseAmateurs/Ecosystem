@@ -7,42 +7,38 @@
 
 
 #include "cell.h"
-#include "../textures/primaryCell.h"
+#include "../textures/cellTexture.h"
 
 class BodyCell : public Cell {
 public:
-    BodyCell(float radius, int size, float speed, sf::Vector2f center, sf::Color color)
-            : Cell(radius, size,
+    BodyCell(texture::AnimationParameters animation, float radius, int size, float speed,
+             sf::Vector2f center, sf::Color color)
+            : Cell(animation, radius, size,
                    speed,
-                   center, color), texture(center, radius, 180, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
+                   center, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
 
     void drawTexture(sf::RenderWindow &window) override;
+
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);
 
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime);
-    char getName();
+                    std::vector<neutro> &neutros, sf::Time deltaTime);
+
+    char getName() const { return 'b'; };
+
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime);
+                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+
 private:
-    texture::PrimaryCell texture;
     sf::Time lifeTime;
-
-
 };
 
 template<typename pathogen, typename body, typename macro, typename neutro>
-void BodyCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime) {
-
-}
-
-template<typename pathogen, typename body, typename macro, typename neutro>
 void BodyCell::updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                std::vector<neutro> &neutros, sf::Time deltaTime) {
+                          std::vector<neutro> &neutros, sf::Time deltaTime) {
     if (timer.getElapsedTime() > randomMoveInterval) {
         setRandomVelocity();
         auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
