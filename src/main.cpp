@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "utils/initialization.h"
+#include "utils/settings.h"
 
 using namespace utils;
 
@@ -12,10 +13,12 @@ bool isRun = true;
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
     for (auto &cell: cells) {
-        if (cell.getName() == 'p' || cell.getName() == 'n' || cell.getName() == 'm')
+        if (cell.type() == CellType::PATHOGEN || cell.type() == CellType::NEUTRO ||
+                cell.type() == CellType::MACRO)
             cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         else
             cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+
         window.draw(cell);
         cell.setFont(field.font);
         cell.drawTexture(window);
@@ -27,9 +30,16 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     sf::Clock clock;
     std::vector<BodyCell> newCells;
 
+    // For debugging ---
+    sf::CircleShape brain(BRAIN_RADIUS);
+    brain.setFillColor(sf::Color::Black);
+    brain.setOrigin(BRAIN_RADIUS, BRAIN_RADIUS);
+    brain.setPosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+    // ---
+
     while (isRun) {
         window.clear(sf::Color::White);
-
+        window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
 
         for (int i = 0; i < CellType::COUNT; ++i) {
@@ -39,7 +49,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case BODY:
                     newCells.clear();
-                    for (BodyCell &cell : field.bodies)
+                    for (BodyCell &cell: field.bodies)
                         cell.cellDivision(deltaTime, newCells);
                     field.bodies.insert(field.bodies.end(), newCells.begin(), newCells.end());
                     drawing(field.bodies, field, window, deltaTime);
@@ -68,7 +78,7 @@ int main() {
     setbuf(stdout, nullptr);
     srand(time(nullptr));
 
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     Field field = initField(readCSV("../data.csv"), "../resources/font/couriercyrps_bold.ttf", window);

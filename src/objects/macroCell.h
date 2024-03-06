@@ -17,8 +17,9 @@ public:
                    speed,
                    center, color) { }
 
+    int type() const override { return CellType::MACRO; }
+
     void drawTexture(sf::RenderWindow &window) override;
-    char getName() const override { return 'm'; };
 };
 
 

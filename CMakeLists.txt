@@ -40,6 +40,8 @@ set(UTILS
         src/utils/initialization.h
         src/utils/initialization.cpp
         src/utils/utils.h
+        src/utils/cellTypes.h
+        src/utils/settings.h
 )
 
 # Исходные файлы

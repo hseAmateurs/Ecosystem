@@ -6,8 +6,7 @@
 #include "neutroCell.h"
 
 void NeutroCell::drawTexture(sf::RenderWindow &window) {
-    sf::Vector2f radiusOffset(getRadius(), getRadius());
-    texture.changeCenter(getPosition() + radiusOffset);
+    texture.changeCenter(getPosition());
     texture.update();
     window.draw(texture);
 }

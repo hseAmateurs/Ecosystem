@@ -7,14 +7,14 @@
 #include <cmath>
 
 #include "../textures/cellTexture.h"
+#include "../utils/cellTypes.h"
+
+using utils::CellType;
 
 class Cell : public sf::CircleShape {
 public:
     explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
                   sf::Color color);
-
-    // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
-    void setPos(float x, float y);
 
     // установка случайного вектора движения
     void setRandomVelocity();
@@ -30,10 +30,11 @@ public:
 
     void setFont(const sf::Font &font) { code.setFont(font); };
 
+    virtual int type() const = 0;
+
 protected:
     template<class T>
     void updateCollision(std::vector<T> &cells);
-
     sf::Text code;
     texture::CellTexture texture;
     float radius;
