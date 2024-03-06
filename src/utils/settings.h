@@ -14,10 +14,14 @@ namespace settings {
     const float BORDER_OFFSET = 100.f;
 
     // Радиус левого нижнего круга, в котором выпускаются антитела
-    const float BRAIN_RADIUS = 630.f;
+    const float BRAIN_RADIUS = 500.f;
 
     // Минимальная дистанция для триггера на цель
     const float HUNT_TRIGGER = 150.f;
+
+    // Процент удаления статичных клетки от центра "мозгового" круга
+    const double PLASMA_DISTANCE = 0.4;
+    const double BCELL_DISTANCE = 0.85;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

@@ -30,9 +30,16 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     sf::Clock clock;
     std::vector<BodyCell> newCells;
 
+    // For debugging ---
+    sf::CircleShape brain(BRAIN_RADIUS);
+    brain.setFillColor(sf::Color::Black);
+    brain.setOrigin(BRAIN_RADIUS, BRAIN_RADIUS);
+    brain.setPosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+    // ---
+
     while (isRun) {
         window.clear(sf::Color::White);
-
+        window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
 
         for (int i = 0; i < CellType::COUNT; ++i) {
