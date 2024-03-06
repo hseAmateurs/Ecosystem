@@ -18,16 +18,6 @@
 #include "../textures/animations.h"
 
 namespace utils {
-    enum CellType {
-        PATHOGEN,
-        BODY,
-        MACRO,
-        NEUTRO,
-        BCELL,
-        PLASMA,
-        COUNT
-    };
-
     // Конфиг любой клетки
     struct CellParam {
         CellParam() :

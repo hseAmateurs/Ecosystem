@@ -40,7 +40,8 @@ void HunterCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<bod
     closestBody.y = 0;
     float minDistance = 30000;
     sf::Vector2f hunterPos = getPosition();
-    if (this->getName() == 'p') {
+
+    if (this->type() == CellType::PATHOGEN) {
         for (auto &otherCell: bodies) {
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
@@ -51,7 +52,7 @@ void HunterCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<bod
             }
         }
     }
-    else if (this->getName() == 'm' || this->getName() == 'n') {
+    else if (this->type() == CellType::MACRO || this->type() == CellType::NEUTRO) {
         for (auto &otherCell: pathogens) {
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +

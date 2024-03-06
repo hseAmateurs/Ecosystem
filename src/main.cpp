@@ -11,10 +11,9 @@ bool isRun = true;
 
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
-    const std::type_info &cellType = typeid(T);
     for (auto &cell: cells) {
-        if (cellType == typeid(PathogenCell) || cellType == typeid(NeutroCell) ||
-            cellType == typeid(MacroCell))
+        if (cell.type() == CellType::PATHOGEN || cell.type() == CellType::NEUTRO ||
+                cell.type() == CellType::MACRO)
             cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         else
             cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);

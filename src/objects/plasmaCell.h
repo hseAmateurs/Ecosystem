@@ -17,6 +17,8 @@ public:
                    speed,
                    center, color) { }
 
+    int type() const override { return CellType::PLASMA; }
+
     void drawTexture(sf::RenderWindow &window) override;
 
     template<typename pathogen, typename body, typename macro, typename neutro>

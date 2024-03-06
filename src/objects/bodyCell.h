@@ -17,6 +17,8 @@ public:
                    speed,
                    center, color), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
 
+    int type() const override { return CellType::BODY; }
+
     void drawTexture(sf::RenderWindow &window) override;
 
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);

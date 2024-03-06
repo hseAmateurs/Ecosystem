@@ -13,6 +13,8 @@ public:
                    speed,
                    center, color) { }
 
+    int type() const override { return CellType::PATHOGEN; }
+
     void drawTexture(sf::RenderWindow &window) override;
 };
 

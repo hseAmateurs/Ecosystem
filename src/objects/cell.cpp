@@ -23,15 +23,10 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
 }
 
 
-
 // генерация случайного вектора движения
 void Cell::setRandomVelocity() {
     auto angle = static_cast<float>(std::rand() % 360) * 3.14159f / 180.f;
     velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * speed;
-}
-
-void Cell::setPos(float x, float y) {
-    setPosition(x, y);
 }
 
 void Cell::reflectionControl() {

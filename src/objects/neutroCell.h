@@ -17,6 +17,8 @@ public:
                    speed,
                    center, color) { }
 
+    int type() const override { return CellType::NEUTRO; }
+
     void drawTexture(sf::RenderWindow &window) override;
 };
 
