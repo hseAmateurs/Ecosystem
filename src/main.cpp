@@ -66,7 +66,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
 
 int main() {
     setbuf(stdout, nullptr);
-    srand(time(0));
+    srand(time(nullptr));
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
