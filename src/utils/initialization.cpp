@@ -8,6 +8,10 @@
 #include <iostream>
 #include <fstream>
 
+#include "settings.h"
+
+using namespace settings;
+
 
 vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
     vector<utils::CellParam> config;
@@ -72,8 +76,8 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
     return config;
 }
 
-utils::Field utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
-    srand(time(0));
+utils::Field
+utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
     utils::Field field;
 
     sf::Font font;
@@ -115,16 +119,30 @@ utils::Field utils::initField(const vector<utils::CellParam> &config, const std:
 template<class T>
 vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &window) {
     vector<T> cells;
-
     sf::Vector2u windowSize = window.getSize();
+
     for (int i = 0; i < param.amount; ++i) {
         float posX, posY;
         do {
             posX = rand() % (windowSize.x - 2 * static_cast<int>(param.radius));
             posY = rand() % (windowSize.y - 2 * static_cast<int>(param.radius));
-        } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) <
-                 400030); // this will be a problem later on. i don't care.
+        } while ((posY - SCREEN_HEIGHT) * (posY - SCREEN_HEIGHT) + (posX - SCREEN_WIDTH) * (posX - SCREEN_WIDTH) <
+                 BRAIN_RADIUS * BRAIN_RADIUS); // this will be a problem later on. i don't care.
         T cell(param.animation, param.radius, param.size, param.speed, {posX, posY}, param.color);
+
+        if (cell.type() == CellType::PLASMA) {
+            posX = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
+            posY = posX;
+            cell.setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
+        }
+        else if (cell.type() == CellType::BCELL) {
+            const double angleOffset = M_PI / 8;
+            double angleBCell = (M_PI / 2 + angleOffset) / (param.amount + 1) * (i + 1) - angleOffset / 2;
+
+            posX = std::cos(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
+            posY = std::sin(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
+            cell.setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
+        }
         window.draw(cell);
         cells.push_back(cell);
     }

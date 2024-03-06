@@ -6,8 +6,7 @@
 #include "../textures/animations.h"
 
 void BodyCell::drawTexture(sf::RenderWindow &window) {
-    sf::Vector2f radiusOffset(getRadius(), getRadius());
-    texture.changeCenter(getPosition() + radiusOffset);
+    texture.changeCenter(getPosition());
     texture.update();
     window.draw(texture);
 }
@@ -25,7 +24,6 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCell
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
         } while (x1 == 0 && y1 == 0);
 
-        // ???????????
         newCell.setPosition((getPosition() + sf::Vector2f(x1, y1)));
         bodyCells.push_back(newCell);
         lifeTime = sf::Time::Zero;

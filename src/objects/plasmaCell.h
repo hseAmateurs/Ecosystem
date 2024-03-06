@@ -12,14 +12,11 @@
 class PlasmaCell : public Cell {
 public:
     PlasmaCell(texture::AnimationParameters animation, float radius, int size, float speed,
-               sf::Vector2f center, sf::Color color)
-            : Cell(animation, radius, size,
-                   speed,
-                   center, color) { }
+               sf::Vector2f center, sf::Color color);
+
+    int type() const override { return CellType::PLASMA; }
 
     void drawTexture(sf::RenderWindow &window) override;
-
-    char getName() const { return 'r'; };
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,

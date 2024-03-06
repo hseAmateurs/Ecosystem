@@ -13,8 +13,9 @@ public:
                    speed,
                    center, color) { }
 
+    int type() const override { return CellType::PATHOGEN; }
+
     void drawTexture(sf::RenderWindow &window) override;
-    char getName() const override { return 'p'; };
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
@@ -35,7 +36,7 @@ void PathogenCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<b
     closestBody.y = 0;
     float minDistance = 30000;
     sf::Vector2f hunterPos = getPosition();
-    if (this->getName() == 'p') {
+    if (this->type() == CellType::PATHOGEN) {
         for (auto &otherCell: bodies) {
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
@@ -46,7 +47,7 @@ void PathogenCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<b
             }
         }
     }
-    else if (this->getName() == 'm' || this->getName() == 'n') {
+    else if (this->type() == CellType::MACRO || this->type() == CellType::NEUTRO) {
         for (auto &otherCell: pathogens) {
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +

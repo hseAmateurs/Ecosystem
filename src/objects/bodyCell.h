@@ -15,7 +15,9 @@ public:
              sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), lifeTime(sf::seconds(-(rand()%20+15))) { }
+                   center, color), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
+
+    int type() const override { return CellType::BODY; }
 
     void drawTexture(sf::RenderWindow &window) override;
 
@@ -26,7 +28,9 @@ public:
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                     std::vector<neutro> &neutros, sf::Time deltaTime);
 
-    char getName() const override { return 'b'; } ;
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
 private:
     sf::Time lifeTime;

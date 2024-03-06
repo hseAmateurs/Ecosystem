@@ -17,7 +17,7 @@ namespace texture {
                 parameters->pulsationWaveHeight
                 +
                 (
-                        powf(sinf(parameters->delta * parameters->pulsationSpeed), 2)
+                        powf(sinf(parameters->delta * parameters->pulsationSpeed), 10)
                         +
                         powf(sinf(parameters->delta * parameters->pulsationSpeed * 4), 4)
                 )
@@ -29,10 +29,14 @@ namespace texture {
     AnimationParameters plasmaCell{
             offsetPlasma,
             pulsationPlasma,
-            13,
-            0.008f,
-            3.5f,
+            7,
+            0.002f,
+            4.f,
             0.04f,
-            0.1f,
+            0.03f,
+
+            // look at dying or birthing constructor in cellTexture.h
+            5,
+            0.015f,
     };
 }

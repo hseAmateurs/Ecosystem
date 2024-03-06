@@ -29,10 +29,15 @@ namespace texture {
     AnimationParameters bCell{
             offsetBCell,
             pulsationBCell,
-            13,
-            0.008f,
+            8,
+            0.004f,
             3.5f,
             0.04f,
-            0.1f,
+            0.04f,
+
+            // look at dying or birthing constructor in cellTexture.h
+            3,
+            0.015f,
     };
+
 }

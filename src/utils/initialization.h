@@ -9,6 +9,7 @@
 #include <string>
 
 #include "utils.h"
+#include "cellTypes.h"
 
 using std::vector;
 
