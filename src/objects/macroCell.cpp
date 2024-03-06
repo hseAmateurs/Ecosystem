@@ -2,7 +2,6 @@
 // Created by Денис Громачихин on 19.02.2024.
 //
 
-#include "hunterCell.h"
 #include "macroCell.h"
 
 void MacroCell::drawTexture(sf::RenderWindow &window) {

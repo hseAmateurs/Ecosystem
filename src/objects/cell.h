@@ -8,8 +8,10 @@
 
 #include "../textures/cellTexture.h"
 #include "../utils/cellTypes.h"
+#include "../utils/settings.h"
 
 using utils::CellType;
+using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
@@ -29,6 +31,14 @@ public:
     char getCode() const { return code.getString()[0]; };
 
     void setFont(const sf::Font &font) { code.setFont(font); };
+
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                    std::vector<neutro> &neutros, sf::Time deltaTime) { };
+
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
     virtual int type() const = 0;
 
