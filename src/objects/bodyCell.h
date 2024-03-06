@@ -26,11 +26,7 @@ public:
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                     std::vector<neutro> &neutros, sf::Time deltaTime);
 
-    char getName() const { return 'b'; };
-
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+    char getName() const override { return 'b'; } ;
 
 private:
     sf::Time lifeTime;

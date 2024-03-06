@@ -30,6 +30,16 @@ public:
 
     void setFont(const sf::Font &font) { code.setFont(font); };
 
+    virtual char getName() const = 0;
+
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                    std::vector<neutro> &neutros, sf::Time deltaTime) { };
+
+    template<typename pathogen, typename body, typename macro, typename neutro>
+    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+
 protected:
     template<class T>
     void updateCollision(std::vector<T> &cells);

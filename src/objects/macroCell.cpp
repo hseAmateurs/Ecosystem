@@ -2,7 +2,6 @@
 // Created by Денис Громачихин on 19.02.2024.
 //
 
-#include "hunterCell.h"
 #include "macroCell.h"
 
 void MacroCell::drawTexture(sf::RenderWindow &window) {
@@ -13,8 +12,4 @@ void MacroCell::drawTexture(sf::RenderWindow &window) {
 
     code.setPosition(getPosition() + radiusOffset);
     window.draw(code);
-}
-
-char MacroCell::getName(){
-    return 'm';
 }

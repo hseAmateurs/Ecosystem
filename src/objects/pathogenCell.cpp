@@ -1,7 +1,7 @@
 //
 // Created by Денис Громачихин on 19.02.2024.
 //
-#include "hunterCell.h"
+
 #include "pathogenCell.h"
 
 void PathogenCell::drawTexture(sf::RenderWindow &window) {
@@ -12,8 +12,4 @@ void PathogenCell::drawTexture(sf::RenderWindow &window) {
 
     code.setPosition(getPosition() + radiusOffset);
     window.draw(code);
-}
-
-char PathogenCell::getName(){
-    return 'p';
 }
