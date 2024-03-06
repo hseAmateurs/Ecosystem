@@ -4,9 +4,9 @@
 
 #include "macroCell.h"
 
-void MacroCell::drawTexture(sf::RenderWindow &window) {
+void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 
     code.setPosition(getPosition());

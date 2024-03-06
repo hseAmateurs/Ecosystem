@@ -7,27 +7,27 @@ void texture::CellTexture::startDying() {
     m_vertices.setPrimitiveType(sf::Points);
     pointsCount *= parameters.dying.pointsMultAtExplosion;
     m_vertices.resize(pointsCount);
-    innerTimer = 0;
+    innerTimer = sf::Time::Zero;
 }
 
 void texture::CellTexture::startBirthing() {
     isBirthing = true;
-    innerTimer = 0;
+    innerTimer = sf::Time::Zero;
 }
 
 void texture::CellTexture::updateDying() {
     m_vertices[0].position = center + getRadiusVector(0, radius);
-    if(innerTimer % 5 == 0) {
-        pointsCount -= parameters.dying.pointsLoss;
+    //if(innerTimer % 5 == 0) {
+        pointsCount -= parameters.dying.pointsLoss / 5.f;
         m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
-    }
+    //}
 }
 
+#include <iostream>
+void texture::CellTexture::update(sf::Time elapsed) {
+    innerTimer += elapsed;
 
-void texture::CellTexture::update() {
-    ++innerTimer;
-
-    parameters.delta += rotationDirection * parameters.rotationSpeed;
+    parameters.delta += rotationDirection * parameters.rotationSpeed * elapsed.asSeconds();
     parameters.updatePulsationAspect(&parameters);
 
     float angle = 0, step = (float)(2 * M_PI / (pointsCount-2));
@@ -38,14 +38,13 @@ void texture::CellTexture::update() {
     if(isDying)
         updateDying();
 
-
     for (int i = 1; i < pointsCount; ++i) {
         sf::Vector2f currentRadiusVector = getRadiusVector(angle, radius);
         currentRadiusVector *= 1.f + parameters.getOffset(angle, &parameters);
         if(isDying)
             currentRadiusVector *= 1.f + parameters.dying.getDyingOffset(innerTimer);
         if(isBirthing) {
-            if(parameters.birthing.isEndOfBirhing(innerTimer))
+            if(parameters.birthing.isEndOfBirthing(innerTimer))
                 isBirthing = false;
             currentRadiusVector *= parameters.birthing.getBirthingOffset(innerTimer);
         }

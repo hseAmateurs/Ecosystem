@@ -34,13 +34,13 @@ namespace texture {
             offsetPathogen,
             pulsationPathogen,
             4,
-            0.02f,
+            1.16f,
             2.f,
             0.07f,
             0.1f,
 
             // look at dying or birthing constructor in cellTexture.h
             1,
-            0.02f,
+            1.18f,
     };
 }
