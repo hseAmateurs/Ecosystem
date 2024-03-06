@@ -1,7 +1,5 @@
 #include <cmath>
 #include "cellTexture.h"
-#include <iostream>
-
 
 
 void texture::CellTexture::startDying() {
@@ -64,14 +62,7 @@ void texture::CellTexture::draw(sf::RenderTarget &target, sf::RenderStates state
     target.draw(m_vertices, states);
 }
 
-void texture::CellTexture::changeCenter(sf::Vector2f newCenter) {
-    center = newCenter;
-}
 
 sf::Vector2f texture::CellTexture::getRadiusVector(const float &angle, const float &r) const {
     return {r * cosf(angle), r * sinf(angle)};
-}
-
-void texture::CellTexture::setRotationDirection(bool isRight) {
-    rotationDirection = isRight ? 1 : -1;
 }
