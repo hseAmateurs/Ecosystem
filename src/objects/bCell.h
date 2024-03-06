@@ -17,8 +17,6 @@ public:
                    speed,
                    center, color) { }
 
-    char getName() const { return 'l'; };
-
     void drawTexture(sf::RenderWindow &window) override;
 
     template<typename pathogen, typename body, typename macro, typename neutro>

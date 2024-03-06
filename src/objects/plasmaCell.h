@@ -19,8 +19,6 @@ public:
 
     void drawTexture(sf::RenderWindow &window) override;
 
-    char getName() const { return 'r'; };
-
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                     std::vector<neutro> &neutros, sf::Time deltaTime) { };

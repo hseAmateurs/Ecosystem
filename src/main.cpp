@@ -11,11 +11,14 @@ bool isRun = true;
 
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
+    const std::type_info &cellType = typeid(T);
     for (auto &cell: cells) {
-        if (cell.getName() == 'p' || cell.getName() == 'n' || cell.getName() == 'm')
+        if (cellType == typeid(PathogenCell) || cellType == typeid(NeutroCell) ||
+            cellType == typeid(MacroCell))
             cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         else
             cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+
         window.draw(cell);
         cell.setFont(field.font);
         cell.drawTexture(window);
@@ -39,7 +42,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case BODY:
                     newCells.clear();
-                    for (BodyCell &cell : field.bodies)
+                    for (BodyCell &cell: field.bodies)
                         cell.cellDivision(deltaTime, newCells);
                     field.bodies.insert(field.bodies.end(), newCells.begin(), newCells.end());
                     drawing(field.bodies, field, window, deltaTime);

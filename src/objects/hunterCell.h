@@ -18,8 +18,6 @@ public:
     void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                        std::vector<neutro> &neutros, sf::Time deltaTime);
 
-    virtual char getName() const = 0;
-
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                     std::vector<neutro> &neutros, sf::Time deltaTime);
