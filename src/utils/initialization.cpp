@@ -73,7 +73,6 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
 }
 
 utils::Field utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
-    srand(time(0));
     utils::Field field;
 
     sf::Font font;

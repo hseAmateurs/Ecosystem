@@ -39,6 +39,8 @@ namespace texture {
     void pulsationPlasma(AnimationParameters *parameters);
 
 
+
+
     extern AnimationParameters bodyCell;
 
     extern AnimationParameters macrophage;
