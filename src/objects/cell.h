@@ -8,8 +8,10 @@
 
 #include "../textures/cellTexture.h"
 #include "../utils/cellTypes.h"
+#include "../utils/settings.h"
 
 using utils::CellType;
+using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
