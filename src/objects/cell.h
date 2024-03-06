@@ -16,9 +16,6 @@ public:
     explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
                   sf::Color color);
 
-    // Переименовал эту функцию (было setPosition), т.к. она наследуется от CircleShape
-    void setPos(float x, float y) { setPosition(x, y); };
-
     // установка случайного вектора движения
     void setRandomVelocity();
 

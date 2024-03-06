@@ -15,7 +15,7 @@ public:
           sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color) { }
+                   center, color) { setOrigin(getRadius() / 2, getRadius() / 2); }
 
     int type() const override { return CellType::BCELL; }
 

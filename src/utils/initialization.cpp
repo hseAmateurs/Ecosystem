@@ -114,7 +114,6 @@ utils::Field utils::initField(const vector<utils::CellParam> &config, const std:
 template<class T>
 vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &window) {
     vector<T> cells;
-
     sf::Vector2u windowSize = window.getSize();
     for (int i = 0; i < param.amount; ++i) {
         float posX, posY;
@@ -124,6 +123,10 @@ vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &wi
         } while ((posY - 900.f) * (posY - 900.f) + (posX - 1600.f) * (posX - 1600.f) <
                  400030); // this will be a problem later on. i don't care.
         T cell(param.animation, param.radius, param.size, param.speed, {posX, posY}, param.color);
+
+        if(cell.type() == CellType::PLASMA) {
+            cell.setPosition(0, 0);
+        }
         window.draw(cell);
         cells.push_back(cell);
     }

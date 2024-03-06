@@ -9,10 +9,8 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
           randomMoveInterval(sf::seconds(2)), color(color),
           texture(animation, center, radius, 180, color) {
     setFillColor(sf::Color::Transparent);
-
-    setPos(center.x, center.y);
+    setPosition(center);
     timer.restart();
-
     int fontSize = radius * 0.8;
     code.setFillColor(sf::Color::Black);
     code.setCharacterSize(fontSize);
