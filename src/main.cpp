@@ -7,7 +7,6 @@
 #include "utils/settings.h"
 
 using namespace utils;
-using namespace settings;
 
 bool isRun = true;
 
