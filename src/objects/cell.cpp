@@ -8,6 +8,8 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
           velocity(0, 0), interval(sf::seconds(5)),
           randomMoveInterval(sf::seconds(2)), color(color),
           texture(animation, center, radius, 180, color) {
+    setFillColor(sf::Color::Transparent);
+
     setPos(center.x, center.y);
     timer.restart();
 
