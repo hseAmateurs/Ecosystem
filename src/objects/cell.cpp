@@ -1,5 +1,8 @@
 #include "cell.h"
 #include "random"
+#include "../utils/settings.h"
+
+using namespace settings;
 
 
 Cell::Cell(texture::AnimationParameters animation, float radius, int size, float speed, sf::Vector2f center,
@@ -24,14 +27,16 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
 
 // генерация случайного вектора движения
 void Cell::setRandomVelocity() {
-    auto angle = static_cast<float>(std::rand() % 360) * 3.14159f / 180.f;
+    double angle = (rand() % 360) * M_PI / 180;
     velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * speed;
 }
 
 void Cell::reflectionControl() {
     sf::Vector2f pos = getPosition();
-    if (pos.x <= -100 || pos.y <= -100 || pos.x >= 1700 || pos.y >= 1000 ||
-        (pos.y - 900.f) * (pos.y - 900.f) + (pos.x - 1600.f) * (pos.x - 1600.f) <= 400100) {
+    if (pos.x <= -BORDER_OFFSET || pos.x >= SCREEN_WIDTH + BORDER_OFFSET ||
+        pos.y <= -BORDER_OFFSET || pos.y >= SCREEN_HEIGHT + BORDER_OFFSET ||
+        (pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <=
+        BRAIN_RADIUS * BRAIN_RADIUS) {
         velocity = sf::Vector2f(-1, -1) * speed;
     }
 }

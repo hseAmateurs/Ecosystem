@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "utils/initialization.h"
+#include "utils/settings.h"
 
 using namespace utils;
 
@@ -70,7 +71,7 @@ int main() {
     setbuf(stdout, nullptr);
     srand(time(nullptr));
 
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     Field field = initField(readCSV("../data.csv"), "../resources/font/couriercyrps_bold.ttf", window);

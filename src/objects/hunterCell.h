@@ -5,6 +5,9 @@
 #include "cell.h"
 #include "../textures/animations.h"
 #include <iostream>
+#include "../utils/settings.h"
+
+using namespace settings;
 
 class HunterCell : public Cell {
 public:
@@ -34,11 +37,12 @@ template<typename pathogen, typename body, typename macro, typename neutro>
 void HunterCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                                std::vector<neutro> &neutros, sf::Time deltaTime) {
 
-    const float hunt = 150.0f;
+    const int INF = 30000;
+
     sf::Vector2f closestBody;
     closestBody.x = 0;
     closestBody.y = 0;
-    float minDistance = 30000;
+    float minDistance = INF;
     sf::Vector2f hunterPos = getPosition();
 
     if (this->type() == CellType::PATHOGEN) {
@@ -46,7 +50,7 @@ void HunterCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<bod
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-            if (distance < minDistance && distance < hunt) {
+            if (distance < minDistance && distance < HUNT_TRIGGER) {
                 minDistance = distance;
                 closestBody = bodyPos;
             }
@@ -57,13 +61,13 @@ void HunterCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<bod
             sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-            if (distance < minDistance && distance < hunt) {
+            if (distance < minDistance && distance < HUNT_TRIGGER) {
                 minDistance = distance;
                 closestBody = bodyPos;
             }
         }
     }
-    if (minDistance == 30000) {
+    if (minDistance == INF) {
         if (timer.getElapsedTime() > randomMoveInterval) {
             setRandomVelocity();
             auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
