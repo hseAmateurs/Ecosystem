@@ -33,12 +33,12 @@ public:
     void setFont(const sf::Font &font) { code.setFont(font); };
 
     template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                     std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+//    template<typename pathogen, typename body, typename macro, typename neutro>
+//    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+//                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
     virtual int type() const = 0;
 
@@ -55,6 +55,7 @@ protected:
     float speed;
     sf::Clock timer;
     sf::Time randomMoveInterval;
+
 
 private:
     sf::Time interval;
