@@ -14,7 +14,9 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     setPosition(center);
+    setFillColor(sf::Color::Transparent);
     timer.restart();
+
     int fontSize = radius * 0.8;
     code.setFillColor(sf::Color::Black);
     code.setCharacterSize(fontSize);

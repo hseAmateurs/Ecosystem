@@ -76,8 +76,7 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
     return config;
 }
 
-utils::Field
-utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
+utils::Field utils::initField(const vector<utils::CellParam> &config, const std::string &fontPath, sf::RenderWindow &window) {
     utils::Field field;
 
     sf::Font font;
