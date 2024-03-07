@@ -6,8 +6,8 @@
 
 namespace texture {
 
-    struct birthing {
-        birthing(float birthingSpeed) : birthingSpeed(birthingSpeed) { };
+    struct Birthing {
+        Birthing(float birthingSpeed) : birthingSpeed(birthingSpeed) { };
 
         float getBirthingOffset(sf::Time time) {
             float x = (float)time.asSeconds() * birthingSpeed;
@@ -21,9 +21,9 @@ namespace texture {
         float birthingSpeed;
     };
 
-    struct dying {
+    struct Dying {
         // constructor, pointsMultAtExplosion depends on cell type, look at anim{Cell}.cpp -> AnimationParameters init
-        dying(int pointsMultAtExplosion) :
+        Dying(int pointsMultAtExplosion) :
                 pointsMultAtExplosion(pointsMultAtExplosion),
                 pointsLossSpeed(3.f),
                 pointsLoss(35 * pointsMultAtExplosion),
@@ -60,8 +60,8 @@ namespace texture {
         float pulsationSpan;
         float pulsationWaveHeight;
 
-        dying dying;
-        birthing birthing;
+        Dying dying;
+        Birthing birthing;
 
         // dynamic variables
         float delta;
@@ -77,7 +77,7 @@ namespace texture {
                              int pointsCount = 180,
                              sf::Color color = sf::Color::Magenta)
                 :
-                center(center), radius(radius), rotationDirection(rand()%2 ? -1 : 1),
+                center(center), radius(radius), rotationDirection(rand() % 2 ? -1 : 1),
                 m_vertices(sf::TriangleFan, pointsCount + 2), pointsCount(pointsCount + 2), color(color),
                 parameters(animation),
                 isDying(false), isBirthing(false), innerTimer(sf::Time::Zero) {
