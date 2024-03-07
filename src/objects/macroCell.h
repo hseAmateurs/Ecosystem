@@ -19,7 +19,7 @@ public:
 
     int type() const override { return CellType::MACRO; }
 
-    void drawTexture(sf::RenderWindow &window) override;
+    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,

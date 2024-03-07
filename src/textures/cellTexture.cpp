@@ -7,45 +7,41 @@ void texture::CellTexture::startDying() {
     m_vertices.setPrimitiveType(sf::Points);
     pointsCount *= parameters.dying.pointsMultAtExplosion;
     m_vertices.resize(pointsCount);
-    innerTimer = 0;
+    innerTimer = sf::Time::Zero;
 }
 
 void texture::CellTexture::startBirthing() {
     isBirthing = true;
-    innerTimer = 0;
+    innerTimer = sf::Time::Zero;
 }
 
 void texture::CellTexture::updateDying() {
     m_vertices[0].position = center + getRadiusVector(0, radius);
-    if(innerTimer % 5 == 0) {
-        pointsCount -= parameters.dying.pointsLoss;
-        m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
-    }
+    pointsCount -= parameters.dying.pointsLoss / 5.f;
+    m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
 }
 
+void texture::CellTexture::update(sf::Time elapsed) {
+    innerTimer += elapsed;
 
-void texture::CellTexture::update() {
-    ++innerTimer;
-
-    parameters.delta += rotationDirection * parameters.rotationSpeed;
+    parameters.delta += rotationDirection * parameters.rotationSpeed * elapsed.asSeconds();
     parameters.updatePulsationAspect(&parameters);
 
-    float angle = 0, step = (float)(2 * M_PI / (pointsCount-2));
+    float angle = 0, step = (float)(2 * M_PI / (pointsCount - 2));
 
     m_vertices[0].color = color;
     m_vertices[0].position = center;
 
-    if(isDying)
+    if (isDying)
         updateDying();
-
 
     for (int i = 1; i < pointsCount; ++i) {
         sf::Vector2f currentRadiusVector = getRadiusVector(angle, radius);
         currentRadiusVector *= 1.f + parameters.getOffset(angle, &parameters);
-        if(isDying)
+        if (isDying)
             currentRadiusVector *= 1.f + parameters.dying.getDyingOffset(innerTimer);
-        if(isBirthing) {
-            if(parameters.birthing.isEndOfBirhing(innerTimer))
+        if (isBirthing) {
+            if (parameters.birthing.isEndOfBirthing(innerTimer))
                 isBirthing = false;
             currentRadiusVector *= parameters.birthing.getBirthingOffset(innerTimer);
         }
@@ -55,13 +51,11 @@ void texture::CellTexture::update() {
     }
 }
 
-
 void texture::CellTexture::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.transform *= getTransform();
     states.texture = nullptr;
     target.draw(m_vertices, states);
 }
-
 
 sf::Vector2f texture::CellTexture::getRadiusVector(const float &angle, const float &r) const {
     return {r * cosf(angle), r * sinf(angle)};

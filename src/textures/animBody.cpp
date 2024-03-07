@@ -31,13 +31,13 @@ namespace texture {
             offsetBody,
             pulsationBody,
             10,
-            0.006f,
+            0.35f,
             4.f,
             0.03f,
             0.06f,
 
             // look at dying or birthing constructor in cellTexture.h
             1,
-            0.02f,
+            1.18f,
     };
 }

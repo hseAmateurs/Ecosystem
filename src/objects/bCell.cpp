@@ -4,8 +4,8 @@
 
 #include "bCell.h"
 
-void BCell::drawTexture(sf::RenderWindow &window) {
+void BCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 }
