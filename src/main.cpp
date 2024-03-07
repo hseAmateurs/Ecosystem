@@ -21,7 +21,7 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
 
         window.draw(cell);
         cell.setFont(field.font);
-        cell.drawTexture(window);
+        cell.drawTexture(window, deltaTime);
     }
 }
 

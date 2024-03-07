@@ -4,9 +4,9 @@
 
 #include "pathogenCell.h"
 
-void PathogenCell::drawTexture(sf::RenderWindow &window) {
+void PathogenCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 
     code.setPosition(getPosition());

@@ -30,13 +30,13 @@ namespace texture {
             offsetPlasma,
             pulsationPlasma,
             7,
-            0.002f,
+            0.116f,
             4.f,
             0.04f,
             0.03f,
 
             // look at dying or birthing constructor in cellTexture.h
             5,
-            0.015f,
+            0.885f,
     };
 }
