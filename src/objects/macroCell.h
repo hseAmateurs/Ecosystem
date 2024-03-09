@@ -22,12 +22,12 @@ public:
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
     template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                        std::vector<neutro> &neutros, sf::Time deltaTime);
 };
 
 template<typename pathogen, typename body, typename macro, typename neutro>
-void MacroCell::updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+void MacroCell::update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
                                std::vector<neutro> &neutros, sf::Time deltaTime) {
 
     const int INF = 30000;

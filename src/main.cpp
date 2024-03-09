@@ -13,12 +13,12 @@ bool isRun = true;
 template<class T>
 void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
     for (auto &cell: cells) {
-        if (cell.type() == CellType::PATHOGEN || cell.type() == CellType::NEUTRO ||
-                cell.type() == CellType::MACRO)
-            cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
-        else
-            cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
-
+//        if (cell.type() == CellType::PATHOGEN || cell.type() == CellType::NEUTRO ||
+//                cell.type() == CellType::MACRO)
+//            cell.updateHunters(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+//        else
+//            cell.updateBody(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+        cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
         cell.setFont(field.font);
         cell.drawTexture(window, deltaTime);
