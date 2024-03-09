@@ -5,9 +5,9 @@
 #include "bodyCell.h"
 #include "../textures/animations.h"
 
-void BodyCell::drawTexture(sf::RenderWindow &window) {
+void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 }
 

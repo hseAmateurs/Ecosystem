@@ -22,7 +22,7 @@ void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time 
         cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
         window.draw(cell);
         cell.setFont(field.font);
-        cell.drawTexture(window);
+        cell.drawTexture(window, deltaTime);
     }
 }
 

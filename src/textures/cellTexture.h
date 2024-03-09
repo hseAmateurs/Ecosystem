@@ -6,33 +6,33 @@
 
 namespace texture {
 
-    struct birthing {
-        birthing(float birthingSpeed) : birthingSpeed(birthingSpeed) { };
+    struct Birthing {
+        Birthing(float birthingSpeed) : birthingSpeed(birthingSpeed) { };
 
-        float getBirthingOffset(int time) {
-            float x = (float)time * birthingSpeed;
+        float getBirthingOffset(sf::Time time) {
+            float x = (float)time.asSeconds() * birthingSpeed;
             return x * powf(4, -x + 1);
         }
 
-        bool isEndOfBirhing(int time) const {
-            return (float)time * birthingSpeed >= 1;
+        bool isEndOfBirthing(sf::Time time) const {
+            return (float)time.asSeconds() * birthingSpeed >= 1;
         }
 
         float birthingSpeed;
     };
 
-    struct dying {
+    struct Dying {
         // constructor, pointsMultAtExplosion depends on cell type, look at anim{Cell}.cpp -> AnimationParameters init
-        dying(int pointsMultAtExplosion) :
+        Dying(int pointsMultAtExplosion) :
                 pointsMultAtExplosion(pointsMultAtExplosion),
-                pointsLossSpeed(0.05f),
+                pointsLossSpeed(3.f),
                 pointsLoss(35 * pointsMultAtExplosion),
                 randomOffsetWidth(2.f),
                 explosionWidth(0.01f) { };
 
         // static functions
-        float getDyingOffset(int time) const {
-            float x = (float)time * pointsLossSpeed;
+        float getDyingOffset(sf::Time time) const {
+            float x = (float)time.asSeconds() * pointsLossSpeed;
             return (float)(rand() % 1000) * 0.0001f * randomOffsetWidth + explosionWidth * (x * powf(5, -x + 2));
         };
 
@@ -60,8 +60,8 @@ namespace texture {
         float pulsationSpan;
         float pulsationWaveHeight;
 
-        dying dying;
-        birthing birthing;
+        Dying dying;
+        Birthing birthing;
 
         // dynamic variables
         float delta;
@@ -77,15 +77,14 @@ namespace texture {
                              int pointsCount = 180,
                              sf::Color color = sf::Color::Magenta)
                 :
-                center(center), radius(radius),
+                center(center), radius(radius), rotationDirection(rand() % 2 ? -1 : 1),
                 m_vertices(sf::TriangleFan, pointsCount + 2), pointsCount(pointsCount + 2), color(color),
                 parameters(animation),
-                isDying(false), isBirthing(false), innerTimer(0) {
+                isDying(false), isBirthing(false), innerTimer(sf::Time::Zero) {
             startBirthing();
-            setRotationDirection(rand() % 2);
         };
 
-        void update();
+        void update(sf::Time elapsed);
 
         void changeCenter(sf::Vector2f newCenter) { center = newCenter; };
 
@@ -99,8 +98,6 @@ namespace texture {
         void updateDying();
 
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
-
-        void setRotationDirection(bool isRight) { rotationDirection = isRight ? 1 : -1; };
 
         AnimationParameters parameters;
 
@@ -116,7 +113,7 @@ namespace texture {
 
         bool isDying;
         bool isBirthing;
-        int innerTimer;
+        sf::Time innerTimer;
     };
 }
 

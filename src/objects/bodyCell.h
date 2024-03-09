@@ -19,7 +19,7 @@ public:
 
     int type() const override { return CellType::BODY; }
 
-    void drawTexture(sf::RenderWindow &window) override;
+    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);
 

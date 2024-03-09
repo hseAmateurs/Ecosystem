@@ -24,7 +24,7 @@ public:
     void reflectionControl();
 
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
-    virtual void drawTexture(sf::RenderWindow &window) = 0;
+    virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
 
     void setCode(const char &new_code) { code.setString(new_code); };
 
@@ -55,7 +55,6 @@ protected:
     float speed;
     sf::Clock timer;
     sf::Time randomMoveInterval;
-
 
 private:
     sf::Time interval;

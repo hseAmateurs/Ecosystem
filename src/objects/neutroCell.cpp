@@ -4,8 +4,8 @@
 
 #include "neutroCell.h"
 
-void NeutroCell::drawTexture(sf::RenderWindow &window) {
+void NeutroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 }
