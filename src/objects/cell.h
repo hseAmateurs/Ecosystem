@@ -34,17 +34,14 @@ public:
 
     template<typename pathogen, typename body, typename macro, typename neutro>
     void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                    std::vector<neutro> &neutros, sf::Time deltaTime) { };
-
-//    template<typename pathogen, typename body, typename macro, typename neutro>
-//    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-//                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+                std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
     virtual int type() const = 0;
 
 protected:
     template<class T>
     void updateCollision(std::vector<T> &cells);
+
     sf::Text code;
     texture::CellTexture texture;
     float radius;
