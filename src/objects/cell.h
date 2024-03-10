@@ -33,14 +33,14 @@ public:
     void setFont(const sf::Font &font) { code.setFont(font); };
 
     template<typename pathogen, typename body, typename macro, typename neutro>
-    void update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
-                std::vector<neutro*> &neutros, sf::Time deltaTime) { };
+    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime) { };
 
     virtual int type() const = 0;
 
 protected:
     template<class T>
-    void updateCollision(std::vector<T*> &cells);
+    void updateCollision(std::vector<T> &cells);
 
     sf::Text code;
     texture::CellTexture texture;
@@ -58,16 +58,16 @@ private:
 };
 
 template<class T>
-void Cell::updateCollision(std::vector<T*> &cells) {
-    for (T* &otherCell: cells) {
-        if (otherCell == this) continue;
-        if (getGlobalBounds().intersects(otherCell->getGlobalBounds())) {
-            velocity = (getPosition() - otherCell->getPosition());
+void Cell::updateCollision(std::vector<T> &cells) {
+    for (auto &otherCell: cells) {
+        if (&otherCell == this) continue;
+        if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
+            velocity = (getPosition() - otherCell.getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
-            otherCell->velocity = otherCell->getPosition() - getPosition();
-            otherCell->velocity = otherCell->velocity / std::sqrt(
-                    otherCell->velocity.x * otherCell->velocity.x + otherCell->velocity.y * otherCell->velocity.y) *
-                                 otherCell->speed;
+            otherCell.velocity = otherCell.getPosition() - getPosition();
+            otherCell.velocity = otherCell.velocity / std::sqrt(
+                    otherCell.velocity.x * otherCell.velocity.x + otherCell.velocity.y * otherCell.velocity.y) *
+                                 otherCell.speed;
         }
     }
 }

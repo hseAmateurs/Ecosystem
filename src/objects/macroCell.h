@@ -22,13 +22,13 @@ public:
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
     template<typename pathogen, typename body, typename macro, typename neutro>
-    void update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
-                std::vector<neutro*> &neutros, sf::Time deltaTime);
+    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime);
 };
 
 template<typename pathogen, typename body, typename macro, typename neutro>
-void MacroCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
-                       std::vector<neutro*> &neutros, sf::Time deltaTime) {
+void MacroCell::update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                       std::vector<neutro> &neutros, sf::Time deltaTime) {
 
     const int INF = 30000;
 
@@ -39,8 +39,8 @@ void MacroCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> &bo
     sf::Vector2f hunterPos = getPosition();
 
     if (this->type() == CellType::PATHOGEN) {
-        for (body* &otherCell: bodies) {
-            sf::Vector2f bodyPos = otherCell->getPosition();
+        for (auto &otherCell: bodies) {
+            sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
             if (distance < minDistance && distance < HUNT_TRIGGER) {
@@ -50,8 +50,8 @@ void MacroCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> &bo
         }
     }
     else if (this->type() == CellType::MACRO || this->type() == CellType::NEUTRO) {
-        for (pathogen* &otherCell: pathogens) {
-            sf::Vector2f bodyPos = otherCell->getPosition();
+        for (auto &otherCell: pathogens) {
+            sf::Vector2f bodyPos = otherCell.getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
             if (distance < minDistance && distance < HUNT_TRIGGER) {

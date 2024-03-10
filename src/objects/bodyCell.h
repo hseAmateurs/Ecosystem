@@ -25,16 +25,16 @@ public:
 
 
     template<typename pathogen, typename body, typename macro, typename neutro>
-    void update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
-                std::vector<neutro*> &neutros, sf::Time deltaTime);
+    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                std::vector<neutro> &neutros, sf::Time deltaTime);
 
 private:
     sf::Time lifeTime;
 };
 
 template<typename pathogen, typename body, typename macro, typename neutro>
-void BodyCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
-                      std::vector<neutro*> &neutros, sf::Time deltaTime) {
+void BodyCell::update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
+                      std::vector<neutro> &neutros, sf::Time deltaTime) {
     if (timer.getElapsedTime() > randomMoveInterval) {
         setRandomVelocity();
         auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
