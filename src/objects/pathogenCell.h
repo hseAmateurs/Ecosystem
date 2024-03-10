@@ -20,8 +20,6 @@ public:
     template<typename pathogen, typename body, typename macro, typename neutro>
     void update(std::vector<pathogen*> &pathogens, std::vector<body*> &bodies, std::vector<macro*> &macroes,
                 std::vector<neutro*> &neutros, sf::Time deltaTime);
-
-
 };
 
 
@@ -38,7 +36,7 @@ void PathogenCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> 
     sf::Vector2f hunterPos = getPosition();
 
     if (this->type() == CellType::PATHOGEN) {
-        for (auto otherCell: bodies) {
+        for (body* otherCell: bodies) {
             sf::Vector2f bodyPos = otherCell->getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
@@ -49,7 +47,7 @@ void PathogenCell::update(std::vector<pathogen*> &pathogens, std::vector<body*> 
         }
     }
     else if (this->type() == CellType::MACRO || this->type() == CellType::NEUTRO) {
-        for (auto &otherCell: pathogens) {
+        for (pathogen* &otherCell: pathogens) {
             sf::Vector2f bodyPos = otherCell->getPosition();
             float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                        (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));

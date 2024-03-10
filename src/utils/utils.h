@@ -31,6 +31,12 @@ namespace utils {
         texture::AnimationParameters animation;
     };
 
+    template<class T>
+    void deleteCellType(std::vector<T*> cells) {
+        for (T* &cell : cells)
+            delete cell;
+    }
+
     // Конфиги всех клеток
     struct Field {
         sf::Font font;
@@ -40,6 +46,15 @@ namespace utils {
         std::vector<NeutroCell*> neutroes;
         std::vector<BCell*> bCells;
         std::vector<PlasmaCell*> plasmas;
+
+        ~Field() {
+            deleteCellType(pathogens);
+            deleteCellType(bodies);
+            deleteCellType(macroes);
+            deleteCellType(neutroes);
+            deleteCellType(bCells);
+            deleteCellType(plasmas);
+        }
     };
 }
 
