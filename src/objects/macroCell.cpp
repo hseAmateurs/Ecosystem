@@ -2,6 +2,7 @@
 // Created by Денис Громачихин on 19.02.2024.
 //
 
+#include <iostream>
 #include "macroCell.h"
 
 void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
@@ -14,16 +15,38 @@ void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
 }
 
 void MacroCell::update(Field &field, sf::Time deltaTime) {
-    if(m_status == HUNTING) {
+    if (m_status == HUNTING) {
         hunting(field, deltaTime);
         return;
     }
-    if(m_status == DELIVERY) {
-        if(field.bCells.front()->getStatus() == BCell::BUSY) {
+    if (m_status == DELIVERY) {
+        if (field.bCells.front()->getStatus() != BCell::FREE) {
             setRandomMovement();
-            reflectionControl();
             move(velocity * deltaTime.asSeconds());
+            return;
         }
+
+        const sf::Vector2f targetPos = BCell::nextOrbitXY(bCellIndex, field.bCells.size());
+        velocity = targetPos - getPosition();
+
+        if(velocity.x < 1 && velocity.y < 1) {
+            setPosition(targetPos);
+            m_status = CHECKING;
+        }
+
+        normalizeVelocity();
+
+        reflectionControl();
+        move(velocity * deltaTime.asSeconds());
+    }
+    if(m_status == CHECKING) {
+        auto &bCell = field.bCells[bCellIndex];
+        bCell->setStatus(BCell::BUSY);
+        if(!bCell->getCode()) bCell->setCode(getCode());
+        m_status = DELIVERY;
+        // Проверять и двигать клетку
+        // Возможно стоит фукнции из bCell вынести в общий файл, т.к. они повторяются
+        return;
     }
 }
 
@@ -33,12 +56,13 @@ void MacroCell::scrollBCells(Field &field) {
         if (cell->getStatus() == BCell::BUSY || cell->getStatus() == BCell::MOVING)
             return;
 
+    auto firstBCell = field.bCells.front();
     auto *newBCell = new BCell(texture::bCell,
-                               field.bCells[0]->getRadius(),
-                               field.bCells[0]->getSize(),
-                               field.bCells[0]->getSpeed(),
-                               BCell::getXY(field.bCells.size(), field.bCells.size()),
-                               field.bCells[0]->getColor());
+                               firstBCell->getRadius(),
+                               firstBCell->getSize(),
+                               firstBCell->getSpeed(),
+                               BCell::getXY((int)field.bCells.size(), (int)field.bCells.size()),
+                               firstBCell->getColor());
     field.bCells.push_back(newBCell);
 
     for (BCell *&cell: field.bCells)

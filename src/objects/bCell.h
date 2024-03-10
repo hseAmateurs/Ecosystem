@@ -40,7 +40,9 @@ public:
 
     static sf::Vector2f getXY(int index, int amount);
 
-    static sf::Vector2f getXY(double angle);
+    static sf::Vector2f getXY(double angle, double distance = BCELL_DISTANCE);
+
+    static sf::Vector2f nextOrbitXY(int index, int amount);
 
 private:
     int getID(const Field &field) const;

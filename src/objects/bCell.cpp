@@ -9,6 +9,9 @@ void BCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
     texture.update(elapsed);
     window.draw(texture);
+
+    code.setPosition(getPosition());
+    window.draw(code);
 }
 
 BCell::~BCell() {
@@ -56,9 +59,9 @@ int BCell::getID(const Field &field) const {
 }
 
 
-sf::Vector2f BCell::getXY(double angle) {
-    float posX = std::cos(angle) * (BCELL_DISTANCE * BRAIN_RADIUS);
-    float posY = std::sin(angle) * (BCELL_DISTANCE * BRAIN_RADIUS);
+sf::Vector2f BCell::getXY(const double angle, const double distance) {
+    float posX = std::cos(angle) * (distance * BRAIN_RADIUS);
+    float posY = std::sin(angle) * (distance * BRAIN_RADIUS);
     return {SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY};
 }
 
@@ -66,4 +69,10 @@ sf::Vector2f BCell::getXY(const int index, const int amount) {
     const double angleOffset = M_PI / 8;
     double angle = (M_PI / 2 + angleOffset) / (amount + 1) * (amount - index) - angleOffset / 2;
     return getXY(angle);
+}
+
+sf::Vector2f BCell::nextOrbitXY(const int index, const int amount) {
+    const double angleOffset = M_PI / 8;
+    double angle = (M_PI / 2 + angleOffset) / (amount + 1) * (amount - index) - angleOffset / 2;
+    return getXY(angle, MACRO_DISTANCE);
 }

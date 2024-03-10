@@ -31,6 +31,8 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     brain.setOrigin(BRAIN_RADIUS, BRAIN_RADIUS);
     brain.setPosition(SCREEN_WIDTH, SCREEN_HEIGHT);
     sf::Time timer = sf::seconds(2);
+    bool stepOne = true;
+    bool stepTwo = true;
     // ---
 
     while (isRun) {
@@ -38,12 +40,17 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
         timer -= deltaTime;
-        if(timer <= sf::Time::Zero) {
-            timer = sf::seconds(120);
+        if(timer <= sf::Time::Zero && stepOne) {
+            stepOne = false;
             std::cout << "Start: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::BUSY);
             field.macroes.front()->setStatus(MacroCell::DELIVERY);
 //            field.macroes[0]->scrollBCells(field);
+        }
+        if(timer <= sf::seconds(-2) && stepTwo) {
+            stepTwo = false;
+            std::cout << "Delivery active: " << field.macroes.front()->getCode() << "\n";
+            field.bCells.front()->setStatus(BCell::FREE);
         }
 
         for (int i = 0; i < CellType::COUNT; ++i) {
