@@ -40,6 +40,8 @@ set(UTILS
         src/utils/utils.h
         src/utils/cellTypes.h
         src/utils/settings.h
+        src/utils/cells.h
+        src/utils/freeMemory.h
 )
 
 # Исходные файлы

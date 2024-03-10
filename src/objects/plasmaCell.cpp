@@ -5,9 +5,9 @@
 #include <iostream>
 #include "plasmaCell.h"
 
-void PlasmaCell::drawTexture(sf::RenderWindow &window) {
+void PlasmaCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
-    texture.update();
+    texture.update(elapsed);
     window.draw(texture);
 }
 

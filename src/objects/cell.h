@@ -10,7 +10,10 @@
 #include "../utils/cellTypes.h"
 #include "../utils/settings.h"
 
+#include "../utils/utils.h"
+
 using utils::CellType;
+using utils::Field;
 using namespace settings;
 
 class Cell : public sf::CircleShape {
@@ -24,7 +27,7 @@ public:
     void reflectionControl();
 
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
-    virtual void drawTexture(sf::RenderWindow &window) = 0;
+    virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
 
     void setCode(const char &new_code) { code.setString(new_code); };
 
@@ -32,19 +35,14 @@ public:
 
     void setFont(const sf::Font &font) { code.setFont(font); };
 
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void update(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                    std::vector<neutro> &neutros, sf::Time deltaTime) { };
-
-//    template<typename pathogen, typename body, typename macro, typename neutro>
-//    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-//                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
-
     virtual int type() const = 0;
+
+    virtual void update(Field &field, sf::Time deltaTime) = 0;
 
 protected:
     template<class T>
-    void updateCollision(std::vector<T> &cells);
+    void updateCollision(std::vector<T *> &cells);
+
     sf::Text code;
     texture::CellTexture texture;
     float radius;
@@ -56,22 +54,21 @@ protected:
     sf::Clock timer;
     sf::Time randomMoveInterval;
 
-
 private:
     sf::Time interval;
 };
 
 template<class T>
-void Cell::updateCollision(std::vector<T> &cells) {
-    for (auto &otherCell: cells) {
-        if (&otherCell == this) continue;
-        if (getGlobalBounds().intersects(otherCell.getGlobalBounds())) {
-            velocity = (getPosition() - otherCell.getPosition());
+void Cell::updateCollision(std::vector<T *> &cells) {
+    for (T *&otherCell: cells) {
+        if (otherCell == this) continue;
+        if (getGlobalBounds().intersects(otherCell->getGlobalBounds())) {
+            velocity = (getPosition() - otherCell->getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
-            otherCell.velocity = otherCell.getPosition() - getPosition();
-            otherCell.velocity = otherCell.velocity / std::sqrt(
-                    otherCell.velocity.x * otherCell.velocity.x + otherCell.velocity.y * otherCell.velocity.y) *
-                                 otherCell.speed;
+            otherCell->velocity = otherCell->getPosition() - getPosition();
+            otherCell->velocity = otherCell->velocity / std::sqrt(
+                    otherCell->velocity.x * otherCell->velocity.x + otherCell->velocity.y * otherCell->velocity.y) *
+                                  otherCell->speed;
         }
     }
 }
