@@ -3,7 +3,6 @@
 //
 
 #include "bodyCell.h"
-#include "../textures/animations.h"
 
 void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
@@ -11,12 +10,12 @@ void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     window.draw(texture);
 }
 
-void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells) {
+void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCells) {
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
     if (lifeTime.asSeconds() >= randomTime.asSeconds()) {
-        BodyCell newCell(texture::bodyCell, radius, size, speed, center, color);
+        BodyCell *newCell = new BodyCell(texture::bodyCell, radius, size, speed, center, color);
 
         float x1, y1;
         do {
@@ -24,8 +23,25 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCell
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
         } while (x1 == 0 && y1 == 0);
 
-        newCell.setPosition((getPosition() + sf::Vector2f(x1, y1)));
+        newCell->setPosition((getPosition() + sf::Vector2f(x1, y1)));
         bodyCells.push_back(newCell);
         lifeTime = sf::Time::Zero;
     }
+}
+
+void BodyCell::update(Field &field, sf::Time deltaTime) {
+    if (timer.getElapsedTime() > randomMoveInterval) {
+        setRandomVelocity();
+        auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
+        randomMoveInterval = sf::seconds(randomSeconds);
+        timer.restart();
+    }
+    reflectionControl();
+    updateCollision(field.neutroes);
+    updateCollision(field.pathogens);
+    updateCollision(field.macroes);
+    updateCollision(field.bodies);
+
+
+    move(velocity * deltaTime.asSeconds());
 }

@@ -8,14 +8,19 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "../objects/pathogenCell.h"
-#include "../objects/bodyCell.h"
-#include "../objects/macroCell.h"
-#include "../objects/neutroCell.h"
-#include "../objects/bCell.h"
-#include "../objects/plasmaCell.h"
-
 #include "../textures/animations.h"
+
+class BCell;
+
+class BodyCell;
+
+class PathogenCell;
+
+class MacroCell;
+
+class PlasmaCell;
+
+class NeutroCell;
 
 namespace utils {
     // Конфиг любой клетки
@@ -34,12 +39,12 @@ namespace utils {
     // Конфиги всех клеток
     struct Field {
         sf::Font font;
-        std::vector<PathogenCell> pathogens;
-        std::vector<BodyCell> bodies;
-        std::vector<MacroCell> macroes;
-        std::vector<NeutroCell> neutroes;
-        std::vector<BCell> bCells;
-        std::vector<PlasmaCell> plasmas;
+        std::vector<PathogenCell *> pathogens;
+        std::vector<BodyCell *> bodies;
+        std::vector<MacroCell *> macroes;
+        std::vector<NeutroCell *> neutroes;
+        std::vector<BCell *> bCells;
+        std::vector<PlasmaCell *> plasmas;
     };
 }
 

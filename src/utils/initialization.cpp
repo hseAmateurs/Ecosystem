@@ -91,22 +91,22 @@ utils::initField(const vector<utils::CellParam> &config, const std::string &font
     for (int i = 0; i < configSize; ++i) {
         switch (i) {
             case PATHOGEN:
-                field.pathogens = createCells<PathogenCell>(config[i], window);
+                createCells(field.pathogens, config[i], window);
                 break;
             case BODY:
-                field.bodies = createCells<BodyCell>(config[i], window);
+                createCells(field.bodies, config[i], window);
                 break;
             case MACRO:
-                field.macroes = createCells<MacroCell>(config[i], window);
+                createCells(field.macroes, config[i], window);
                 break;
             case NEUTRO:
-                field.neutroes = createCells<NeutroCell>(config[i], window);
+                createCells(field.neutroes, config[i], window);
                 break;
             case BCELL:
-                field.bCells = createCells<BCell>(config[i], window);
+                createCells(field.bCells, config[i], window);
                 break;
             case PLASMA:
-                field.plasmas = createCells<PlasmaCell>(config[i], window);
+                createCells(field.plasmas, config[i], window);
                 break;
             default:
                 std::cerr << "Undefined cell type\n";
@@ -117,8 +117,7 @@ utils::initField(const vector<utils::CellParam> &config, const std::string &font
 }
 
 template<class T>
-vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &window) {
-    vector<T> cells;
+void utils::createCells(vector <T*> &cells, const utils::CellParam &param, sf::RenderWindow &window) {
     sf::Vector2u windowSize = window.getSize();
 
     for (int i = 0; i < param.amount; ++i) {
@@ -128,23 +127,22 @@ vector<T> utils::createCells(const utils::CellParam &param, sf::RenderWindow &wi
             posY = rand() % (windowSize.y - 2 * static_cast<int>(param.radius));
         } while ((posY - SCREEN_HEIGHT) * (posY - SCREEN_HEIGHT) + (posX - SCREEN_WIDTH) * (posX - SCREEN_WIDTH) <
                  BRAIN_RADIUS * BRAIN_RADIUS); // this will be a problem later on. i don't care.
-        T cell(param.animation, param.radius, param.size, param.speed, {posX, posY}, param.color);
+        T *cell = new T(param.animation, param.radius, param.size, param.speed, {posX, posY}, param.color);
 
-        if (cell.type() == CellType::PLASMA) {
+        if (cell->type() == CellType::PLASMA) {
             posX = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
             posY = posX;
-            cell.setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
+            cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
         }
-        else if (cell.type() == CellType::BCELL) {
+        else if (cell->type() == CellType::BCELL) {
             const double angleOffset = M_PI / 8;
             double angleBCell = (M_PI / 2 + angleOffset) / (param.amount + 1) * (i + 1) - angleOffset / 2;
 
             posX = std::cos(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
             posY = std::sin(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
-            cell.setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
+            cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
         }
-        window.draw(cell);
+        window.draw(*cell);
         cells.push_back(cell);
     }
-    return cells;
 }

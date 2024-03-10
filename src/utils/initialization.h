@@ -10,6 +10,7 @@
 
 #include "utils.h"
 #include "cellTypes.h"
+#include "cells.h"
 
 using std::vector;
 
@@ -21,7 +22,7 @@ namespace utils {
 
 // Отрисовка конкретного типа клетки
     template<class T>
-    vector <T> createCells(const CellParam &param, sf::RenderWindow &window);
+    void createCells(vector <T*> &cells, const CellParam &param, sf::RenderWindow &window);
 }
 
 #endif //ECOSYSTEM_INITIALIZATION_H

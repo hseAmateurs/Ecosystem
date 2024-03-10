@@ -7,6 +7,7 @@
 
 
 #include "cell.h"
+#include "../utils/cells.h"
 #include "../textures/cellTexture.h"
 
 class PlasmaCell : public Cell {
@@ -18,13 +19,7 @@ public:
 
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateBody(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                    std::vector<neutro> &neutros, sf::Time deltaTime) { };
-
-    template<typename pathogen, typename body, typename macro, typename neutro>
-    void updateHunters(std::vector<pathogen> &pathogens, std::vector<body> &bodies, std::vector<macro> &macroes,
-                       std::vector<neutro> &neutros, sf::Time deltaTime) { };
+    void update(Field &field, sf::Time deltaTime) override { };
 };
 
 
