@@ -21,7 +21,7 @@ public:
 
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
-    void cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCells);
+    void cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells);
 
 
     template<typename pathogen, typename body, typename macro, typename neutro>

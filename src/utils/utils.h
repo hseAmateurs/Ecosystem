@@ -34,12 +34,12 @@ namespace utils {
     // Конфиги всех клеток
     struct Field {
         sf::Font font;
-        std::vector<PathogenCell*> pathogens;
-        std::vector<BodyCell*> bodies;
-        std::vector<MacroCell*> macroes;
-        std::vector<NeutroCell*> neutroes;
-        std::vector<BCell*> bCells;
-        std::vector<PlasmaCell*> plasmas;
+        std::vector<PathogenCell> pathogens;
+        std::vector<BodyCell> bodies;
+        std::vector<MacroCell> macroes;
+        std::vector<NeutroCell> neutroes;
+        std::vector<BCell> bCells;
+        std::vector<PlasmaCell> plasmas;
     };
 }
 

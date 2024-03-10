@@ -21,7 +21,7 @@ namespace utils {
 
 // Отрисовка конкретного типа клетки
     template<class T>
-    void createCells(vector <T*> &cells, const CellParam &param, sf::RenderWindow &window);
+    void createCells(vector <T> &cells, const CellParam &param, sf::RenderWindow &window);
 }
 
 #endif //ECOSYSTEM_INITIALIZATION_H
