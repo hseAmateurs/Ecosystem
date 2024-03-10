@@ -11,7 +11,7 @@ void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     window.draw(texture);
 }
 
-void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCells) {
+void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCells) {
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
@@ -25,7 +25,7 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell> &bodyCell
         } while (x1 == 0 && y1 == 0);
 
         newCell.setPosition((getPosition() + sf::Vector2f(x1, y1)));
-        bodyCells.push_back(newCell);
+        bodyCells.push_back(&newCell);
         lifeTime = sf::Time::Zero;
     }
 }

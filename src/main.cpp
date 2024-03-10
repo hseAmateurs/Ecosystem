@@ -11,19 +11,19 @@ using namespace utils;
 bool isRun = true;
 
 template<class T>
-void drawing(vector<T> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
-    for (auto &cell: cells) {
-        cell.update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
-        window.draw(cell);
-        cell.setFont(field.font);
-        cell.drawTexture(window, deltaTime);
+void drawing(vector<T*> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
+    for (auto cell: cells) {
+        cell->update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+        window.draw(*cell);
+        cell->setFont(field.font);
+        cell->drawTexture(window, deltaTime);
     }
 }
 
 void renderingThread(sf::RenderWindow &window, Field &field) {
     window.setActive(true);
     sf::Clock clock;
-    std::vector<BodyCell> newCells;
+    std::vector<BodyCell*> newCells;
 
     // For debugging ---
     sf::CircleShape brain(BRAIN_RADIUS);
@@ -51,8 +51,8 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case BODY:
                     newCells.clear();
-                    for (BodyCell &cell: field.bodies)
-                        cell.cellDivision(deltaTime, newCells);
+                    for (BodyCell *cell: field.bodies)
+                        cell->cellDivision(deltaTime, newCells);
                     field.bodies.insert(field.bodies.end(), newCells.begin(), newCells.end());
                     drawing(field.bodies, field, window, deltaTime);
                     break;
