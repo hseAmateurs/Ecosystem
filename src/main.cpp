@@ -40,6 +40,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         if(timer <= sf::Time::Zero) {
             timer = sf::seconds(120);
             std::cout << "Zero\n";
+            delete field.bCells.back();
             field.bCells.pop_back();
         }
 
