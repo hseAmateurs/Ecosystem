@@ -41,3 +41,7 @@ void Cell::reflectionControl() {
         velocity = sf::Vector2f(-1, -1) * speed;
     }
 }
+
+void Cell::normalizeVelocity() {
+    velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+}

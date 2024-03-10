@@ -15,14 +15,18 @@ public:
     enum Status {
         FREE,
         AWAIT,
-        BUSY
+        BUSY,
+        MOVE,
+        SCROLLING
     };
 
     BCell(texture::AnimationParameters animation, float radius, int size, float speed,
           sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), m_status(FREE) { setOrigin(getRadius() / 2, getRadius() / 2); }
+                   center, color), m_status(FREE) {
+        setOrigin(getRadius() / 2, getRadius() / 2);
+    }
 
     int type() const override { return CellType::BCELL; }
 
@@ -30,14 +34,29 @@ public:
 
     Status getStatus() const { return m_status; }
 
-    void setStatus(Status status) { m_status = status; }
+    void setStatus(Status status) { m_status = status; };
 
-    void update(Field &field, sf::Time deltaTime) override {  };
+    void update(Field &field, sf::Time deltaTime) override;
 
     ~BCell() override;
 
+    static sf::Vector2f getXY(int index, int amount);
+
+    static sf::Vector2f getXY(double angle);
+
 private:
+    int getID(const Field &field) const;
+
+    void updateAngle();
+
+    struct Animation {
+        double targetAngle;
+        double currentAngle;
+        double speedScale;
+    };
+
     Status m_status;
+    Animation anim;
 };
 
 

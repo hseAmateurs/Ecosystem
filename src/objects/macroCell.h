@@ -23,6 +23,9 @@ public:
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
 
     void update(Field &field, sf::Time deltaTime) override;
+
+private:
+    void scrollBCells(Field &field);
 };
 
 #endif //ECOSYSTEM_MACROCELL_H

@@ -40,7 +40,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     }
     else {
         velocity = closestBody - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+        normalizeVelocity();
     }
     reflectionControl();
     updateCollision(field.neutroes);
@@ -48,4 +48,14 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.macroes);
     updateCollision(field.bodies);
     move(velocity * deltaTime.asSeconds());
+}
+
+void MacroCell::scrollBCells(Field &field) {
+    // Защита от одновременного смещения и B-клеток, и макрофагов по ним
+    for (BCell *&cell: field.bCells)
+        if(cell->getStatus() == BCell::BUSY)
+            return;
+
+    for (BCell *&cell: field.bCells)
+        cell->setStatus(BCell::SCROLLING);
 }

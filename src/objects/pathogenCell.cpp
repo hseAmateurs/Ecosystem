@@ -40,7 +40,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     }
     else {
         velocity = closestBody - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+        normalizeVelocity();
     }
     reflectionControl();
     updateCollision(field.neutroes);

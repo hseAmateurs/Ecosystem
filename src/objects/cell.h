@@ -43,6 +43,8 @@ protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
 
+    void normalizeVelocity();
+
     sf::Text code;
     texture::CellTexture texture;
     float radius;
@@ -66,9 +68,7 @@ void Cell::updateCollision(std::vector<T *> &cells) {
             velocity = (getPosition() - otherCell->getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
             otherCell->velocity = otherCell->getPosition() - getPosition();
-            otherCell->velocity = otherCell->velocity / std::sqrt(
-                    otherCell->velocity.x * otherCell->velocity.x + otherCell->velocity.y * otherCell->velocity.y) *
-                                  otherCell->speed;
+            otherCell->normalizeVelocity();
         }
     }
 }

@@ -40,9 +40,11 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         timer -= deltaTime;
         if(timer <= sf::Time::Zero) {
             timer = sf::seconds(120);
-            std::cout << "Zero\n";
-            delete field.bCells.back();
-            field.bCells.pop_back();
+            std::cout << "Start\n";
+            for (BCell *&cell: field.bCells)
+                cell->setStatus(BCell::MOVE);
+//            delete field.bCells.back();
+//            field.bCells.pop_back();
         }
 
         for (int i = 0; i < CellType::COUNT; ++i) {
