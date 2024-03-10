@@ -21,8 +21,8 @@ public:
     explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
                   sf::Color color);
 
-    // установка случайного вектора движения
-    void setRandomVelocity();
+    // установка случайного вектора движения + обновление времени
+    void setRandomMovement();
 
     void reflectionControl();
 

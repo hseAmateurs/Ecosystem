@@ -30,12 +30,7 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCel
 }
 
 void BodyCell::update(Field &field, sf::Time deltaTime) {
-    if (timer.getElapsedTime() > randomMoveInterval) {
-        setRandomVelocity();
-        auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-        randomMoveInterval = sf::seconds(randomSeconds);
-        timer.restart();
-    }
+    setRandomMovement();
     reflectionControl();
     updateCollision(field.neutroes);
     updateCollision(field.pathogens);

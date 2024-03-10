@@ -40,8 +40,10 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         timer -= deltaTime;
         if(timer <= sf::Time::Zero) {
             timer = sf::seconds(120);
-            std::cout << "Start\n";
-            field.macroes[0]->scrollBCells(field);
+            std::cout << "Start: " << field.macroes.front()->getCode() << "\n";
+            field.bCells.front()->setStatus(BCell::BUSY);
+            field.macroes.front()->setStatus(MacroCell::DELIVERY);
+//            field.macroes[0]->scrollBCells(field);
         }
 
         for (int i = 0; i < CellType::COUNT; ++i) {

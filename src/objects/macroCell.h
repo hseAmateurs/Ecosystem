@@ -12,11 +12,17 @@
 
 class MacroCell : public Cell {
 public:
+    enum Status {
+        HUNTING,
+        DELIVERY,
+        CHECKING
+    };
+
     MacroCell(texture::AnimationParameters animation, float radius, int size, float speed,
               sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color) { }
+                   center, color), m_status(HUNTING) { }
 
     int type() const override { return CellType::MACRO; }
 
@@ -24,10 +30,16 @@ public:
 
     void update(Field &field, sf::Time deltaTime) override;
 
-    void scrollBCells(Field &field);
+    Status getStatus() const { return m_status; }
+
+    void setStatus(Status status) { m_status = status; };
 
 private:
+    void scrollBCells(Field &field);
 
+    void hunting(Field &field, sf::Time deltaTime);
+
+    Status m_status;
 };
 
 #endif //ECOSYSTEM_MACROCELL_H

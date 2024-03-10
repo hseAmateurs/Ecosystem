@@ -26,10 +26,16 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
 }
 
 
-// генерация случайного вектора движения
-void Cell::setRandomVelocity() {
+// генерация случайного вектора движения + обновление времени
+void Cell::setRandomMovement() {
+    if (timer.getElapsedTime() <= randomMoveInterval) return;
+
     double angle = (rand() % 360) * M_PI / 180;
     velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * speed;
+
+    auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
+    randomMoveInterval = sf::seconds(randomSeconds);
+    timer.restart();
 }
 
 void Cell::reflectionControl() {
