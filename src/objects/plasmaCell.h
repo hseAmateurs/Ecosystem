@@ -7,6 +7,7 @@
 
 
 #include "cell.h"
+#include "../utils/cells.h"
 #include "../textures/cellTexture.h"
 
 class PlasmaCell : public Cell {
@@ -17,6 +18,8 @@ public:
     int type() const override { return CellType::PLASMA; }
 
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
+
+    void update(Field &field, sf::Time deltaTime) override { };
 };
 
 

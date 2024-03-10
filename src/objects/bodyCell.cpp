@@ -3,7 +3,6 @@
 //
 
 #include "bodyCell.h"
-#include "../textures/animations.h"
 
 void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
@@ -28,4 +27,21 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCel
         bodyCells.push_back(newCell);
         lifeTime = sf::Time::Zero;
     }
+}
+
+void BodyCell::update(Field &field, sf::Time deltaTime) {
+    if (timer.getElapsedTime() > randomMoveInterval) {
+        setRandomVelocity();
+        auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
+        randomMoveInterval = sf::seconds(randomSeconds);
+        timer.restart();
+    }
+    reflectionControl();
+    updateCollision(field.neutroes);
+    updateCollision(field.pathogens);
+    updateCollision(field.macroes);
+    updateCollision(field.bodies);
+
+
+    move(velocity * deltaTime.asSeconds());
 }

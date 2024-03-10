@@ -7,6 +7,7 @@
 
 
 #include "cell.h"
+#include "../utils/cells.h"
 #include "../textures/cellTexture.h"
 
 class BCell : public Cell {
@@ -30,6 +31,8 @@ public:
     Status getStatus() const { return m_status; }
 
     void setStatus(Status status) { m_status = status; }
+
+    void update(Field &field, sf::Time deltaTime) override {  };
 
     ~BCell() override;
 

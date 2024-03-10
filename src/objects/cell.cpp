@@ -1,3 +1,4 @@
+#include <iostream>
 #include "cell.h"
 #include "random"
 #include "../utils/settings.h"

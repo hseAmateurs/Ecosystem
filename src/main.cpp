@@ -5,6 +5,7 @@
 
 #include "utils/initialization.h"
 #include "utils/settings.h"
+#include "utils/freeMemory.h"
 
 using namespace utils;
 
@@ -13,7 +14,7 @@ bool isRun = true;
 template<class T>
 void drawing(vector<T*> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
     for (auto cell: cells) {
-        cell->update(field.pathogens, field.bodies, field.macroes, field.neutroes, deltaTime);
+        cell->update(field, deltaTime);
         window.draw(*cell);
         cell->setFont(field.font);
         cell->drawTexture(window, deltaTime);
@@ -101,6 +102,8 @@ int main() {
             }
         }
     }
+
+    freeField(field);
 
     return 0;
 }

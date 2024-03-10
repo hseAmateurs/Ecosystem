@@ -10,6 +10,7 @@
 
 #include "utils.h"
 #include "cellTypes.h"
+#include "cells.h"
 
 using std::vector;
 
