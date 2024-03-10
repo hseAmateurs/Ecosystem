@@ -53,9 +53,20 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
 void MacroCell::scrollBCells(Field &field) {
     // Защита от одновременного смещения и B-клеток, и макрофагов по ним
     for (BCell *&cell: field.bCells)
-        if(cell->getStatus() == BCell::BUSY)
+        if (cell->getStatus() == BCell::BUSY || cell->getStatus() == BCell::MOVING)
             return;
 
+    auto *newBCell = new BCell(texture::bCell,
+                               field.bCells[0]->getRadius(),
+                               field.bCells[0]->getSize(),
+                               field.bCells[0]->getSpeed(),
+                               BCell::getXY(field.bCells.size(), field.bCells.size()),
+                               field.bCells[0]->getColor());
+    field.bCells.push_back(newBCell);
+
     for (BCell *&cell: field.bCells)
-        cell->setStatus(BCell::SCROLLING);
+        cell->setStatus(BCell::SCROLL);
+
+//    delete field.bCells.front();
+//    field.bCells.erase(field.bCells.begin());
 }

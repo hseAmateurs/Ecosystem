@@ -39,6 +39,12 @@ public:
 
     virtual void update(Field &field, sf::Time deltaTime) = 0;
 
+    sf::Color getColor() const { return color; }
+
+    int getSize() const { return size; }
+
+    float getSpeed() const { return speed; }
+
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);

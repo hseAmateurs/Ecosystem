@@ -24,8 +24,10 @@ public:
 
     void update(Field &field, sf::Time deltaTime) override;
 
-private:
     void scrollBCells(Field &field);
+
+private:
+
 };
 
 #endif //ECOSYSTEM_MACROCELL_H

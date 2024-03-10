@@ -16,17 +16,15 @@ public:
         FREE,
         AWAIT,
         BUSY,
-        MOVE,
-        SCROLLING
+        SCROLL,
+        MOVING
     };
 
     BCell(texture::AnimationParameters animation, float radius, int size, float speed,
           sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), m_status(FREE) {
-        setOrigin(getRadius() / 2, getRadius() / 2);
-    }
+                   center, color), m_status(FREE) { }
 
     int type() const override { return CellType::BCELL; }
 

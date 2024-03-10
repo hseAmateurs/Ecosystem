@@ -24,20 +24,20 @@ void BCell::updateAngle() {
 
 
 void BCell::update(Field &field, sf::Time deltaTime) {
-    if (m_status == MOVE) {
+    if (m_status == SCROLL) {
         int index = getID(field);
-        sf::Vector2f nextPos = getXY(index + 1, field.bCells.size());
-        sf::Vector2f pos = getXY(index, field.bCells.size());
+        sf::Vector2f nextPos = getXY(index - 1, field.bCells.size() - 1);
+        sf::Vector2f curPos = getXY(index, field.bCells.size() - 1);
         anim = {
                 atan2(SCREEN_HEIGHT - nextPos.y, SCREEN_WIDTH - nextPos.x),
-                atan2(SCREEN_HEIGHT - pos.y, SCREEN_WIDTH - pos.x),
+                atan2(SCREEN_HEIGHT - curPos.y, SCREEN_WIDTH - curPos.x),
                 600 + (double)(rand() % 1000 - 500)
         };
-        m_status = SCROLLING;
+        m_status = MOVING;
         timer.restart();
         return;
     }
-    if(m_status == SCROLLING) {
+    if(m_status == MOVING) {
         updateAngle();
         setPosition(getXY(anim.currentAngle));
         if(anim.currentAngle >= anim.targetAngle) {
@@ -64,6 +64,6 @@ sf::Vector2f BCell::getXY(double angle) {
 
 sf::Vector2f BCell::getXY(const int index, const int amount) {
     const double angleOffset = M_PI / 8;
-    double angle = (M_PI / 2 + angleOffset) / (amount + 1) * (index + 1) - angleOffset / 2;
+    double angle = (M_PI / 2 + angleOffset) / (amount + 1) * (amount - index) - angleOffset / 2;
     return getXY(angle);
 }
