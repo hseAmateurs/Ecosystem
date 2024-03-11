@@ -41,6 +41,9 @@ void BodyCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.macroes);
     updateCollision(field.bodies);
 
+    if (texture.isDead()){
+        m_isDead = true;
+    }
 
     move(velocity * deltaTime.asSeconds());
 }

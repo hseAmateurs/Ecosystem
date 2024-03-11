@@ -40,6 +40,8 @@ public:
     virtual void update(Field &field, sf::Time deltaTime) = 0;
 
     texture::CellTexture texture;
+
+    bool isDead() const { return m_isDead; }
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
@@ -53,6 +55,8 @@ protected:
     float speed;
     sf::Clock timer;
     sf::Time randomMoveInterval;
+
+    bool m_isDead;
 
 private:
     sf::Time interval;

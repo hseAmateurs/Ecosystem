@@ -40,6 +40,7 @@ void Cell::reflectionControl() {
         pos.y <= -BORDER_OFFSET || pos.y >= SCREEN_HEIGHT + BORDER_OFFSET ||
         (pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <=
         BRAIN_RADIUS * BRAIN_RADIUS) {
-        velocity = sf::Vector2f(-1, -1) * speed;
+        velocity = sf::Vector2f(800.f, 450.f) - getPosition();
+        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
     }
 }
