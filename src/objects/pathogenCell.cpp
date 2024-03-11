@@ -41,12 +41,10 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
             if (otherCell->texture.isDead()){
                 deadInd = i;
                 newPos = otherCell->getPosition();
-                delete field.bodies.at(deadInd);
-                field.bodies.erase(field.bodies.begin() + deadInd);
                 PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, center,  color);
                 newCell->setPosition(newPos);
-                //field.pathogens.push_back(newCell);
-                //break;
+                field.pathogens.push_back(newCell);
+                break;
             }
 
 
@@ -54,17 +52,6 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         }
         i++;
     }
-
-//    if (deadInd != 0 && deadInd <= field.bodies.size()) {
-//        delete field.bodies.at(deadInd);
-//        field.bodies.erase(field.bodies.begin() + deadInd);
-//        std::cout<<"Delete dead body\n";
-//        PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, newPos, color);
-//        //field.pathogens.push_back(newCell);
-//    }
-
-
-
     if (minDistance == INF) {
         if (timer.getElapsedTime() > randomMoveInterval) {
             setRandomVelocity();

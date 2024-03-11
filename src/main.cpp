@@ -14,11 +14,24 @@ bool isRun = true;
 
 template<class T>
 void drawing(vector<T*> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
-    for (auto cell: cells) {
+    int cellsSize = cells.size();
+    vector<int> deadCells;
+    for (int i = 0; i < cellsSize; ++i) {
+        auto &cell = cells[i];
+        if(cell->isDead()) {
+            deadCells.push_back(i);
+            continue;
+        }
         cell->update(field, deltaTime);
         window.draw(*cell);
         cell->setFont(field.font);
         cell->drawTexture(window, deltaTime);
+    }
+    // Подчищаем мертвые клетки
+    int deadSize = deadCells.size();
+    for (int i = deadSize - 1; i >= 0; --i) {
+        delete cells[deadCells[i]];
+        cells.erase(cells.begin() + deadCells[i]);
     }
 }
 
