@@ -27,7 +27,7 @@ void BCell::update(Field &field, sf::Time deltaTime) {
     }
     if (m_status == MOVING) {
         updateAngle(anim, timer);
-        if (anim.currentAngle >= anim.targetAngle) {
+        if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
             int index = getID(field);
             if(index == 0) {
                 field.bCells.erase(field.bCells.begin());

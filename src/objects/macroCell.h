@@ -10,12 +10,15 @@
 #include "../utils/cells.h"
 #include "../textures/cellTexture.h"
 
+#include "../utils/brain.h"
+
 class MacroCell : public Cell {
 public:
     enum Status {
         HUNTING,
         DELIVERY,
-        CHECKING
+        CHECKING,
+        MOVING
     };
 
     MacroCell(texture::AnimationParameters animation, float radius, int size, float speed,
@@ -39,8 +42,12 @@ private:
 
     void hunting(Field &field, sf::Time deltaTime);
 
+    void moveNextPrepare(Field &field);
+
     Status m_status;
     int bCellIndex;
+
+    brain::Animation anim;
 };
 
 #endif //ECOSYSTEM_MACROCELL_H

@@ -46,6 +46,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
             std::cout << "Start: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::BUSY);
             field.macroes.front()->setStatus(MacroCell::DELIVERY);
+            field.bCells.front()->setCode('s');
 //            field.macroes[0]->scrollBCells(field);
         }
         if(timer <= sf::seconds(-2) && stepTwo) {

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "macroCell.h"
 
+using namespace brain;
+
 void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
     texture.update(elapsed);
@@ -25,13 +27,14 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
             move(velocity * deltaTime.asSeconds());
             return;
         }
-
-        const sf::Vector2f targetPos = BCell::nextOrbitXY(bCellIndex, field.bCells.size());
+        // Первая клетка свободна
+        const sf::Vector2f targetPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
         velocity = targetPos - getPosition();
 
-        if(velocity.x < 1 && velocity.y < 1) {
+        if (velocity.x < 1 && velocity.y < 1) {
             setPosition(targetPos);
             m_status = CHECKING;
+            return;
         }
 
         normalizeVelocity();
@@ -39,37 +42,73 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         reflectionControl();
         move(velocity * deltaTime.asSeconds());
     }
-    if(m_status == CHECKING) {
+    if (m_status == CHECKING) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
-        if(!bCell->getCode()) bCell->setCode(getCode());
-        m_status = DELIVERY;
-        // Проверять и двигать клетку
-        // Возможно стоит фукнции из bCell вынести в общий файл, т.к. они повторяются
+        if (!bCell->getCode()) {
+            bCell->setCode(getCode()); // Вместо set будет подбор
+            bCell->setStatus(BCell::FREE);
+            // run plasma
+            // delete cell
+            return;
+        }
+        if (bCell->getCode() == getCode()) {
+            bCell->setStatus(BCell::FREE);
+            // run plasma
+            // delete cell
+            return;
+        }
+        if (bCellIndex + 1 == field.bCells.size()) {
+            scrollBCells(field);
+            return;
+        }
+
+        // Заупск анимации перемещения
+        if (field.bCells[bCellIndex + 1]->getStatus() == BCell::FREE)
+            moveNextPrepare(field);
+        return;
+    }
+
+    if (m_status == MOVING) {
+        updateAngle(anim, timer);
+        if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
+            m_status = CHECKING;
+            anim.currentAngle = anim.targetAngle;
+        }
+        setPosition(getXY(anim.currentAngle, MACRO_DISTANCE));
         return;
     }
 }
 
+void MacroCell::moveNextPrepare(Field &field) {
+    field.bCells[bCellIndex]->setStatus(BCell::FREE);
+    bCellIndex++;
+    field.bCells[bCellIndex]->setStatus(BCell::BUSY);
+    sf::Vector2f nextPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
+    sf::Vector2f curPos = getXY(bCellIndex - 1, field.bCells.size(), MACRO_DISTANCE);
+    anim = {
+            atan2(SCREEN_HEIGHT - nextPos.y, SCREEN_WIDTH - nextPos.x),
+            atan2(SCREEN_HEIGHT - curPos.y, SCREEN_WIDTH - curPos.x),
+            600 + (double)(rand() % 1000 - 500),
+            speed / 10
+    };
+    m_status = MOVING;
+    timer.restart();
+}
+
 void MacroCell::scrollBCells(Field &field) {
     // Защита от одновременного смещения и B-клеток, и макрофагов по ним
-    for (BCell *&cell: field.bCells)
-        if (cell->getStatus() == BCell::BUSY || cell->getStatus() == BCell::MOVING)
+    for (MacroCell *&cell: field.macroes)
+        if (cell->getStatus() == MOVING)
             return;
 
     auto firstBCell = field.bCells.front();
-    auto *newBCell = new BCell(texture::bCell,
-                               firstBCell->getRadius(),
-                               firstBCell->getSize(),
-                               firstBCell->getSpeed(),
-                               BCell::getXY((int)field.bCells.size(), (int)field.bCells.size()),
-                               firstBCell->getColor());
+    auto *newBCell = new BCell(*firstBCell);
+    newBCell->setPosition(getXY((int)field.bCells.size(), (int)field.bCells.size()));
     field.bCells.push_back(newBCell);
 
     for (BCell *&cell: field.bCells)
         cell->setStatus(BCell::SCROLL);
-
-//    delete field.bCells.front();
-//    field.bCells.erase(field.bCells.begin());
 }
 
 void MacroCell::hunting(Field &field, sf::Time deltaTime) {
