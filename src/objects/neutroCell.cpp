@@ -16,10 +16,6 @@ void NeutroCell::update(Field &field, sf::Time deltaTime) {
 
     sf::Vector2f closestBody;
     float minDistance = INF;
-    int i = 0;
-    int j=0;
-    int deadInd = -1;
-    int neutroInd = -1;
     sf::Vector2f hunterPos = getPosition();
 
     for (PathogenCell* &otherCell: field.pathogens) {
@@ -32,15 +28,14 @@ void NeutroCell::update(Field &field, sf::Time deltaTime) {
         }
         if (distance <= radius+otherCell->getRadius()) {
             if (!otherCell->texture.isAnimDying()){
-                // this->size-otherCell->getSize();
-                // if(this->size<=0||!this->texture.isAnimDying()){
-                //     this->texture.startDying();
-                // }
+                this->size=this->size-otherCell->getSize();
+                if(this->size<=0&&!this->texture.isAnimDying()){
+                    this->texture.startDying();
+                }
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }
         }
-        i++;
     }
 
     if (minDistance == INF) {
@@ -59,5 +54,8 @@ void NeutroCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
+    if (texture.isDead()){
+        m_isDead = true;
+    }
     move(velocity * deltaTime.asSeconds());
 }

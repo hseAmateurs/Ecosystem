@@ -43,7 +43,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
                 newPos = otherCell->getPosition();
                 PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, center,  color);
                 newCell->setPosition(newPos);
-                field.pathogens.push_back(newCell);
+                //field.pathogens.push_back(newCell);
                 break;
             }
 
@@ -66,6 +66,9 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     }
     reflectionControl();
     updateCollision(field.pathogens);
+    if (texture.isDead()){
+        m_isDead = true;
+    }
     move(velocity * deltaTime.asSeconds());
 
 

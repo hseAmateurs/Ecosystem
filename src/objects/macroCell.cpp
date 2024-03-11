@@ -32,17 +32,11 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         }
         if (distance <= radius) {
             if (!otherCell->texture.isAnimDying()){
-                // this->setCode(otherCell->getCode());
+                this->setCode(otherCell->getCode());
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }
-            if (otherCell->texture.isDead()){
-                deadInd = i;
-                delete field.pathogens.at(deadInd);
-                field.pathogens.erase(field.pathogens.begin() + deadInd);
-            }
         }
-        i++;
     }
 
     if (minDistance == INF) {
@@ -61,5 +55,8 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
+    if(texture.isDead()){
+        m_isDead = true;
+    }
     move(velocity * deltaTime.asSeconds());
 }
