@@ -21,20 +21,12 @@ BCell::~BCell() {
 }
 
 void BCell::update(Field &field, sf::Time deltaTime) {
-    if (m_status == SCROLL) {
-        scrollPrepare(field);
-        return;
-    }
     if (m_status == MOVING) {
         updateAngle(anim, timer);
         if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
-            int index = getID(field);
-            if(index == 0) {
-                field.bCells.erase(field.bCells.begin());
-                delete this;
-            }
+            if (m_index == 0)
+                m_isDead = true;
             m_status = FREE;
-
             anim.currentAngle = anim.targetAngle;
         }
         setPosition(getXY(anim.currentAngle));
@@ -42,10 +34,10 @@ void BCell::update(Field &field, sf::Time deltaTime) {
     }
 }
 
-void BCell::scrollPrepare(const Field &field) {
-    int index = getID(field);
-    sf::Vector2f nextPos = getXY(index - 1, field.bCells.size() - 1);
-    sf::Vector2f curPos = getXY(index, field.bCells.size() - 1);
+void BCell::scrollPrepare(const int index, const int amount) {
+    m_index = index;
+    sf::Vector2f nextPos = getXY(m_index - 1, amount - 1);
+    sf::Vector2f curPos = getXY(m_index, amount - 1);
     anim = {
             atan2(SCREEN_HEIGHT - nextPos.y, SCREEN_WIDTH - nextPos.x),
             atan2(SCREEN_HEIGHT - curPos.y, SCREEN_WIDTH - curPos.x),
@@ -54,12 +46,4 @@ void BCell::scrollPrepare(const Field &field) {
     };
     m_status = MOVING;
     timer.restart();
-}
-
-int BCell::getID(const Field &field) const {
-    int index = 0;
-    for (const BCell *cell: field.bCells) {
-        if (cell == this) return index;
-        index++;
-    }
 }

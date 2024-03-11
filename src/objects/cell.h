@@ -45,6 +45,8 @@ public:
 
     float getSpeed() const { return speed; }
 
+    bool isDead() const { return m_isDead; }
+
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
@@ -61,6 +63,8 @@ protected:
     float speed;
     sf::Clock timer;
     sf::Time randomMoveInterval;
+
+    bool m_isDead;
 
 private:
     sf::Time interval;

@@ -12,12 +12,25 @@ using namespace utils;
 bool isRun = true;
 
 template<class T>
-void drawing(vector<T*> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
-    for (auto cell: cells) {
+void drawing(vector<T *> &cells, Field &field, sf::RenderWindow &window, sf::Time &deltaTime) {
+    int cellsSize = cells.size();
+    vector<int> deadCells;
+    for (int i = 0; i < cellsSize; ++i) {
+        auto &cell = cells[i];
+        if(cell->isDead()) {
+            deadCells.push_back(i);
+            continue;
+        }
         cell->update(field, deltaTime);
         window.draw(*cell);
         cell->setFont(field.font);
         cell->drawTexture(window, deltaTime);
+    }
+    // Подчищаем мертвые клетки
+    int deadSize = deadCells.size();
+    for (int i = deadSize - 1; i >= 0; --i) {
+        delete cells[deadCells[i]];
+        cells.erase(cells.begin() + deadCells[i]);
     }
 }
 
@@ -41,15 +54,16 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
         timer -= deltaTime;
-        if(timer <= sf::Time::Zero && stepOne) {
+        if (timer <= sf::Time::Zero && stepOne) {
             stepOne = false;
             std::cout << "Start: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::BUSY);
             field.macroes.front()->setStatus(MacroCell::DELIVERY);
-            field.bCells.front()->setCode('s');
-//            field.macroes[0]->scrollBCells(field);
+            for (int i = 0; i < field.bCells.size(); ++i) {
+                field.bCells[i]->setCode('s');
+            }
         }
-        if(timer <= sf::seconds(-2) && stepTwo) {
+        if (timer <= sf::seconds(-2) && stepTwo) {
             stepTwo = false;
             std::cout << "Delivery active: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::FREE);
@@ -91,7 +105,8 @@ int main() {
     setbuf(stdout, nullptr);
     srand(time(nullptr));
 
-    sf::RenderWindow window(sf::VideoMode(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT), "Ecosystem", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT), "Ecosystem",
+                            sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     Field field = initField(readCSV("../data.csv"), "../resources/font/couriercyrps_bold.ttf", window);

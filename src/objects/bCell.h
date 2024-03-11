@@ -17,7 +17,6 @@ public:
     enum Status {
         FREE,
         BUSY,
-        SCROLL,
         MOVING
     };
 
@@ -37,17 +36,16 @@ public:
 
     void setStatus(Status status) { m_status = status; };
 
+    void scrollPrepare(int index, int amount);
+
     void update(Field &field, sf::Time deltaTime) override;
 
     ~BCell() override;
 
 private:
-    int getID(const Field &field) const;
-
-    void scrollPrepare(const Field &field);
-
     Status m_status;
     brain::Animation anim;
+    int m_index; // Индекс в field.bCells
 };
 
 

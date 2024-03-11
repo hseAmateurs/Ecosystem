@@ -46,6 +46,8 @@ private:
 
     void moveNextPrepare(Field &field);
 
+    bool isBCellReady(const Field &field) const;
+
     Status m_status;
     int bCellIndex;
 

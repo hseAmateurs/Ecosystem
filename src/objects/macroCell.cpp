@@ -47,7 +47,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         reflectionControl();
         move(velocity * deltaTime.asSeconds());
     }
-    if (m_status == CHECKING) {
+    if (m_status == CHECKING && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
 
@@ -86,6 +86,14 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     }
 }
 
+bool MacroCell::isBCellReady(const Field &field) const {
+    for (BCell *cell: field.bCells) {
+        if(cell->getStatus() == BCell::MOVING)
+            return false;
+    }
+    return true;
+}
+
 void MacroCell::moveNextPrepare(Field &field) {
     field.bCells[bCellIndex]->setStatus(BCell::FREE);
     bCellIndex++;
@@ -113,8 +121,9 @@ void MacroCell::scrollBCells(Field &field) {
     newBCell->setPosition(getXY((int)field.bCells.size(), (int)field.bCells.size()));
     field.bCells.push_back(newBCell);
 
-    for (BCell *&cell: field.bCells)
-        cell->setStatus(BCell::SCROLL);
+    int bCellAmount = field.bCells.size();
+    for (int i = 0; i < bCellAmount; ++i)
+        field.bCells[i]->scrollPrepare(i, bCellAmount);
 }
 
 void MacroCell::hunting(Field &field, sf::Time deltaTime) {
