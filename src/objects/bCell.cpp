@@ -27,7 +27,6 @@ void BCell::update(Field &field, sf::Time deltaTime) {
     }
     if (m_status == MOVING) {
         updateAngle(anim, timer);
-        setPosition(getXY(anim.currentAngle));
         if (anim.currentAngle >= anim.targetAngle) {
             int index = getID(field);
             if(index == 0) {
@@ -35,7 +34,10 @@ void BCell::update(Field &field, sf::Time deltaTime) {
                 delete this;
             }
             m_status = FREE;
+
+            anim.currentAngle = anim.targetAngle;
         }
+        setPosition(getXY(anim.currentAngle));
         return;
     }
 }

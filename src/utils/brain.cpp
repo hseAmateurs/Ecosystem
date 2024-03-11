@@ -12,7 +12,6 @@ namespace brain {
         double deltaAngle = anim.targetAngle - anim.currentAngle;
         double scale = sin(M_PI * timer.getElapsedTime().asSeconds() / (anim.speedScale / anim.speed));
         anim.currentAngle += deltaAngle * scale;
-        if (anim.currentAngle > anim.targetAngle) anim.currentAngle = anim.targetAngle;
     }
 
     sf::Vector2f getXY(const double angle, const double distance) {
