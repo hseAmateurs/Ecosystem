@@ -51,23 +51,42 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     while (isRun) {
         window.clear(sf::Color::White);
         vector<BodyCell *> newBodies;
-        window.draw(brain); // DEBUG
+// DEBUG ---
+        window.draw(brain);
         sf::Time deltaTime = clock.restart();
         timer -= deltaTime;
         if (timer <= sf::Time::Zero && stepOne) {
             stepOne = false;
-            std::cout << "Start: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::BUSY);
-            field.macroes.front()->setStatus(MacroCell::DELIVERY);
             for (int i = 0; i < field.bCells.size(); ++i) {
                 field.bCells[i]->setCode('s');
             }
+//            field.macroes[0]->setCode('0');
+//            field.macroes[0]->setPosition(1500, 300);
+//            field.macroes[1]->setCode('1');
+//            field.macroes[1]->setPosition(1400, 300);
+//            field.macroes[2]->setCode('3');
+//            field.macroes[2]->setPosition(1300, 300);
+//            field.macroes[3]->setCode('4');
+//            field.macroes[3]->setPosition(100, 300);
+//            field.macroes[4]->setCode('1');
+//            field.macroes[4]->setPosition(400, 300);
+//            field.macroes[5]->setCode('0');
+//            field.macroes[5]->setPosition(200, 300);
+//            field.macroes[6]->setCode('4');
+//            field.macroes[6]->setPosition(0, 300);
+            for (int i = 0; i < field.macroes.size(); ++i) {
+                field.macroes[i]->setPosition(1200, 300);
+                field.macroes[i]->setStatus(MacroCell::DELIVERY);
+                std::cout << "Start: " << field.macroes[i]->getCode() << "\n";
+            }
+//            field.bCells.front()->setStatus(BCell::FREE);
         }
         if (timer <= sf::seconds(-2) && stepTwo) {
             stepTwo = false;
-            std::cout << "Delivery active: " << field.macroes.front()->getCode() << "\n";
             field.bCells.front()->setStatus(BCell::FREE);
         }
+// ---
 
         for (int i = 0; i < CellType::COUNT; ++i) {
             switch (i) {
