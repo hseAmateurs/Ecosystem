@@ -28,7 +28,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-        if (distance < minDistance && distance < HUNT_TRIGGER) {
+        if (distance < minDistance && distance < PATH_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
@@ -43,7 +43,6 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
                 newPos = otherCell->getPosition();
                 delete field.bodies.at(deadInd);
                 field.bodies.erase(field.bodies.begin() + deadInd);
-                std::cout<<"Delete dead body\n";
                 PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, center,  color);
                 newCell->setPosition(newPos);
                 //field.pathogens.push_back(newCell);
@@ -79,10 +78,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
     }
     reflectionControl();
-    updateCollision(field.neutroes);
     updateCollision(field.pathogens);
-    updateCollision(field.macroes);
-    //updateCollision(field.bodies);
     move(velocity * deltaTime.asSeconds());
 
 

@@ -38,7 +38,6 @@ void BodyCell::update(Field &field, sf::Time deltaTime) {
     }
     reflectionControl();
     updateCollision(field.neutroes);
-    updateCollision(field.pathogens);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
 

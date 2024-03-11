@@ -18,16 +18,30 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
 
     sf::Vector2f closestBody;
     float minDistance = INF;
+    int i = 0;
+    int deadInd = -1;
     sf::Vector2f hunterPos = getPosition();
 
     for (PathogenCell *&otherCell: field.pathogens) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-        if (distance < minDistance && distance < HUNT_TRIGGER) {
+        if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
+        if (distance <= radius+otherCell->getRadius()+1) {
+            if (!otherCell->texture.isAnimDying()){
+                otherCell->setCode(' ');
+                otherCell->texture.startDying();
+            }
+            if (otherCell->texture.isDead()){
+                deadInd = i;
+                delete field.pathogens.at(deadInd);
+                field.pathogens.erase(field.pathogens.begin() + deadInd);
+            }
+        }
+        i++;
     }
 
     if (minDistance == INF) {
@@ -44,7 +58,6 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     }
     reflectionControl();
     updateCollision(field.neutroes);
-    updateCollision(field.pathogens);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
     move(velocity * deltaTime.asSeconds());
