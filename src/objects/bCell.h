@@ -17,7 +17,8 @@ public:
     enum Status {
         FREE,
         BUSY,
-        MOVING
+        MOVING,
+        AWAIT
     };
 
     BCell(texture::AnimationParameters animation, float radius, int size, float speed,
@@ -26,7 +27,7 @@ public:
                    speed,
                    center, color), m_status(FREE) { }
 
-    BCell(const BCell &right) : Cell(right), m_status(FREE) { code.setString(""); }
+    BCell(const BCell &right) : Cell(right), m_status(FREE) { code.setString(std::string()); }
 
     int type() const override { return CellType::BCELL; }
 
@@ -36,13 +37,14 @@ public:
 
     void setStatus(Status status) { m_status = status; };
 
-    void scrollPrepare(int index, int amount);
+    void scrollPrepare(int index, int amount, Status nextStatus);
 
     void update(Field &field, sf::Time deltaTime) override;
 
     ~BCell() override;
 
 private:
+    Status m_nextStatus;
     Status m_status;
     brain::Animation anim;
     int m_index; // Индекс в field.bCells

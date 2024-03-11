@@ -23,10 +23,10 @@ BCell::~BCell() {
 void BCell::update(Field &field, sf::Time deltaTime) {
     if (m_status == MOVING) {
         updateAngle(anim, timer);
-        if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
+        if (std::abs(anim.targetAngle - anim.currentAngle) <= angleEps) {
             if (m_index == 0)
                 kill();
-            m_status = FREE;
+            m_status = m_nextStatus;
             anim.currentAngle = anim.targetAngle;
         }
         setPosition(getXY(anim.currentAngle));
@@ -34,8 +34,9 @@ void BCell::update(Field &field, sf::Time deltaTime) {
     }
 }
 
-void BCell::scrollPrepare(const int index, const int amount) {
+void BCell::scrollPrepare(const int index, const int amount, Status nextStatus) {
     m_index = index;
+    m_nextStatus = nextStatus;
     sf::Vector2f nextPos = getXY(m_index - 1, amount - 1);
     sf::Vector2f curPos = getXY(m_index, amount - 1);
     anim = {
