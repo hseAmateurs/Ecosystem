@@ -37,6 +37,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
 
     while (isRun) {
         window.clear(sf::Color::White);
+        vector<BodyCell *> newBodies;
         window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
         timer -= deltaTime;
@@ -59,8 +60,10 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
+                    newBodies.clear();
                     for (BodyCell *cell: field.bodies)
-                        cell->cellDivision(deltaTime, field.bodies);
+                        cell->cellDivision(deltaTime, newBodies);
+                    field.bodies.insert(field.bodies.end(), newBodies.begin(), newBodies.end());
                     drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:

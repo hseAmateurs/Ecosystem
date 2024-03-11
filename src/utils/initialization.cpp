@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "settings.h"
+#include "../utils/brain.h"
 
 using namespace settings;
 
@@ -135,7 +136,7 @@ void utils::createCells(vector <T*> &cells, const utils::CellParam &param, sf::R
             cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
         }
         else if (cell->type() == CellType::BCELL)
-            cell->setPosition(BCell::getXY(i, param.amount));
+            cell->setPosition(brain::getXY(i, param.amount));
         window.draw(*cell);
         cells.push_back(cell);
     }
