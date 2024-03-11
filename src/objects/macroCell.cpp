@@ -30,8 +30,9 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
             minDistance = distance;
             closestBody = bodyPos;
         }
-        if (distance <= radius+otherCell->getRadius()+1) {
+        if (distance <= radius) {
             if (!otherCell->texture.isAnimDying()){
+                // this->setCode(otherCell->getCode());
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }

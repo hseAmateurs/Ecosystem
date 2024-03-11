@@ -33,6 +33,10 @@ public:
 
     char getCode() const { return code.getString()[0]; };
 
+    void setSize(const int &new_size){ size=new_size; };
+
+    int getSize() const {return size;};
+
     void setFont(const sf::Font &font) { code.setFont(font); };
 
     virtual int type() const = 0;
