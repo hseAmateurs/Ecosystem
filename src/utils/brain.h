@@ -22,6 +22,8 @@ namespace brain {
     sf::Vector2f getXY(double angle, double distance = settings::BCELL_DISTANCE);
 
     void updateAngle(Animation &anim, const sf::Clock &timer);
+
+    const double angleEps = 0.0025;
 }
 
 #endif //ECOSYSTEM_BRAIN_H
