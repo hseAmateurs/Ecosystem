@@ -36,7 +36,5 @@ void BodyCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.pathogens);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
-
-
     move(velocity * deltaTime.asSeconds());
 }
