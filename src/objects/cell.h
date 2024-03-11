@@ -29,7 +29,7 @@ public:
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
     virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
 
-    void setCode(const char &new_code) { code.setString(new_code); };
+    void setCode(const char new_code) { code.setString(std::string{new_code}); };
 
     char getCode() const { return code.getString()[0]; };
 
