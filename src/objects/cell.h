@@ -53,6 +53,8 @@ protected:
 
     void normalizeVelocity();
 
+    void kill() { m_isDead = true; }
+
     sf::Text code;
     texture::CellTexture texture;
     float radius;
@@ -64,9 +66,8 @@ protected:
     sf::Clock timer;
     sf::Time randomMoveInterval;
 
-    bool m_isDead;
-
 private:
+    bool m_isDead;
     sf::Time interval;
 };
 

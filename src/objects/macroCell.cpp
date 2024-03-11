@@ -17,6 +17,7 @@ void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
 }
 
 void MacroCell::runPlasma(Field &field) {
+    kill();
     // run plasma
     // current delete cell
 }

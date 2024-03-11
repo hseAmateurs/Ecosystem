@@ -25,7 +25,7 @@ void BCell::update(Field &field, sf::Time deltaTime) {
         updateAngle(anim, timer);
         if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
             if (m_index == 0)
-                m_isDead = true;
+                kill();
             m_status = FREE;
             anim.currentAngle = anim.targetAngle;
         }
