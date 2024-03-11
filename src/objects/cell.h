@@ -39,12 +39,12 @@ public:
 
     virtual void update(Field &field, sf::Time deltaTime) = 0;
 
+    texture::CellTexture texture;
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
 
     sf::Text code;
-    texture::CellTexture texture;
     float radius;
     int size;
     sf::Color color;

@@ -92,6 +92,10 @@ namespace texture {
 
         void startBirthing();
 
+        bool isDead() const { return pointsCount==0; }
+
+        bool isAnimDying() const { return isDying; }
+
     private:
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

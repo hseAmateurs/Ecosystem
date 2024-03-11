@@ -3,6 +3,7 @@
 //
 
 #include "pathogenCell.h"
+#include <iostream>
 
 void PathogenCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
@@ -19,6 +20,9 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
     sf::Vector2f hunterPos = getPosition();
+    int i = 0;
+    int deadInd = -1;
+    sf::Vector2f newPos(-1000.f, -1000.f);
 
     for (BodyCell* otherCell: field.bodies) {
         sf::Vector2f bodyPos = otherCell->getPosition();
@@ -28,7 +32,39 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
             minDistance = distance;
             closestBody = bodyPos;
         }
+
+        if (distance <= radius+otherCell->getRadius()) {
+            if (!otherCell->texture.isAnimDying()) {
+                otherCell->texture.startDying();
+            }
+
+            if (otherCell->texture.isDead()){
+                deadInd = i;
+                newPos = otherCell->getPosition();
+                delete field.bodies.at(deadInd);
+                field.bodies.erase(field.bodies.begin() + deadInd);
+                std::cout<<"Delete dead body\n";
+                PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, center,  color);
+                newCell->setPosition(newPos);
+                //field.pathogens.push_back(newCell);
+                //break;
+            }
+
+
+
+        }
+        i++;
     }
+
+//    if (deadInd != 0 && deadInd <= field.bodies.size()) {
+//        delete field.bodies.at(deadInd);
+//        field.bodies.erase(field.bodies.begin() + deadInd);
+//        std::cout<<"Delete dead body\n";
+//        PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, newPos, color);
+//        //field.pathogens.push_back(newCell);
+//    }
+
+
 
     if (minDistance == INF) {
         if (timer.getElapsedTime() > randomMoveInterval) {
@@ -46,6 +82,8 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     updateCollision(field.neutroes);
     updateCollision(field.pathogens);
     updateCollision(field.macroes);
-    updateCollision(field.bodies);
+    //updateCollision(field.bodies);
     move(velocity * deltaTime.asSeconds());
+
+
 }
