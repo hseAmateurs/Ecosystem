@@ -38,6 +38,8 @@ public:
     void setStatus(Status status) { m_status = status; };
 
 private:
+    void runPlasma(Field &field);
+
     void scrollBCells(Field &field);
 
     void hunting(Field &field, sf::Time deltaTime);

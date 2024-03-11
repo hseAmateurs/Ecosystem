@@ -16,6 +16,11 @@ void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     window.draw(code);
 }
 
+void MacroCell::runPlasma(Field &field) {
+    // run plasma
+    // current delete cell
+}
+
 void MacroCell::update(Field &field, sf::Time deltaTime) {
     if (m_status == HUNTING) {
         hunting(field, deltaTime);
@@ -45,17 +50,18 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
     if (m_status == CHECKING) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
+
+        // Добавить задержку для чекинга (можно анимировать радиус ещё)
+
         if (!bCell->getCode()) {
             bCell->setCode(getCode()); // Вместо set будет подбор
             bCell->setStatus(BCell::FREE);
-            // run plasma
-            // delete cell
+            runPlasma(field);
             return;
         }
         if (bCell->getCode() == getCode()) {
             bCell->setStatus(BCell::FREE);
-            // run plasma
-            // delete cell
+            runPlasma(field);
             return;
         }
         if (bCellIndex + 1 == field.bCells.size()) {
