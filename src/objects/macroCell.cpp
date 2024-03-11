@@ -28,34 +28,32 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         return;
     }
     if (m_status == DELIVERY) {
-        if (field.bCells.front()->getStatus() != BCell::FREE) {
-            setRandomMovement();
-            move(velocity * deltaTime.asSeconds());
-            return;
-        }
         // Первая клетка свободна
-        const sf::Vector2f targetPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
-        velocity = targetPos - getPosition();
-
-        if (velocity.x < 1 && velocity.y < 1) {
-            setPosition(targetPos);
-            m_status = CHECKING;
-            return;
+        BCell::Status firstStatus = field.bCells.front()->getStatus();
+        if (firstStatus == BCell::FREE) {
+            const sf::Vector2f targetPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
+            velocity = targetPos - getPosition();
+            if (velocity.x < 1 && velocity.y < 1) {
+                setPosition(targetPos);
+                m_status = CHECKING;
+                return;
+            }
+            normalizeVelocity();
         }
-
-        normalizeVelocity();
+        else
+            setRandomMovement();
 
         reflectionControl();
         move(velocity * deltaTime.asSeconds());
+        return;
     }
     if (m_status == CHECKING && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
 
         // Добавить задержку для чекинга (можно анимировать радиус ещё)
-
         if (!bCell->getCode()) {
-            bCell->setCode(getCode()); // Вместо set будет подбор
+            bCell->setCode(getCode()); // Вместо set будет анимированный подбор
             bCell->setStatus(BCell::FREE);
             runPlasma(field);
             return;
@@ -69,8 +67,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
             scrollBCells(field);
             return;
         }
-
-        // Заупск анимации перемещения
+        // Заупск анимации перемещения (нельзя переместиться на клетку с AWAIT, т.к. у неё уже есть пара)
         if (field.bCells[bCellIndex + 1]->getStatus() == BCell::FREE)
             moveNextPrepare(field);
         return;
@@ -78,7 +75,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
 
     if (m_status == MOVING) {
         updateAngle(anim, timer);
-        if (std::abs(anim.targetAngle - anim.currentAngle) <= 0.001) {
+        if (std::abs(anim.targetAngle - anim.currentAngle) <= angleEps) {
             m_status = CHECKING;
             anim.currentAngle = anim.targetAngle;
         }
@@ -89,16 +86,18 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
 
 bool MacroCell::isBCellReady(const Field &field) const {
     for (BCell *cell: field.bCells) {
-        if(cell->getStatus() == BCell::MOVING)
+        if (cell->getStatus() == BCell::MOVING)
             return false;
     }
     return true;
 }
 
 void MacroCell::moveNextPrepare(Field &field) {
+    m_status = MOVING;
+    std::cout << "Start moveNext (from " << bCellIndex << "): " << getCode() << "\n";
+    field.bCells[bCellIndex + 1]->setStatus(BCell::BUSY);
     field.bCells[bCellIndex]->setStatus(BCell::FREE);
     bCellIndex++;
-    field.bCells[bCellIndex]->setStatus(BCell::BUSY);
     sf::Vector2f nextPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
     sf::Vector2f curPos = getXY(bCellIndex - 1, field.bCells.size(), MACRO_DISTANCE);
     anim = {
@@ -107,7 +106,6 @@ void MacroCell::moveNextPrepare(Field &field) {
             600 + (double)(rand() % 1000 - 500),
             speed / 10
     };
-    m_status = MOVING;
     timer.restart();
 }
 
@@ -116,15 +114,24 @@ void MacroCell::scrollBCells(Field &field) {
     for (MacroCell *&cell: field.macroes)
         if (cell->getStatus() == MOVING)
             return;
-
+    std::cout << "Run scroll: " << getCode() << "\n";
     auto firstBCell = field.bCells.front();
     auto *newBCell = new BCell(*firstBCell);
     newBCell->setPosition(getXY((int)field.bCells.size(), (int)field.bCells.size()));
     field.bCells.push_back(newBCell);
 
+    // Простановка ожидаемых статусов, чтобы клетки,
+    // которые находятся раньше в массиве, не сломали очередь следования в кругу
     int bCellAmount = field.bCells.size();
+    std::vector<BCell::Status> nextStatuses(bCellAmount);
+    nextStatuses[0] = BCell::BUSY;
+    for (int i = 1; i < bCellAmount; ++i) {
+        BCell::Status nextStatus = field.bCells[i - 1]->getStatus();
+        if (nextStatus == BCell::BUSY) nextStatus = BCell::AWAIT;
+        nextStatuses[i] = nextStatus;
+    }
     for (int i = 0; i < bCellAmount; ++i)
-        field.bCells[i]->scrollPrepare(i, bCellAmount);
+        field.bCells[i]->scrollPrepare(i, bCellAmount, nextStatuses[i]);
 }
 
 void MacroCell::hunting(Field &field, sf::Time deltaTime) {
