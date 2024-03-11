@@ -18,6 +18,8 @@ public:
                    speed,
                    center, color), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
 
+    BodyCell(const BodyCell &right) : Cell(right), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
+
     int type() const override { return CellType::BODY; }
 
     void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;

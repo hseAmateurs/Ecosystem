@@ -15,7 +15,7 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCel
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
     if (lifeTime.asSeconds() >= randomTime.asSeconds()) {
-        BodyCell *newCell = new BodyCell(texture::bodyCell, radius, size, speed, center, color);
+        auto *newCell = new BodyCell(*this);
 
         float x1, y1;
         do {

@@ -10,11 +10,12 @@
 #include "../utils/cells.h"
 #include "../textures/cellTexture.h"
 
+#include "../utils/brain.h"
+
 class BCell : public Cell {
 public:
     enum Status {
         FREE,
-        AWAIT,
         BUSY,
         SCROLL,
         MOVING
@@ -25,6 +26,8 @@ public:
             : Cell(animation, radius, size,
                    speed,
                    center, color), m_status(FREE) { }
+
+    BCell(const BCell &right) : Cell(right), m_status(FREE) { code.setString(""); }
 
     int type() const override { return CellType::BCELL; }
 
@@ -38,25 +41,13 @@ public:
 
     ~BCell() override;
 
-    static sf::Vector2f getXY(int index, int amount);
-
-    static sf::Vector2f getXY(double angle, double distance = BCELL_DISTANCE);
-
-    static sf::Vector2f nextOrbitXY(int index, int amount);
-
 private:
     int getID(const Field &field) const;
 
-    void updateAngle();
-
-    struct Animation {
-        double targetAngle;
-        double currentAngle;
-        double speedScale;
-    };
+    void scrollPrepare(const Field &field);
 
     Status m_status;
-    Animation anim;
+    brain::Animation anim;
 };
 
 
