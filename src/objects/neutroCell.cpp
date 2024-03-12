@@ -38,17 +38,11 @@ void NeutroCell::update(Field &field, sf::Time deltaTime) {
         }
     }
 
-    if (minDistance == INF) {
-        if (timer.getElapsedTime() > randomMoveInterval) {
-            setRandomVelocity();
-            auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-            randomMoveInterval = sf::seconds(randomSeconds);
-            timer.restart();
-        }
-    }
+    if (minDistance == INF)
+        setRandomMovement();
     else {
         velocity = closestBody - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+        normalizeVelocity();
     }
     reflectionControl();
     updateCollision(field.neutroes);

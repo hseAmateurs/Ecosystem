@@ -24,7 +24,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     int deadInd = -1;
     sf::Vector2f newPos(-1000.f, -1000.f);
 
-    for (BodyCell* otherCell: field.bodies) {
+    for (BodyCell *otherCell: field.bodies) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
@@ -33,46 +33,19 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
             closestBody = bodyPos;
         }
 
-        if (distance <= radius+otherCell->getRadius()) {
-            if (!otherCell->texture.isAnimDying()) {
+        if (distance <= radius + otherCell->getRadius())
+            if (!otherCell->texture.isAnimDying())
                 otherCell->texture.startDying();
-            }
-
-//            if (otherCell->texture.isDead()){
-//                //deadInd = i;
-//                //newPos = otherCell->getPosition();
-//                //PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, otherCell->getPosition(),  color);
-//                //newCell->setPosition(newPos);
-//                //std::cout<<"Create pathpgen\n";
-//                //field.pathogens.push_back(newCell);
-//                //break;
-//            }
-
-
-
-        }
-        i++;
     }
-    if (minDistance == INF) {
-        if (timer.getElapsedTime() > randomMoveInterval) {
-            setRandomVelocity();
-            auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-            randomMoveInterval = sf::seconds(randomSeconds);
-            timer.restart();
-        }
-    }
+
+    if (minDistance == INF)
+        setRandomMovement();
     else {
         velocity = closestBody - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+        normalizeVelocity();
     }
     reflectionControl();
     updateCollision(field.pathogens);
-
-    if (texture.isDead()){
-        m_isDead = true;
-    }
-
+    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
-
-
 }
