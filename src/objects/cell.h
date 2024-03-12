@@ -35,8 +35,6 @@ public:
 
     void setSize(const int &new_size){ size=new_size; };
 
-    int getSize() const {return size;};
-
     void setFont(const sf::Font &font) { code.setFont(font); };
 
     virtual int type() const = 0;
@@ -46,6 +44,12 @@ public:
     texture::CellTexture texture;
 
     bool isDead() const { return m_isDead; }
+
+    sf::Color getColor() const { return color; }
+
+    int getSize() const { return size; }
+
+    float getSpeed() const { return speed;}
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);

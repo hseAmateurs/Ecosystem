@@ -62,11 +62,24 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
         for (int i = 0; i < CellType::COUNT; ++i) {
             switch (i) {
                 case PATHOGEN:
+//                    for (BodyCell *cell: field.bodies) {
+//                        if (cell->texture.isDead()) {
+//                            PathogenCell *newCell = new PathogenCell(texture::pathogen, field.pathogens[0]->getRadius(),field.pathogens[0]->getSize(),field.pathogens[0]->getSpeed(),cell->getPosition(),field.pathogens[0]->getColor());
+//                            std::cout << "Create pathpgen\n";
+//                            field.pathogens.push_back(newCell);
+//                        }
+//                    }
                     drawing(field.pathogens, field, window, deltaTime);
                     break;
                 case BODY:
-                    for (BodyCell *cell: field.bodies)
+                    for (BodyCell *cell: field.bodies) {
+                        if (cell->texture.isDead()){
+                            PathogenCell *newCell = new PathogenCell(texture::pathogen, field.pathogens[0]->getRadius(), field.pathogens[0]->getSize(), field.pathogens[0]->getSpeed(), cell->getPosition(), field.pathogens[0]->getColor());
+                            std::cout<<"Create pathpgen\n";
+                            field.pathogens.push_back(newCell);
+                        }
                         cell->cellDivision(deltaTime, field.bodies);
+                    }
                     drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:

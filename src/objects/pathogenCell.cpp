@@ -38,14 +38,15 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
                 otherCell->texture.startDying();
             }
 
-            if (otherCell->texture.isDead()){
-                deadInd = i;
-                newPos = otherCell->getPosition();
-                PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, center,  color);
-                newCell->setPosition(newPos);
-                //field.pathogens.push_back(newCell);
-                break;
-            }
+//            if (otherCell->texture.isDead()){
+//                //deadInd = i;
+//                //newPos = otherCell->getPosition();
+//                //PathogenCell *newCell = new PathogenCell(texture::pathogen, radius, size, speed, otherCell->getPosition(),  color);
+//                //newCell->setPosition(newPos);
+//                //std::cout<<"Create pathpgen\n";
+//                //field.pathogens.push_back(newCell);
+//                //break;
+//            }
 
 
 
@@ -66,9 +67,11 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     }
     reflectionControl();
     updateCollision(field.pathogens);
+
     if (texture.isDead()){
         m_isDead = true;
     }
+
     move(velocity * deltaTime.asSeconds());
 
 
