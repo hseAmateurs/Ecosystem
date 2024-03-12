@@ -20,9 +20,6 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
     sf::Vector2f hunterPos = getPosition();
-    int i = 0;
-    int deadInd = -1;
-    sf::Vector2f newPos(-1000.f, -1000.f);
 
     for (BodyCell *otherCell: field.bodies) {
         sf::Vector2f bodyPos = otherCell->getPosition();
