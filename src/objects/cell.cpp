@@ -1,7 +1,5 @@
-#include <iostream>
 #include "cell.h"
 #include "random"
-#include "../utils/settings.h"
 
 using namespace settings;
 
@@ -42,12 +40,13 @@ void Cell::setRandomMovement() {
 
 void Cell::reflectionControl() {
     sf::Vector2f pos = getPosition();
+    const float brainOffset = 35.f;
     if (pos.x <= -BORDER_OFFSET || pos.x >= SCREEN_WIDTH + BORDER_OFFSET ||
         pos.y <= -BORDER_OFFSET || pos.y >= SCREEN_HEIGHT + BORDER_OFFSET ||
         (pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <=
-        BRAIN_RADIUS * BRAIN_RADIUS) {
-        velocity = sf::Vector2f(800.f, 450.f) - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+                (BRAIN_RADIUS + brainOffset) * BRAIN_RADIUS + brainOffset) {
+        velocity = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) - getPosition();
+        normalizeVelocity();
     }
 }
 
