@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "settings.h"
+#include "brain.h"
 
 using namespace settings;
 
@@ -134,14 +135,8 @@ void utils::createCells(vector <T*> &cells, const utils::CellParam &param, sf::R
             posY = posX;
             cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
         }
-        else if (cell->type() == CellType::BCELL) {
-            const double angleOffset = M_PI / 8;
-            double angleBCell = (M_PI / 2 + angleOffset) / (param.amount + 1) * (i + 1) - angleOffset / 2;
-
-            posX = std::cos(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
-            posY = std::sin(angleBCell) * (BCELL_DISTANCE * BRAIN_RADIUS);
-            cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
-        }
+        else if (cell->type() == CellType::BCELL)
+            cell->setPosition(brain::getXY(i, param.amount));
         window.draw(*cell);
         cells.push_back(cell);
     }

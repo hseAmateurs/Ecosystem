@@ -42,6 +42,8 @@ set(UTILS
         src/utils/settings.h
         src/utils/cells.h
         src/utils/freeMemory.h
+        src/utils/brain.cpp
+        src/utils/brain.h
 )
 
 # Исходные файлы

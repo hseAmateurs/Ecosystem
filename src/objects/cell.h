@@ -21,15 +21,15 @@ public:
     explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
                   sf::Color color);
 
-    // установка случайного вектора движения
-    void setRandomVelocity();
+    // установка случайного вектора движения + обновление времени
+    void setRandomMovement();
 
     void reflectionControl();
 
     // Означает, что эта функция должна быть обязательно переопределена в производных классах
     virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
 
-    void setCode(const char &new_code) { code.setString(new_code); };
+    void setCode(const char new_code) { code.setString(std::string{new_code}); };
 
     char getCode() const { return code.getString()[0]; };
 
@@ -39,9 +39,21 @@ public:
 
     virtual void update(Field &field, sf::Time deltaTime) = 0;
 
+    sf::Color getColor() const { return color; }
+
+    int getSize() const { return size; }
+
+    float getSpeed() const { return speed; }
+
+    bool isDead() const { return m_isDead; }
+
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
+
+    void normalizeVelocity();
+
+    void kill() { m_isDead = true; }
 
     sf::Text code;
     texture::CellTexture texture;
@@ -55,6 +67,7 @@ protected:
     sf::Time randomMoveInterval;
 
 private:
+    bool m_isDead;
     sf::Time interval;
 };
 
@@ -66,9 +79,7 @@ void Cell::updateCollision(std::vector<T *> &cells) {
             velocity = (getPosition() - otherCell->getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
             otherCell->velocity = otherCell->getPosition() - getPosition();
-            otherCell->velocity = otherCell->velocity / std::sqrt(
-                    otherCell->velocity.x * otherCell->velocity.x + otherCell->velocity.y * otherCell->velocity.y) *
-                                  otherCell->speed;
+            otherCell->normalizeVelocity();
         }
     }
 }

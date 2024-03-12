@@ -20,7 +20,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     float minDistance = INF;
     sf::Vector2f hunterPos = getPosition();
 
-    for (BodyCell* otherCell: field.bodies) {
+    for (BodyCell *otherCell: field.bodies) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
@@ -30,17 +30,11 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         }
     }
 
-    if (minDistance == INF) {
-        if (timer.getElapsedTime() > randomMoveInterval) {
-            setRandomVelocity();
-            auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
-            randomMoveInterval = sf::seconds(randomSeconds);
-            timer.restart();
-        }
-    }
+    if (minDistance == INF)
+        setRandomMovement();
     else {
         velocity = closestBody - getPosition();
-        velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+        normalizeVelocity();
     }
     reflectionControl();
     updateCollision(field.neutroes);

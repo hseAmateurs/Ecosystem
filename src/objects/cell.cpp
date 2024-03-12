@@ -11,7 +11,8 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
         : sf::CircleShape(radius), speed(speed), size(size), radius(radius), center(center),
           velocity(0, 0), interval(sf::seconds(5)),
           randomMoveInterval(sf::seconds(2)), color(color),
-          texture(animation, center, radius, 180, color) {
+          texture(animation, center, radius, 180, color),
+          m_isDead(false) {
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     setPosition(center);
@@ -21,15 +22,20 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
     code.setCharacterSize(fontSize);
     code.setOrigin(fontSize / 3.f,
                    fontSize / 1.5f);
-
-    setCode(rand() % 31 + '@');
+    code.setString(std::string());
 }
 
 
-// генерация случайного вектора движения
-void Cell::setRandomVelocity() {
+// генерация случайного вектора движения + обновление времени
+void Cell::setRandomMovement() {
+    if (timer.getElapsedTime() <= randomMoveInterval) return;
+
     double angle = (rand() % 360) * M_PI / 180;
     velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * speed;
+
+    auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
+    randomMoveInterval = sf::seconds(randomSeconds);
+    timer.restart();
 }
 
 void Cell::reflectionControl() {
@@ -40,4 +46,8 @@ void Cell::reflectionControl() {
         BRAIN_RADIUS * BRAIN_RADIUS) {
         velocity = sf::Vector2f(-1, -1) * speed;
     }
+}
+
+void Cell::normalizeVelocity() {
+    velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
 }
