@@ -16,10 +16,6 @@ void BCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     window.draw(code);
 }
 
-BCell::~BCell() {
-    std::cout << "Deleted\n";
-}
-
 void BCell::update(Field &field, sf::Time deltaTime) {
     if (m_status == MOVING) {
         updateAngle(anim, timer);
