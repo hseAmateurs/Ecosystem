@@ -32,6 +32,10 @@ set(OBJECTS
         src/objects/plasmaCell.cpp
         src/objects/bCell.h
         src/objects/bCell.cpp
+        src/objects/temperature.h
+        src/objects/temperature.cpp
+        src/objects/gameMenu.cpp
+        src/objects/gameMenu.h
 )
 
 set(UTILS
