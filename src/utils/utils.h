@@ -22,6 +22,8 @@ class PlasmaCell;
 
 class NeutroCell;
 
+class Antibody;
+
 namespace utils {
     // Конфиг любой клетки
     struct CellParam {
@@ -45,6 +47,7 @@ namespace utils {
         std::vector<NeutroCell *> neutroes;
         std::vector<BCell *> bCells;
         std::vector<PlasmaCell *> plasmas;
+        std::vector<Antibody *> antis;
     };
 }
 

@@ -82,6 +82,9 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                 case PLASMA:
                     drawing(field.plasmas, field, window, deltaTime);
                     break;
+                case ANTI:
+                    drawing(field.antis, field, window, deltaTime);
+                    break;
                 default:
                     std::cerr << "Undefined cell type\n";
             }
