@@ -86,7 +86,6 @@ namespace texture {
                 parameters(animation),
                 isDying(false), isBirthing(false), isChangingRadius(false), innerTimer(sf::Time::Zero) {
             startBirthing();
-            changeRadius(35.f);
         };
 
         void update(sf::Time elapsed);

@@ -65,11 +65,12 @@ sf::Vector2f texture::CellTexture::getRadiusVector(const float &angle, const flo
 
 void texture::CellTexture::changeRadius(float newRadius) {
     isChangingRadius = true;
-    parameters.radiusChangingStep = (newRadius - radius) / 3.f * parameters.radiusChangingSpeed;
+    parameters.radiusChangingStep = (newRadius - radius) / 160.f * parameters.radiusChangingSpeed;
     parameters.newRadius = newRadius;
 }
 
 void texture::CellTexture::updateChangingRadius() {
+    radius += parameters.radiusChangingStep;
     if(radius >= parameters.newRadius) {
         isChangingRadius = false;
         radius = parameters.newRadius;
