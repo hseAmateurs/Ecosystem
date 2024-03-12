@@ -25,7 +25,7 @@ public:
               sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color), m_status(HUNTING), bCellIndex(0) { setCode(rand() % 31 + '@'); }
+                   center, color), m_status(HUNTING), bCellIndex(0) { }
 
     int type() const override { return CellType::MACRO; }
 

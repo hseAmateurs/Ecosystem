@@ -1,7 +1,5 @@
-#include <iostream>
 #include "cell.h"
 #include "random"
-#include "../utils/settings.h"
 
 using namespace settings;
 
@@ -16,7 +14,9 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     setPosition(center);
+    setFillColor(sf::Color::Transparent);
     timer.restart();
+
     int fontSize = radius * 0.8;
     code.setFillColor(sf::Color::Black);
     code.setCharacterSize(fontSize);
@@ -40,11 +40,13 @@ void Cell::setRandomMovement() {
 
 void Cell::reflectionControl() {
     sf::Vector2f pos = getPosition();
+    const float brainOffset = 35.f;
     if (pos.x <= -BORDER_OFFSET || pos.x >= SCREEN_WIDTH + BORDER_OFFSET ||
         pos.y <= -BORDER_OFFSET || pos.y >= SCREEN_HEIGHT + BORDER_OFFSET ||
         (pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <=
-        BRAIN_RADIUS * BRAIN_RADIUS) {
-        velocity = sf::Vector2f(-1, -1) * speed;
+                (BRAIN_RADIUS + brainOffset) * BRAIN_RADIUS + brainOffset) {
+        velocity = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) - getPosition();
+        normalizeVelocity();
     }
 }
 

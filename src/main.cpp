@@ -17,7 +17,7 @@ void drawing(vector<T *> &cells, Field &field, sf::RenderWindow &window, sf::Tim
     vector<int> deadCells;
     for (int i = 0; i < cellsSize; ++i) {
         auto &cell = cells[i];
-        if(cell->isDead()) {
+        if (cell->isDead()) {
             deadCells.push_back(i);
             continue;
         }
@@ -58,8 +58,15 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case BODY:
                     newBodies.clear();
-                    for (BodyCell *cell: field.bodies)
+                    for (BodyCell *cell: field.bodies) {
+                        if (cell->texture.isDead()) {
+                            PathogenCell *newPathogen = new PathogenCell(*field.pathogens.front());
+                            newPathogen->setPosition(cell->getPosition());
+                            std::cout << "Create pathpgen\n";
+                            field.pathogens.push_back(newPathogen);
+                        }
                         cell->cellDivision(deltaTime, newBodies);
+                    }
                     field.bodies.insert(field.bodies.end(), newBodies.begin(), newBodies.end());
                     drawing(field.bodies, field, window, deltaTime);
                     break;

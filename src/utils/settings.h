@@ -16,8 +16,11 @@ namespace settings {
     // Радиус левого нижнего круга, в котором выпускаются антитела
     const float BRAIN_RADIUS = 490.f;
 
-    // Минимальная дистанция для триггера на цель
-    const float HUNT_TRIGGER = 150.f;
+    // Минимальная дистанция для триггера на цель для патогена
+    const float PATH_HUNT_TRIGGER = 350.f;
+
+    // Минимальная дистанция для триггера на цель для иммунных клеток
+    const float IMMUNE_HUNT_TRIGGER = 150.f;
 
     // Процент удаления статичных клетки от центра "мозгового" круга
     const double PLASMA_DISTANCE = 0.4;

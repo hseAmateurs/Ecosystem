@@ -12,7 +12,7 @@ public:
                  sf::Vector2f center, sf::Color color)
             : Cell(animation, radius, size,
                    speed,
-                   center, color) { }
+                   center, color) { setCode(rand() % 31 + '@'); }
 
     int type() const override { return CellType::PATHOGEN; }
 

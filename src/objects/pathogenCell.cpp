@@ -3,6 +3,7 @@
 //
 
 #include "pathogenCell.h"
+#include <iostream>
 
 void PathogenCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
@@ -24,10 +25,14 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-        if (distance < minDistance && distance < HUNT_TRIGGER) {
+        if (distance < minDistance && distance < PATH_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
+
+        if (distance <= radius + otherCell->getRadius())
+            if (!otherCell->texture.isAnimDying())
+                otherCell->texture.startDying();
     }
 
     if (minDistance == INF)
@@ -37,9 +42,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         normalizeVelocity();
     }
     reflectionControl();
-    updateCollision(field.neutroes);
     updateCollision(field.pathogens);
-    updateCollision(field.macroes);
-    updateCollision(field.bodies);
+    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }

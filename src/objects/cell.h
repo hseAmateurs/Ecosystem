@@ -33,6 +33,8 @@ public:
 
     char getCode() const { return code.getString()[0]; };
 
+    void setSize(const int &new_size) { size = new_size; };
+
     void setFont(const sf::Font &font) { code.setFont(font); };
 
     virtual int type() const = 0;
@@ -47,6 +49,8 @@ public:
 
     bool isDead() const { return m_isDead; }
 
+    texture::CellTexture texture;
+
 protected:
     template<class T>
     void updateCollision(std::vector<T *> &cells);
@@ -56,7 +60,6 @@ protected:
     void kill() { m_isDead = true; }
 
     sf::Text code;
-    texture::CellTexture texture;
     float radius;
     int size;
     sf::Color color;

@@ -33,8 +33,8 @@ void BodyCell::update(Field &field, sf::Time deltaTime) {
     setRandomMovement();
     reflectionControl();
     updateCollision(field.neutroes);
-    updateCollision(field.pathogens);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
+    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }
