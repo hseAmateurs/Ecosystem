@@ -104,7 +104,7 @@ void MacroCell::moveNextPrepare(Field &field) {
             atan2(SCREEN_HEIGHT - nextPos.y, SCREEN_WIDTH - nextPos.x),
             atan2(SCREEN_HEIGHT - curPos.y, SCREEN_WIDTH - curPos.x),
             600 + (double)(rand() % 1000 - 500),
-            speed / 10
+            speed
     };
     timer.restart();
 }
@@ -139,8 +139,6 @@ void MacroCell::hunting(Field &field, sf::Time deltaTime) {
 
     sf::Vector2f closestBody;
     float minDistance = INF;
-    int i = 0;
-    int deadInd = -1;
     sf::Vector2f hunterPos = getPosition();
 
     for (PathogenCell *&otherCell: field.pathogens) {
@@ -154,6 +152,7 @@ void MacroCell::hunting(Field &field, sf::Time deltaTime) {
         if (distance <= radius) {
             if (!otherCell->texture.isAnimDying()){
                 this->setCode(otherCell->getCode());
+                m_status = DELIVERY;
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }
@@ -170,8 +169,6 @@ void MacroCell::hunting(Field &field, sf::Time deltaTime) {
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
-    if(texture.isDead()){
-        m_isDead = true;
-    }
+    if(texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }

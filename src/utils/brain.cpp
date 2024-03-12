@@ -10,7 +10,7 @@ using namespace settings;
 namespace brain {
     void updateAngle(Animation &anim, const sf::Clock &timer) {
         double deltaAngle = anim.targetAngle - anim.currentAngle;
-        double scale = sin(M_PI * timer.getElapsedTime().asSeconds() / (anim.speedScale / anim.speed));
+        double scale = sin(M_PI * timer.getElapsedTime().asSeconds() / (anim.speedScale / (anim.speed / 10)));
         anim.currentAngle += deltaAngle * scale;
     }
 
