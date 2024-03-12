@@ -48,3 +48,7 @@ void BCell::scrollPrepare(const int index, const int amount, Status nextStatus) 
     m_status = MOVING;
     timer.restart();
 }
+
+BCell::~BCell() {
+    std::cout << "Deleted\n";
+}

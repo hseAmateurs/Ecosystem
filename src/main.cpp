@@ -37,56 +37,19 @@ void drawing(vector<T *> &cells, Field &field, sf::RenderWindow &window, sf::Tim
 void renderingThread(sf::RenderWindow &window, Field &field) {
     window.setActive(true);
     sf::Clock clock;
+    std::vector<BodyCell *> newBodies;
 
     // For debugging ---
     sf::CircleShape brain(BRAIN_RADIUS);
     brain.setFillColor(sf::Color::Black);
     brain.setOrigin(BRAIN_RADIUS, BRAIN_RADIUS);
     brain.setPosition(SCREEN_WIDTH, SCREEN_HEIGHT);
-    sf::Time timer = sf::seconds(2);
-    bool stepOne = true;
-    bool stepTwo = true;
     // ---
 
     while (isRun) {
         window.clear(sf::Color::White);
-        vector<BodyCell *> newBodies;
-// DEBUG ---
-        window.draw(brain);
+        window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
-        timer -= deltaTime;
-        if (timer <= sf::Time::Zero && stepOne) {
-            stepOne = false;
-            field.bCells.front()->setStatus(BCell::BUSY);
-            for (int i = 0; i < field.bCells.size(); ++i) {
-                field.bCells[i]->setCode('s');
-            }
-//            field.macroes[0]->setCode('0');
-//            field.macroes[0]->setPosition(1500, 300);
-//            field.macroes[1]->setCode('1');
-//            field.macroes[1]->setPosition(1400, 300);
-//            field.macroes[2]->setCode('3');
-//            field.macroes[2]->setPosition(1300, 300);
-//            field.macroes[3]->setCode('4');
-//            field.macroes[3]->setPosition(100, 300);
-//            field.macroes[4]->setCode('1');
-//            field.macroes[4]->setPosition(400, 300);
-//            field.macroes[5]->setCode('0');
-//            field.macroes[5]->setPosition(200, 300);
-//            field.macroes[6]->setCode('4');
-//            field.macroes[6]->setPosition(0, 300);
-            for (int i = 0; i < field.macroes.size(); ++i) {
-                field.macroes[i]->setPosition(1200, 300);
-                field.macroes[i]->setStatus(MacroCell::DELIVERY);
-                std::cout << "Start: " << field.macroes[i]->getCode() << "\n";
-            }
-//            field.bCells.front()->setStatus(BCell::FREE);
-        }
-        if (timer <= sf::seconds(-2) && stepTwo) {
-            stepTwo = false;
-            field.bCells.front()->setStatus(BCell::FREE);
-        }
-// ---
 
         for (int i = 0; i < CellType::COUNT; ++i) {
             switch (i) {
