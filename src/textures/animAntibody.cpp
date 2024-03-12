@@ -41,5 +41,6 @@ namespace texture {
             // look at dying or birthing constructor in cellTexture.h
             1,
             0.885f,
+            1,
     };
 }

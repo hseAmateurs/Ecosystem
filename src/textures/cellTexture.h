@@ -62,10 +62,14 @@ namespace texture {
 
         Dying dying;
         Birthing birthing;
+        float radiusChangingSpeed;
 
         // dynamic variables
         float delta;
         float currentPulsationAspect;
+
+        float radiusChangingStep;
+        float newRadius;
     };
 
 
@@ -80,8 +84,9 @@ namespace texture {
                 center(center), radius(radius), rotationDirection(rand() % 2 ? -1 : 1),
                 m_vertices(sf::TriangleFan, pointsCount + 2), pointsCount(pointsCount + 2), color(color),
                 parameters(animation),
-                isDying(false), isBirthing(false), innerTimer(sf::Time::Zero) {
+                isDying(false), isBirthing(false), isChangingRadius(false), innerTimer(sf::Time::Zero) {
             startBirthing();
+            changeRadius(35.f);
         };
 
         void update(sf::Time elapsed);
@@ -92,10 +97,14 @@ namespace texture {
 
         void startBirthing();
 
+        void changeRadius(float newRadius);
+
     private:
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         void updateDying();
+
+        void updateChangingRadius();
 
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
 
@@ -113,6 +122,8 @@ namespace texture {
 
         bool isDying;
         bool isBirthing;
+        bool isChangingRadius;
+
         sf::Time innerTimer;
     };
 }

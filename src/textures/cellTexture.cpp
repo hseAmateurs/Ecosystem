@@ -34,6 +34,8 @@ void texture::CellTexture::update(sf::Time elapsed) {
 
     if (isDying)
         updateDying();
+    if (isChangingRadius)
+        updateChangingRadius();
 
     for (int i = 1; i < pointsCount; ++i) {
         sf::Vector2f currentRadiusVector = getRadiusVector(angle, radius);
@@ -59,4 +61,17 @@ void texture::CellTexture::draw(sf::RenderTarget &target, sf::RenderStates state
 
 sf::Vector2f texture::CellTexture::getRadiusVector(const float &angle, const float &r) const {
     return {r * cosf(angle), r * sinf(angle)};
+}
+
+void texture::CellTexture::changeRadius(float newRadius) {
+    isChangingRadius = true;
+    parameters.radiusChangingStep = (newRadius - radius) / 3.f * parameters.radiusChangingSpeed;
+    parameters.newRadius = newRadius;
+}
+
+void texture::CellTexture::updateChangingRadius() {
+    if(radius >= parameters.newRadius) {
+        isChangingRadius = false;
+        radius = parameters.newRadius;
+    }
 }
