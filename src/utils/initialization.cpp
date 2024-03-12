@@ -9,7 +9,7 @@
 #include <fstream>
 
 #include "settings.h"
-#include "../utils/brain.h"
+#include "brain.h"
 
 using namespace settings;
 
