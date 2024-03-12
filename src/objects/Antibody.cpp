@@ -16,9 +16,6 @@ void Antibody::antibodyDeath() {
     }
 }
 
-//if(deathTimer.getElapsedTime() <= deathClock) return;
-//deathTimer.restart();
-
 void Antibody::update(Field &field, sf::Time deltaTime) {
     const int INF = 30000;
 
@@ -40,6 +37,10 @@ void Antibody::update(Field &field, sf::Time deltaTime) {
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }
+            if(!this->texture.isAnimDying()){
+                this->setCode(' ');
+                this->texture.startDying();
+            }
         }
     }
 
@@ -51,7 +52,10 @@ void Antibody::update(Field &field, sf::Time deltaTime) {
     else {
         setRandomMovement();
         if(deathTimer.getElapsedTime()>=deathClock)
-            antibodyDeath();
+            if(!this->texture.isAnimDying()){
+                this->setCode(' ');
+                this->texture.startDying();
+            }
     }
     reflectionControl();
     updateCollision(field.neutroes);
