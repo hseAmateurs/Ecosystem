@@ -9,6 +9,8 @@
 #include <vector>
 
 #include "../textures/animations.h"
+#include "../objects/temperature.h"
+#include "../objects/gameMenu.h"
 
 class BCell;
 
@@ -23,6 +25,8 @@ class PlasmaCell;
 class NeutroCell;
 
 class Antibody;
+
+class Temperature;
 
 namespace utils {
     // Конфиг любой клетки
@@ -48,6 +52,8 @@ namespace utils {
         std::vector<BCell *> bCells;
         std::vector<PlasmaCell *> plasmas;
         std::vector<Antibody *> antis;
+        Temperature temperature;
+        GameMenu menu;
     };
 }
 

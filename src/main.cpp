@@ -46,11 +46,14 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     brain.setPosition(SCREEN_WIDTH, SCREEN_HEIGHT);
     // ---
 
+    bool isEnd = false;
+
     while (isRun) {
         window.clear(sf::Color::White);
         window.draw(brain); // DEBUG
         sf::Time deltaTime = clock.restart();
 
+        if(!isEnd)
         for (int i = 0; i < CellType::COUNT; ++i) {
             switch (i) {
                 case PATHOGEN:
@@ -89,6 +92,16 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     std::cerr << "Undefined cell type\n";
             }
         }
+
+        field.temperature.updateAndDraw(field.pathogens.size(), window, field.font);
+        if(field.temperature.isCriticalTemp()) {
+            window.clear(sf::Color(0, 100, 100));
+            field.menu.endGame(window, field.font, deltaTime);
+            isEnd = true;
+        } else
+            field.menu.update(deltaTime);
+
+
         window.display();
     }
 }
