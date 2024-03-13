@@ -98,7 +98,7 @@ namespace texture {
 
         void changeRadius(float newRadius);
 
-        bool isDead() const { return pointsCount==0; }
+        bool isDead() const { return pointsCount == 0; }
 
         bool isAnimDying() const { return isDying; }
 

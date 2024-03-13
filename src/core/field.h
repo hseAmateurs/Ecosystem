@@ -23,8 +23,6 @@ class NeutroCell;
 
 class Antibody;
 
-class Temperature;
-
 // Хранение объектов на поле
 class Field {
 public:

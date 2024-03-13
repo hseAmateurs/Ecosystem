@@ -71,7 +71,7 @@ void texture::CellTexture::changeRadius(float newRadius) {
 
 void texture::CellTexture::updateChangingRadius() {
     radius += parameters.radiusChangingStep;
-    if(radius >= parameters.newRadius) {
+    if (radius >= parameters.newRadius) {
         isChangingRadius = false;
         radius = parameters.newRadius;
     }

@@ -75,7 +75,9 @@ void Field::createCells(const Assets::CellParam &cellParam) {
 }
 
 void Field::updateBodyCell() {
-
+//    for (BodyCell* bodyCell : bodies) {
+//        if(bodyCell)
+//    }
 }
 
 Field::~Field() {
