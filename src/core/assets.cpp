@@ -22,7 +22,7 @@ Assets::Assets() {
 
 void Assets::loadConfig(const std::string &fileName) {
     std::ifstream file(fileName);
-    if (!file.is_open()) throw;
+    if (!file.is_open()) throw std::runtime_error("Can't open config file");
 
     std::string line;
     std::string token;
@@ -30,7 +30,7 @@ void Assets::loadConfig(const std::string &fileName) {
 
     CellType cellType;
     CellParam param;
-    const int argsCount = 4;
+    const int argsCount = 5;
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -41,6 +41,7 @@ void Assets::loadConfig(const std::string &fileName) {
             cellType = mapTypes.at(tokens[0]);
         } catch (const std::out_of_range &ex) {
             // Пропускаем, если не найден ключ
+            tokens.clear();
             continue;
         }
 
