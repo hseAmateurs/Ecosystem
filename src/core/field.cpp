@@ -11,7 +11,7 @@ using namespace settings;
 
 // Функция вне класса для создания клеток
 template<class T>
-void templateInit(T* cell, const Assets::CellParam &cellParam) {
+void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
     float posX, posY;
     for (int i = 0; i < cellParam.amount; ++i) {
         do {
@@ -20,8 +20,8 @@ void templateInit(T* cell, const Assets::CellParam &cellParam) {
         } while ((posY - SCREEN_HEIGHT) * (posY - SCREEN_HEIGHT) + (posX - SCREEN_WIDTH) * (posX - SCREEN_WIDTH) <
                  BRAIN_RADIUS * BRAIN_RADIUS);
 
-        cell = new T(cellParam.animation, cellParam.radius,
-                     cellParam.size, cellParam.speed, {posX, posY}, cellParam.color);
+        T *cell = new T(cellParam.animation, cellParam.radius,
+                        cellParam.size, cellParam.speed, {posX, posY}, cellParam.color);
 
         if (cell->type() == CellType::PLASMA) {
             posX = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
@@ -30,8 +30,11 @@ void templateInit(T* cell, const Assets::CellParam &cellParam) {
         }
         else if (cell->type() == CellType::BCELL)
             cell->setPosition(brain::getXY(i, cellParam.amount));
+
+        cells.push_back(cell);
     }
 }
+
 // Функция вне класса для удаления вектора клеток
 template<class T>
 void templateFree(std::vector<T *> cells) {
@@ -48,34 +51,31 @@ void Field::init() {
 void Field::createCells(const Assets::CellParam &cellParam) {
     switch (cellParam.cellType) {
         case utils::PATHOGEN:
-            PathogenCell *pathogen;
-            templateInit(pathogen, cellParam);
+            templateInit(pathogens, cellParam);
             break;
         case utils::BODY:
-            BodyCell *bodyCell;
-            templateInit(bodyCell, cellParam);
+            templateInit(bodies, cellParam);
             break;
         case utils::MACRO:
-            MacroCell *macro;
-            templateInit(macro, cellParam);
+            templateInit(macroes, cellParam);
             break;
         case utils::NEUTRO:
-            NeutroCell *neutro;
-            templateInit(neutro, cellParam);
+            templateInit(neutroes, cellParam);
             break;
         case utils::BCELL:
-            BCell *bCell;
-            templateInit(bCell, cellParam);
+            templateInit(bCells, cellParam);
             break;
         case utils::PLASMA:
-            PlasmaCell *plasma;
-            templateInit(plasma, cellParam);
+            templateInit(plasmas, cellParam);
             break;
         case utils::ANTI:
-            PlasmaCell *anti;
-            templateInit(anti, cellParam);
+            templateInit(antis, cellParam);
             break;
     }
+}
+
+void Field::updateBodyCell() {
+
 }
 
 Field::~Field() {

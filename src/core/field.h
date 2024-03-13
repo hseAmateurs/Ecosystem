@@ -35,6 +35,8 @@ public:
     // Отрисовка конкретного типа клетки
     void createCells(const Assets::CellParam &cellParam);
 
+    void updateBodyCell();
+
     std::vector<PathogenCell *> pathogens;
     std::vector<BodyCell *> bodies;
     std::vector<MacroCell *> macroes;
