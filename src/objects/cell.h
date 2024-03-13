@@ -10,10 +10,9 @@
 #include "../utils/cellTypes.h"
 #include "../utils/settings.h"
 
-#include "../utils/utils.h"
+#include "../core/field.h"
 
 using utils::CellType;
-using utils::Field;
 using namespace settings;
 
 class Cell : public sf::CircleShape {
