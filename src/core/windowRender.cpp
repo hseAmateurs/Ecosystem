@@ -1,0 +1,85 @@
+//
+// Created by Shon on 13.03.2024.
+//
+
+#include <iostream>
+
+#include "windowRender.h"
+#include "../utils/cells.h"
+#include "../utils/settings.h"
+
+
+void WindowRender::render() {
+    m_window.setActive(true);
+
+    // For debugging ---
+    sf::CircleShape brain(settings::BRAIN_RADIUS);
+    brain.setFillColor(sf::Color::Black);
+    brain.setOrigin(settings::BRAIN_RADIUS, settings::BRAIN_RADIUS);
+    brain.setPosition(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT);
+    // ---
+
+    while (isRun()) {
+        m_window.clear(sf::Color::White);
+        deltaTime = clock.restart();
+
+        m_window.draw(brain);
+        drawField();
+
+        m_window.display();
+    }
+}
+
+void WindowRender::drawField() {
+    for (int i = 0; i < CellType::COUNT; ++i)
+        switch (i) {
+            case CellType::PATHOGEN:
+                drawCells(m_field.pathogens);
+                break;
+            case CellType::BODY:
+                m_field.updateBodyCell();
+                drawCells(m_field.bodies);
+                break;
+            case CellType::MACRO:
+                drawCells(m_field.macroes);
+                break;
+            case CellType::NEUTRO:
+                drawCells(m_field.neutroes);
+                break;
+            case CellType::BCELL:
+                drawCells(m_field.bCells);
+                break;
+            case CellType::PLASMA:
+                drawCells(m_field.plasmas);
+                break;
+            case CellType::ANTI:
+                drawCells(m_field.antis);
+                break;
+        }
+}
+
+void WindowRender::init() {
+    m_window.create(sf::VideoMode(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT), "Ecosystem",
+                    sf::Style::Titlebar | sf::Style::Close);
+    m_window.setVerticalSyncEnabled(true);
+    m_window.setActive(false);
+}
+
+void WindowRender::start() {
+    run = true;
+    m_thread.launch();
+
+    while (m_window.isOpen()) {
+        sf::Event event;
+        while (m_window.pollEvent(event))
+            if (event.type == sf::Event::Closed)
+                // Останавливаем поток и дожидаемся его завершения
+                stop();
+    }
+}
+
+void WindowRender::stop() {
+    run = false;
+    m_thread.wait();
+    m_window.close();
+}
