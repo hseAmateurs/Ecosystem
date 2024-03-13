@@ -20,7 +20,7 @@ public:
     void update(Field &field, sf::Time deltaTime) override;
 
 private:
-    sf::Time deathClock=sf::seconds(5);
+    sf::Time deathClock=sf::seconds(static_cast<float>(std::rand() % 5 + 2));
     sf::Clock deathTimer;
 };
 

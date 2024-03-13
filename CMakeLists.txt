@@ -32,8 +32,8 @@ set(OBJECTS
         src/objects/plasmaCell.cpp
         src/objects/bCell.h
         src/objects/bCell.cpp
-        src/objects/Antibody.h
-        src/objects/Antibody.cpp
+        src/objects/antibody.h
+        src/objects/antibody.cpp
 )
 
 set(UTILS

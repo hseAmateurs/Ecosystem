@@ -1,4 +1,4 @@
-#include "Antibody.h"
+#include "antibody.h"
 #include <iostream>
 
 void Antibody::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
@@ -37,10 +37,7 @@ void Antibody::update(Field &field, sf::Time deltaTime) {
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
             }
-            if(!this->texture.isAnimDying()){
-                this->setCode(' ');
-                this->texture.startDying();
-            }
+            antibodyDeath();
         }
     }
 
@@ -51,11 +48,9 @@ void Antibody::update(Field &field, sf::Time deltaTime) {
     }
     else {
         setRandomMovement();
-        if(deathTimer.getElapsedTime()>=deathClock)
-            if(!this->texture.isAnimDying()){
-                this->setCode(' ');
-                this->texture.startDying();
-            }
+        if(deathTimer.getElapsedTime()>=deathClock){
+            antibodyDeath();
+        }
     }
     reflectionControl();
     updateCollision(field.neutroes);
