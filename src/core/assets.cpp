@@ -47,6 +47,7 @@ void Assets::loadConfig(const std::string &fileName) {
         if (tokens.size() != argsCount)
             throw std::length_error("Wrong arguments count");
 
+        param.cellType = cellType;
         param.radius = std::stof(tokens[1]);
         param.size = std::stoi(tokens[2]);
         param.speed = std::stof(tokens[3]);

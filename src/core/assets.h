@@ -15,6 +15,7 @@
 
 using utils::CellType;
 
+// Хранение конфигов и данных приложения
 class Assets {
 public:
     Assets(Assets const &) = delete;
@@ -33,9 +34,12 @@ public:
     // Конфиг клетки
     struct CellParam {
         CellParam() :
+                cellType(utils::BODY),
                 radius(0), size(0), speed(0), amount(0),
                 color(sf::Color::Black),
                 animation(texture::bodyCell) { };
+
+        CellType cellType;
 
         float radius;
         int size;
