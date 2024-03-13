@@ -41,13 +41,9 @@ set(OBJECTS
 )
 
 set(UTILS
-        src/utils/initialization.h
-        src/utils/initialization.cpp
-        src/utils/utils.h
         src/utils/cellTypes.h
         src/utils/settings.h
         src/utils/cells.h
-        src/utils/freeMemory.h
         src/utils/brain.cpp
         src/utils/brain.h
 )
@@ -57,12 +53,23 @@ set(SOURCE_FILES
         src/main.cpp
 )
 
+# Файлы основной логики игры
+set(CORE
+        src/core/assets.cpp
+        src/core/assets.h
+        src/core/windowRender.cpp
+        src/core/windowRender.h
+        src/core/field.cpp
+        src/core/field.h
+)
+
 # Название исполняемого файла
 add_executable(Ecosystem
         ${SOURCE_FILES}
         ${TEXTURES}
         ${UTILS}
         ${OBJECTS}
+        ${CORE}
 )
 
 # Для платформы windows используем статическую библиотеку sfml

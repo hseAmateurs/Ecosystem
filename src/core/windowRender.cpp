@@ -6,7 +6,6 @@
 
 #include "windowRender.h"
 #include "../utils/cells.h"
-#include "../utils/settings.h"
 
 
 void WindowRender::render() {

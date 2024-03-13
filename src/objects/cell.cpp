@@ -22,6 +22,7 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
     code.setCharacterSize(fontSize);
     code.setOrigin(fontSize / 3.f,
                    fontSize / 1.5f);
+    setFont(Assets::instance().font);
     code.setString(std::string());
 }
 
