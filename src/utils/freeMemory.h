@@ -18,5 +18,6 @@ namespace utils {
         deleteCellType(field.macroes);
         deleteCellType(field.neutroes);
         deleteCellType(field.plasmas);
+        deleteCellType(field.antis);
     }
 }

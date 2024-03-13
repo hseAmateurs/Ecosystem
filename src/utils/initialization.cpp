@@ -65,6 +65,10 @@ vector<utils::CellParam> utils::readCSV(const std::string &fileName) {
                 config[cellType].color = sf::Color::Magenta;
                 config[cellType].animation = texture::plasmaCell;
                 break;
+            case ANTI:
+                config[cellType].color = sf::Color::Yellow;
+                config[cellType].animation = texture::antibody;
+                break;
             default:
                 std::cerr << "Undefined cell type\n";
         }
@@ -107,6 +111,9 @@ utils::Field utils::initField(const vector<utils::CellParam> &config, const std:
                 break;
             case PLASMA:
                 createCells(field.plasmas, config[i], window);
+                break;
+            case ANTI:
+                createCells(field.antis, config[i], window);
                 break;
             default:
                 std::cerr << "Undefined cell type\n";

@@ -36,6 +36,8 @@ set(OBJECTS
         src/objects/temperature.cpp
         src/objects/gameMenu.cpp
         src/objects/gameMenu.h
+        src/objects/antibody.h
+        src/objects/antibody.cpp
 )
 
 set(UTILS

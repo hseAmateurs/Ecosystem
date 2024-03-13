@@ -58,7 +58,7 @@ protected:
     void normalizeVelocity();
 
     void kill() { m_isDead = true; }
-
+ 
     sf::Text code;
     float radius;
     int size;
