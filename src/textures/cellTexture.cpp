@@ -1,5 +1,6 @@
-#include <cmath>
 #include "cellTexture.h"
+
+#include <cmath>
 
 
 void texture::CellTexture::startDying() {

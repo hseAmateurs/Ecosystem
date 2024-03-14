@@ -78,13 +78,12 @@ namespace texture {
     public:
 
         explicit CellTexture(AnimationParameters animation, sf::Vector2f center = {0, 0}, float radius = 15,
-                             int pointsCount = 180,
-                             sf::Color color = sf::Color::Magenta)
+                             sf::Color color = sf::Color::Magenta, int pointsCount = 180)
                 :
-                center(center), radius(radius), rotationDirection(rand() % 2 ? -1 : 1),
-                m_vertices(sf::TriangleFan, pointsCount + 2), pointsCount(pointsCount + 2), color(color),
-                parameters(animation),
-                isDying(false), isBirthing(false), isChangingRadius(false), innerTimer(sf::Time::Zero) {
+                parameters(animation), center(center), radius(radius), color(color), pointsCount(pointsCount + 2),
+                m_vertices(sf::TriangleFan, pointsCount + 2),
+                isDying(false), isBirthing(false), isChangingRadius(false), innerTimer(sf::Time::Zero),
+                rotationDirection(rand() % 2 ? -1 : 1) {
             startBirthing();
         };
 

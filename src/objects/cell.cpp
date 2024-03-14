@@ -9,7 +9,7 @@ Cell::Cell(texture::AnimationParameters animation, float radius, int size, float
         : sf::CircleShape(radius), speed(speed), size(size), radius(radius), center(center),
           velocity(0, 0), interval(sf::seconds(5)),
           randomMoveInterval(sf::seconds(2)), color(color),
-          texture(animation, center, radius, 180, color),
+          texture(animation, center, radius, color),
           m_isDead(false) {
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
