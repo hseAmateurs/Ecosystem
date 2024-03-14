@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
+#include "../core/assets.h"
+
 namespace texture {
 
     struct Birthing {
@@ -77,19 +79,17 @@ namespace texture {
 
     public:
 
-        explicit CellTexture(AnimationParameters animation, sf::Vector2f center = {0, 0}, float radius = 15,
-                             sf::Color color = sf::Color::Magenta, int pointsCount = 180)
+        explicit CellTexture(Assets::CellParam &cellParam, int pointsCount = 180)
                 :
-                parameters(animation), center(center), radius(radius), color(color), pointsCount(pointsCount + 2),
+                parameters(cellParam.animation), radius(cellParam.radius), color(cellParam.color),
+                pointsCount(pointsCount + 2),
                 m_vertices(sf::TriangleFan, pointsCount + 2),
-                isDying(false), isBirthing(false), isChangingRadius(false), innerTimer(sf::Time::Zero),
-                rotationDirection(rand() % 2 ? -1 : 1) {
+                rotationDirection(rand() % 2 ? -1 : 1), innerTimer(sf::Time::Zero),
+                isDying(false), isBirthing(false), isChangingRadius(false) {
             startBirthing();
         };
 
         void update(sf::Time elapsed);
-
-        void changeCenter(sf::Vector2f newCenter) { center = newCenter; };
 
         void startDying();
 
@@ -111,22 +111,17 @@ namespace texture {
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
 
         AnimationParameters parameters;
-
-        int rotationDirection;
-
         float radius;
-        sf::Vector2f center;
-        sf::VertexArray m_vertices;
-
-        int pointsCount;
         sf::Color color;
 
+        int pointsCount;
+        sf::VertexArray m_vertices;
+        int rotationDirection;
+        sf::Time innerTimer;
 
         bool isDying;
         bool isBirthing;
         bool isChangingRadius;
-
-        sf::Time innerTimer;
     };
 }
 

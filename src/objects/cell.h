@@ -11,66 +11,61 @@
 #include "../utils/settings.h"
 
 #include "../core/field.h"
+#include "../core/assets.h"
 
 using utils::CellType;
 using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
-    explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
-                  sf::Color color);
+    explicit Cell(Assets::CellParam &cellParam, sf::Vector2f &position);
 
-    // установка случайного вектора движения + обновление времени
+    void update(Field &field, sf::Time deltaTime, sf::RenderWindow &window);
+
+    CellType type() const { return cellType; }
+
+    // Установка случайного вектора движения + обновление времени
     void setRandomMovement();
 
     void reflectionControl();
-
-    // Означает, что эта функция должна быть обязательно переопределена в производных классах
-    virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
 
     void setCode(const char new_code) { code.setString(std::string{new_code}); };
 
     char getCode() const { return code.getString()[0]; };
 
-    void setSize(const int &new_size) { size = new_size; };
-
-    void setFont(const sf::Font &font) { code.setFont(font); };
-
-    virtual int type() const = 0;
-
-    virtual void update(Field &field, sf::Time deltaTime) = 0;
-
-    sf::Color getColor() const { return color; }
-
     int getSize() const { return size; }
 
-    float getSpeed() const { return speed; }
+    bool isDead() const { return texture.isDead(); }
 
-    bool isDead() const { return m_isDead; }
-
-    texture::CellTexture texture;
+    bool isDying() const { return texture.isAnimDying(); }
 
 protected:
+    virtual void runScript(Field &field, sf::Time deltaTime) = 0;
+
     template<class T>
     void updateCollision(std::vector<T *> &cells);
 
     void normalizeVelocity();
 
-    void kill() { m_isDead = true; }
- 
-    sf::Text code;
+    void kill() { texture.startDying(); }
+
     float radius;
     int size;
-    sf::Color color;
-    sf::Vector2f center;
-    sf::Vector2f velocity;
     float speed;
+
+    sf::Text code;
+
+    sf::Vector2f velocity;
+
     sf::Clock timer;
-    sf::Time randomMoveInterval;
+
+    texture::CellTexture texture;
 
 private:
-    bool m_isDead;
-    sf::Time interval;
+    void initCode();
+
+    CellType cellType;
+    sf::Time randomMoveInterval;
 };
 
 template<class T>
