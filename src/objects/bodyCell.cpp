@@ -30,11 +30,23 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCel
 }
 
 void BodyCell::update(Field &field, sf::Time deltaTime) {
+    if (texture.isDead()) kill();
     setRandomMovement();
     reflectionControl();
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
-    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
+}
+
+void BodyCell::createPathogen(PathogenCell *pathogen, std::vector<PathogenCell *> &newPathogens) {
+    if (texture.isDead()) {
+         auto *newPathogen = new PathogenCell(*pathogen);
+         newPathogen->setPosition(getPosition());
+         newPathogen->setCode(getKillerCode());
+         std::cout << "Create pathpgen\n";
+         newPathogen->texture.startBirthing();
+         newPathogens.push_back(newPathogen);
+    }
+
 }
