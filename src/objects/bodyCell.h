@@ -26,6 +26,8 @@ public:
 
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells);
 
+    void createPathogen(PathogenCell *pathogen, std::vector<PathogenCell *> &newPathogens);
+
     void update(Field &field, sf::Time deltaTime) override;
 
 private:
