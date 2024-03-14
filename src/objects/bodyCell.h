@@ -30,8 +30,13 @@ public:
 
     void update(Field &field, sf::Time deltaTime) override;
 
+    void setKillerCode(char code) {killerCode = code; };
+
+    char getKillerCode() const { return killerCode; };
+
 private:
     sf::Time lifeTime;
+    char killerCode;
 };
 
 

@@ -31,8 +31,10 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
         }
 
         if (distance <= radius + otherCell->getRadius())
-            if (!otherCell->texture.isAnimDying())
+            if (!otherCell->texture.isAnimDying()) {
                 otherCell->texture.startDying();
+                otherCell->setKillerCode(getCode());
+            }
     }
 
     if (minDistance == INF)

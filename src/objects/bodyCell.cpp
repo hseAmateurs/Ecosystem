@@ -43,6 +43,7 @@ void BodyCell::createPathogen(PathogenCell *pathogen, std::vector<PathogenCell *
     if (texture.isDead()) {
          auto *newPathogen = new PathogenCell(*pathogen);
          newPathogen->setPosition(getPosition());
+         newPathogen->setCode(getKillerCode());
          std::cout << "Create pathpgen\n";
          newPathogen->texture.startBirthing();
          newPathogens.push_back(newPathogen);
