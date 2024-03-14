@@ -30,7 +30,7 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
             closestBody = bodyPos;
         }
 
-        if (distance <= 3)
+        if (distance <= otherCell->getRadius())
             if (!otherCell->texture.isAnimDying()) {
                 otherCell->texture.startDying();
                 otherCell->setKillerCode(getCode());
