@@ -5,6 +5,8 @@
 #ifndef ECOSYSTEM_SETTINGS_H
 #define ECOSYSTEM_SETTINGS_H
 
+#include <SFML/Graphics.hpp>
+
 namespace settings {
     // Разрешение экрана
     const unsigned int SCREEN_WIDTH = 1600;
@@ -28,6 +30,16 @@ namespace settings {
 
     // Процент удаления макрофага от центра "мозгового" круга
     const double MACRO_DISTANCE = 1.1;
+
+    namespace color {
+        const sf::Color PATHOGEN = sf::Color(139, 0, 255);
+        const sf::Color BODY = sf::Color::Red;
+        const sf::Color MACRO = sf::Color::Yellow;
+        const sf::Color NEUTRO = sf::Color::Green;
+        const sf::Color BCELL = sf::Color::Cyan;
+        const sf::Color PLASMA = sf::Color::Magenta;
+        const sf::Color ANTI = sf::Color(219, 112, 147);;
+    }
 }
 
 #endif //ECOSYSTEM_SETTINGS_H
