@@ -34,7 +34,7 @@ void NeutroCell::update(Field &field, sf::Time deltaTime) {
                 }
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
-                texture.changeRadius(radius+7);
+                texture.changeRadius(radius + NEUTRO_RADIUS_DELTA);
             }
         }
     }
