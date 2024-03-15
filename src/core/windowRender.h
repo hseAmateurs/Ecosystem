@@ -48,14 +48,12 @@ void WindowRender::drawCells(std::vector<T *> &cells) {
     std::vector<int> deadCells;
     for (int i = 0; i < cellsSize; ++i) {
         auto &cell = cells[i];
-        m_window.draw(*cell);
         if (cell->isDead()) {
             deadCells.push_back(i);
             continue;
         }
-        cell->update(m_field, deltaTime);
+        cell->update(m_field, deltaTime, m_window);
         m_window.draw(*cell);
-        cell->drawTexture(m_window, deltaTime);
     }
     // Подчищаем мертвые клетки
     int deadSize = deadCells.size();

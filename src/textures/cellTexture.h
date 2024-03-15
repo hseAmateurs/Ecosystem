@@ -78,16 +78,21 @@ namespace texture {
     class CellTexture : public sf::Drawable, public sf::Transformable {
 
     public:
-
-        explicit CellTexture(AnimationParameters &animation, sf::Color &color, Assets::CellParam &cellParam, int pointsCount = 180)
-                :
-                parameters(animation), radius(cellParam.radius), color(color),
+        explicit CellTexture(const AnimationParameters &animation, sf::Color color = sf::Color::Magenta,
+                             float radius = 15, sf::Vector2f position = {0, 0},
+                             int pointsCount = 180) :
+                parameters(animation), radius(radius), color(color),
                 pointsCount(pointsCount + 2),
                 m_vertices(sf::TriangleFan, pointsCount + 2),
-                rotationDirection(rand() % 2 ? -1 : 1), innerTimer(sf::Time::Zero),
+                rotationDirection(rand() % 2 ? -1 : 1),
+                innerTimer(sf::Time::Zero),
                 isDying(false), isBirthing(false), isChangingRadius(false) {
             startBirthing();
         };
+
+        explicit CellTexture(const AnimationParameters &animation, const sf::Color &color,
+                             const Assets::CellParam &cellParam, int pointsCount = 180)
+                : CellTexture(animation, color, cellParam.radius) { };
 
         void update(sf::Time elapsed);
 
@@ -111,8 +116,8 @@ namespace texture {
         sf::Vector2f getRadiusVector(const float &angle, const float &radius) const;
 
         AnimationParameters parameters;
-        float radius;
         sf::Color color;
+        float radius;
 
         int pointsCount;
         sf::VertexArray m_vertices;

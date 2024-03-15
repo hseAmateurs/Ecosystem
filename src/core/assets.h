@@ -5,11 +5,11 @@
 #ifndef ECOSYSTEM_ASSETS_H
 #define ECOSYSTEM_ASSETS_H
 
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 #include <map>
 
-#include "../textures/animations.h"
 #include "../utils/cellTypes.h"
 
 using utils::CellType;

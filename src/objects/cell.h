@@ -6,6 +6,7 @@
 #include <ctime>
 #include <cmath>
 
+#include "../textures/animations.h"
 #include "../textures/cellTexture.h"
 #include "../utils/cellTypes.h"
 #include "../utils/settings.h"
@@ -18,8 +19,8 @@ using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
-
-    explicit Cell(Assets::CellParam &cellParam, texture::AnimationParameters &animation, sf::Color &color);
+    explicit Cell(const Assets::CellParam &cellParam, const texture::AnimationParameters &animation,
+                  const sf::Color &color);
 
     virtual ~Cell() { };
 
@@ -32,11 +33,13 @@ public:
 
     void reflectionControl();
 
-    void setCode(const char new_code) { code.setString(std::string{new_code}); };
+    void setCode(const char new_code) { code.setString(new_code); };
 
     char getCode() const { return code.getString()[0]; };
 
     int getSize() const { return size; }
+
+    void kill();
 
     bool isDead() const { return texture.isDead(); }
 
@@ -50,7 +53,10 @@ protected:
 
     void normalizeVelocity();
 
-    void kill() { texture.startDying(); }
+    static float getDistance(sf::Vector2f pos1, sf::Vector2f pos2) {
+        return std::sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +
+                         (pos1.y - pos2.y) * (pos1.y - pos2.y));
+    }
 
     float radius;
     int size;
@@ -62,13 +68,14 @@ protected:
 
     sf::Clock timer;
 
-    texture::CellTexture texture;
+    const float INF = 30000;
 
 private:
     void initCode();
 
     CellType cellType;
     sf::Time randomMoveInterval;
+    texture::CellTexture texture;
 };
 
 template<class T>

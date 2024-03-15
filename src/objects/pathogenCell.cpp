@@ -3,36 +3,22 @@
 //
 
 #include "pathogenCell.h"
-#include <iostream>
 
-void PathogenCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
-    texture.changeCenter(getPosition());
-    texture.update(elapsed);
-    window.draw(texture);
 
-    code.setPosition(getPosition());
-    window.draw(code);
-}
-
-void PathogenCell::update(Field &field, sf::Time deltaTime) {
-    const int INF = 30000;
-
+void PathogenCell::runScript(Field &field, sf::Time deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
-    sf::Vector2f hunterPos = getPosition();
 
     for (BodyCell *otherCell: field.bodies) {
         sf::Vector2f bodyPos = otherCell->getPosition();
-        float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
-                                   (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
+        float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < PATH_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
 
         if (distance <= radius + otherCell->getRadius())
-            if (!otherCell->texture.isAnimDying())
-                otherCell->texture.startDying();
+            otherCell->kill();
     }
 
     if (minDistance == INF)
@@ -43,6 +29,5 @@ void PathogenCell::update(Field &field, sf::Time deltaTime) {
     }
     reflectionControl();
     updateCollision(field.pathogens);
-    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }

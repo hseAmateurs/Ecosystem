@@ -3,30 +3,18 @@
 //
 
 #include <iostream>
+
 #include "macroCell.h"
 
 using namespace brain;
 
-void MacroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
-    texture.changeCenter(getPosition());
-    texture.update(elapsed);
-    window.draw(texture);
 
-    code.setPosition(getPosition());
-    window.draw(code);
-}
-
-void MacroCell::runPlasma(Field &field) {
-    kill();
-    // run plasma
-    // current delete cell
-}
-
-void MacroCell::update(Field &field, sf::Time deltaTime) {
+void MacroCell::runScript(Field &field, sf::Time deltaTime) {
     if (m_status == HUNTING) {
         hunting(field, deltaTime);
         return;
     }
+
     if (m_status == DELIVERY) {
         // Первая клетка свободна
         BCell::Status firstStatus = field.bCells.front()->getStatus();
@@ -47,6 +35,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         move(velocity * deltaTime.asSeconds());
         return;
     }
+
     if (m_status == CHECKING && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
@@ -67,7 +56,7 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
             scrollBCells(field);
             return;
         }
-        // Заупск анимации перемещения (нельзя переместиться на клетку с AWAIT, т.к. у неё уже есть пара)
+        // Запуск анимации перемещения (нельзя переместиться на клетку с AWAIT, т.к. у неё уже есть пара)
         if (field.bCells[bCellIndex + 1]->getStatus() == BCell::FREE)
             moveNextPrepare(field);
         return;
@@ -82,6 +71,12 @@ void MacroCell::update(Field &field, sf::Time deltaTime) {
         setPosition(getXY(anim.currentAngle, MACRO_DISTANCE));
         return;
     }
+}
+
+void MacroCell::runPlasma(Field &field) {
+    kill();
+    // run plasma
+    // current delete cell
 }
 
 bool MacroCell::isBCellReady(const Field &field) const {
@@ -116,9 +111,9 @@ void MacroCell::scrollBCells(Field &field) {
             return;
     std::cout << "Run scroll: " << getCode() << "\n";
     auto firstBCell = field.bCells.front();
-    auto *newBCell = new BCell(*firstBCell);
-    newBCell->setPosition(getXY((int)field.bCells.size(), (int)field.bCells.size()));
-    field.bCells.push_back(newBCell);
+    field.bCells.push_back(
+            new BCell(*firstBCell, getXY((int)field.bCells.size(), (int)field.bCells.size()))
+    );
 
     // Простановка ожидаемых статусов, чтобы клетки,
     // которые находятся раньше в массиве, не сломали очередь следования в кругу
@@ -135,27 +130,20 @@ void MacroCell::scrollBCells(Field &field) {
 }
 
 void MacroCell::hunting(Field &field, sf::Time deltaTime) {
-    const int INF = 30000;
-
     sf::Vector2f closestBody;
     float minDistance = INF;
-    sf::Vector2f hunterPos = getPosition();
 
     for (PathogenCell *&otherCell: field.pathogens) {
         sf::Vector2f bodyPos = otherCell->getPosition();
-        float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
-                                   (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
+        float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
-        if (distance <= radius) {
-            if (!otherCell->texture.isAnimDying()){
-                this->setCode(otherCell->getCode());
-                m_status = DELIVERY;
-                otherCell->setCode(' ');
-                otherCell->texture.startDying();
-            }
+        if (distance <= radius && !otherCell->isDying()) {
+            setCode(otherCell->getCode());
+            m_status = DELIVERY;
+            otherCell->kill();
         }
     }
 
@@ -169,6 +157,5 @@ void MacroCell::hunting(Field &field, sf::Time deltaTime) {
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
-    if(texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }

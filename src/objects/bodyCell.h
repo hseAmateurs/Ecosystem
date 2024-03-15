@@ -8,25 +8,21 @@
 
 #include "cell.h"
 #include "../utils/cells.h"
-#include "../textures/cellTexture.h"
 
 class BodyCell : public Cell {
 public:
-    BodyCell(texture::AnimationParameters animation, float radius, int size, float speed,
-             sf::Vector2f center, sf::Color color)
-            : Cell(animation, radius, size,
-                   speed,
-                   center, color), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
+    explicit BodyCell(const Assets::CellParam &cellParam)
+            : Cell(cellParam, texture::bodyCell, color::BODY),
+              lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
 
-    BodyCell(const BodyCell &right) : Cell(right), lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
+    BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
+            Cell(right), lifeTime(sf::seconds(-(rand() % 20 + 15))) {
+        setPosition(newPos);
+    }
 
-    int type() const override { return CellType::BODY; }
-
-    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
+    virtual void runScript(Field &field, sf::Time deltaTime) override;
 
     void cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells);
-
-    void update(Field &field, sf::Time deltaTime) override;
 
 private:
     sf::Time lifeTime;

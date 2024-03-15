@@ -4,7 +4,8 @@
 using namespace settings;
 
 
-Cell::Cell(Assets::CellParam &cellParam, texture::AnimationParameters &animation, sf::Color &color)
+Cell::Cell(const Assets::CellParam &cellParam, const texture::AnimationParameters &animation,
+           const sf::Color &color)
         : sf::CircleShape(cellParam.radius),
           cellType(cellParam.cellType),
           radius(cellParam.radius), size(cellParam.size), speed(cellParam.speed),
@@ -25,7 +26,7 @@ void Cell::initCode() {
     code.setOrigin(fontSize / 3.f,
                    fontSize / 1.5f);
     code.setFont(Assets::instance().font);
-    code.setString(std::string());
+    code.setString(' ');
 }
 
 
@@ -66,4 +67,10 @@ void Cell::update(Field &field, sf::Time deltaTime, sf::RenderWindow &window) {
 
     code.setPosition(getPosition());
     window.draw(code);
+}
+
+void Cell::kill() {
+    if (isDying()) return;
+    setCode(' ');
+    texture.startDying();
 }

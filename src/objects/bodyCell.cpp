@@ -4,37 +4,30 @@
 
 #include "bodyCell.h"
 
-void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
-    texture.changeCenter(getPosition());
-    texture.update(elapsed);
-    window.draw(texture);
+
+void BodyCell::runScript(Field &field, sf::Time deltaTime) {
+    setRandomMovement();
+    reflectionControl();
+    updateCollision(field.neutroes);
+    updateCollision(field.macroes);
+    updateCollision(field.bodies);
+    move(velocity * deltaTime.asSeconds());
 }
 
-void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCells) {
+void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells) {
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
     if (lifeTime.asSeconds() >= randomTime.asSeconds()) {
-        auto *newCell = new BodyCell(*this);
-
         float x1, y1;
         do {
             x1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
         } while (x1 == 0 && y1 == 0);
 
-        newCell->setPosition((getPosition() + sf::Vector2f(x1, y1)));
-        bodyCells.push_back(newCell);
+        bodyCells.push_back(
+                new BodyCell(*this, getPosition() + sf::Vector2f(x1, y1))
+        );
         lifeTime = sf::Time::Zero;
     }
-}
-
-void BodyCell::update(Field &field, sf::Time deltaTime) {
-    setRandomMovement();
-    reflectionControl();
-    updateCollision(field.neutroes);
-    updateCollision(field.macroes);
-    updateCollision(field.bodies);
-    if (texture.isDead()) kill();
-    move(velocity * deltaTime.asSeconds());
 }

@@ -3,31 +3,27 @@
 //
 
 #include <iostream>
+
 #include "bCell.h"
 
 using namespace brain;
 
-void BCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
-    texture.changeCenter(getPosition());
-    texture.update(elapsed);
-    window.draw(texture);
-
-    code.setPosition(getPosition());
-    window.draw(code);
+BCell::BCell(const BCell &right, const sf::Vector2f &newPos) :
+        Cell(right), m_status(FREE) {
+    setCode(' ');
+    setPosition(newPos);
 }
 
-void BCell::update(Field &field, sf::Time deltaTime) {
-    if (m_status == MOVING) {
-        updateAngle(anim, timer);
-        if (std::abs(anim.targetAngle - anim.currentAngle) <= angleEps) {
-            if (m_index == 0)
-                kill();
-            m_status = m_nextStatus;
-            anim.currentAngle = anim.targetAngle;
-        }
-        setPosition(getXY(anim.currentAngle));
-        return;
+void BCell::runScript(Field &field, sf::Time deltaTime) {
+    if (m_status != MOVING) return;
+
+    updateAngle(anim, timer);
+    if (std::abs(anim.targetAngle - anim.currentAngle) <= angleEps) {
+        if (m_index == 0) kill();
+        m_status = m_nextStatus;
+        anim.currentAngle = anim.targetAngle;
     }
+    setPosition(getXY(anim.currentAngle));
 }
 
 void BCell::scrollPrepare(const int index, const int amount, Status nextStatus) {
@@ -43,8 +39,4 @@ void BCell::scrollPrepare(const int index, const int amount, Status nextStatus) 
     };
     m_status = MOVING;
     timer.restart();
-}
-
-BCell::~BCell() {
-    std::cout << "Deleted\n";
 }

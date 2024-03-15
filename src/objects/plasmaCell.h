@@ -8,18 +8,13 @@
 
 #include "cell.h"
 #include "../utils/cells.h"
-#include "../textures/cellTexture.h"
 
 class PlasmaCell : public Cell {
 public:
-    PlasmaCell(texture::AnimationParameters animation, float radius, int size, float speed,
-               sf::Vector2f center, sf::Color color);
+    explicit PlasmaCell(const Assets::CellParam &cellParam) :
+            Cell(cellParam, texture::plasmaCell, color::PLASMA) { };
 
-    int type() const override { return CellType::PLASMA; }
-
-    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
-
-    void update(Field &field, sf::Time deltaTime) override { };
+    virtual void runScript(Field &field, sf::Time deltaTime) override;
 };
 
 
