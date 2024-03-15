@@ -14,7 +14,7 @@ int main() {
     Field field;
     field.init();
 
-    WindowRender windowRender(field);
+    WindowRender windowRender(&field);
     windowRender.start();
 
     return 0;

@@ -10,6 +10,8 @@ using namespace brain;
 
 
 void MacroCell::runScript(Field &field, sf::Time deltaTime) {
+    if (isDying()) return;
+
     if (m_status == HUNTING) {
         hunting(field, deltaTime);
         return;
@@ -41,7 +43,7 @@ void MacroCell::runScript(Field &field, sf::Time deltaTime) {
         bCell->setStatus(BCell::BUSY);
 
         // Добавить задержку для чекинга (можно анимировать радиус ещё)
-        if (!bCell->getCode()) {
+        if (bCell->getCode() == ' ') {
             bCell->setCode(getCode()); // Вместо set будет анимированный подбор
             bCell->setStatus(BCell::FREE);
             runPlasma(field);

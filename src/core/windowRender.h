@@ -13,7 +13,7 @@
 // Рендер игры
 class WindowRender {
 public:
-    explicit WindowRender(Field &field) :
+    explicit WindowRender(Field *field) :
             m_field(field), m_thread(&WindowRender::render, this) { init(); };
 
     bool isRun() const { return run; };
@@ -34,7 +34,7 @@ private:
 
     bool run;
 
-    Field m_field;
+    Field *m_field;
     sf::RenderWindow m_window;
     sf::Thread m_thread;
 
@@ -52,7 +52,7 @@ void WindowRender::drawCells(std::vector<T *> &cells) {
             deadCells.push_back(i);
             continue;
         }
-        cell->update(m_field, deltaTime, m_window);
+        cell->update(*m_field, deltaTime, m_window);
         m_window.draw(*cell);
     }
     // Подчищаем мертвые клетки

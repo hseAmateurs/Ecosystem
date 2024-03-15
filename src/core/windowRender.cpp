@@ -33,26 +33,26 @@ void WindowRender::drawField() {
     for (int i = 0; i < CellType::COUNT; ++i)
         switch (i) {
             case CellType::PATHOGEN:
-                drawCells(m_field.pathogens);
+                drawCells(m_field->pathogens);
                 break;
             case CellType::BODY:
-                m_field.updateBodyCell();
-                drawCells(m_field.bodies);
+                m_field->updateBodyCell();
+                drawCells(m_field->bodies);
                 break;
             case CellType::MACRO:
-                drawCells(m_field.macroes);
+                drawCells(m_field->macroes);
                 break;
             case CellType::NEUTRO:
-                drawCells(m_field.neutroes);
+                drawCells(m_field->neutroes);
                 break;
             case CellType::BCELL:
-                drawCells(m_field.bCells);
+                drawCells(m_field->bCells);
                 break;
             case CellType::PLASMA:
-                drawCells(m_field.plasmas);
+                drawCells(m_field->plasmas);
                 break;
             case CellType::ANTI:
-                drawCells(m_field.antis);
+                drawCells(m_field->antis);
                 break;
         }
 }
