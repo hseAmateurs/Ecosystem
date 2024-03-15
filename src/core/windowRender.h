@@ -46,20 +46,15 @@ template<class T>
 void WindowRender::drawCells(std::vector<T *> &cells) {
     int cellsSize = cells.size();
     std::vector<int> deadCells;
-    for (int i = 0; i < cellsSize; ++i) {
+    for (int i = cellsSize - 1; i >= 0; --i) {
         auto &cell = cells[i];
         if (cell->isDead()) {
-            deadCells.push_back(i);
+            delete cell;
+            cells.erase(cells.begin() + i);
             continue;
         }
         cell->update(*m_field, deltaTime, m_window);
         m_window.draw(*cell);
-    }
-    // Подчищаем мертвые клетки
-    int deadSize = deadCells.size();
-    for (int i = deadSize - 1; i >= 0; --i) {
-        delete cells[deadCells[i]];
-        cells.erase(cells.begin() + deadCells[i]);
     }
 }
 
