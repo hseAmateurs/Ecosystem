@@ -28,6 +28,9 @@ namespace settings {
 
     // Процент удаления макрофага от центра "мозгового" круга
     const double MACRO_DISTANCE = 1.1;
+
+    // Дельта, на которую увеличивается радиус при съедении патогена
+    const float NEUTRO_RADIUS_DELTA = 2.f;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H
