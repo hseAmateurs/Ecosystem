@@ -5,7 +5,6 @@
 #ifndef ECOSYSTEM_ASSETS_H
 #define ECOSYSTEM_ASSETS_H
 
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 #include <map>
@@ -33,20 +32,11 @@ public:
 
     // Конфиг клетки
     struct CellParam {
-        CellParam() :
-                cellType(utils::BODY),
-                radius(0), size(0), speed(0), amount(0),
-                color(sf::Color::Black),
-                animation(texture::bodyCell) { };
-
         CellType cellType;
-
         float radius;
         int size;
         float speed;
         int amount;
-        sf::Color color;
-        texture::AnimationParameters animation;
     };
 
     sf::Font font;

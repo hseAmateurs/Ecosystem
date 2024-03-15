@@ -4,16 +4,15 @@
 using namespace settings;
 
 
-Cell::Cell(Assets::CellParam &cellParam, sf::Vector2f &position)
+Cell::Cell(Assets::CellParam &cellParam, texture::AnimationParameters &animation, sf::Color &color)
         : sf::CircleShape(cellParam.radius),
           cellType(cellParam.cellType),
           radius(cellParam.radius), size(cellParam.size), speed(cellParam.speed),
           velocity(0, 0),
-          randomMoveInterval(sf::seconds(2)), m_isDead(false),
-          texture(cellParam) {
+          randomMoveInterval(sf::seconds(2)),
+          texture(animation, color, cellParam) {
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
-    setPosition(position);
     timer.restart();
 
     initCode();

@@ -18,7 +18,10 @@ using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
-    explicit Cell(Assets::CellParam &cellParam, sf::Vector2f &position);
+
+    explicit Cell(Assets::CellParam &cellParam, texture::AnimationParameters &animation, sf::Color &color);
+
+    virtual ~Cell() { };
 
     void update(Field &field, sf::Time deltaTime, sf::RenderWindow &window);
 

@@ -12,25 +12,25 @@ using namespace settings;
 // Функция вне класса для создания клеток
 template<class T>
 void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
-    float posX, posY;
+    sf::Vector2f pos;
     for (int i = 0; i < cellParam.amount; ++i) {
-        do {
-            posX = rand() % (SCREEN_WIDTH - 2 * static_cast<int>(cellParam.radius));
-            posY = rand() % (SCREEN_HEIGHT - 2 * static_cast<int>(cellParam.radius));
-        } while ((posY - SCREEN_HEIGHT) * (posY - SCREEN_HEIGHT) + (posX - SCREEN_WIDTH) * (posX - SCREEN_WIDTH) <
-                 BRAIN_RADIUS * BRAIN_RADIUS);
-
-        T *cell = new T(cellParam.animation, cellParam.radius,
-                        cellParam.size, cellParam.speed, {posX, posY}, cellParam.color);
+        T *cell = new T(cellParam);
 
         if (cell->type() == CellType::PLASMA) {
-            posX = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
-            posY = posX;
-            cell->setPosition(SCREEN_WIDTH - posX, SCREEN_HEIGHT - posY);
+            pos.x = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
+            pos.y = SCREEN_HEIGHT - pos.x;
+            pos.x = SCREEN_WIDTH - pos.x;
         }
         else if (cell->type() == CellType::BCELL)
-            cell->setPosition(brain::getXY(i, cellParam.amount));
-
+            pos = brain::getXY(i, cellParam.amount);
+        else {
+            do {
+                pos.x = rand() % (SCREEN_WIDTH - 2 * static_cast<int>(cellParam.radius));
+                pos.y = rand() % (SCREEN_HEIGHT - 2 * static_cast<int>(cellParam.radius));
+            } while ((pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <
+                     BRAIN_RADIUS * BRAIN_RADIUS);
+        }
+        cell->setPosition(pos);
         cells.push_back(cell);
     }
 }

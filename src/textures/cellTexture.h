@@ -79,9 +79,9 @@ namespace texture {
 
     public:
 
-        explicit CellTexture(Assets::CellParam &cellParam, int pointsCount = 180)
+        explicit CellTexture(AnimationParameters &animation, sf::Color &color, Assets::CellParam &cellParam, int pointsCount = 180)
                 :
-                parameters(cellParam.animation), radius(cellParam.radius), color(cellParam.color),
+                parameters(animation), radius(cellParam.radius), color(color),
                 pointsCount(pointsCount + 2),
                 m_vertices(sf::TriangleFan, pointsCount + 2),
                 rotationDirection(rand() % 2 ? -1 : 1), innerTimer(sf::Time::Zero),

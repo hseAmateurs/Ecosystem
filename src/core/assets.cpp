@@ -54,39 +54,6 @@ void Assets::loadConfig(const std::string &fileName) {
         param.speed = std::stof(tokens[3]);
         param.amount = std::stoi(tokens[4]);
 
-        switch (cellType) {
-            case CellType::PATHOGEN:
-                param.color = sf::Color(139, 0, 255);
-                param.animation = texture::pathogen;
-                break;
-            case CellType::BODY:
-                param.color = sf::Color::Red;
-                param.animation = texture::bodyCell;
-                break;
-            case CellType::MACRO:
-                param.color = sf::Color::Yellow;
-                param.animation = texture::macrophage;
-                break;
-            case CellType::NEUTRO:
-                param.color = sf::Color::Green;
-                param.animation = texture::neutrophil;
-                break;
-            case CellType::BCELL:
-                param.color = sf::Color::Cyan;
-                param.animation = texture::bCell;
-                break;
-            case CellType::PLASMA:
-                param.color = sf::Color::Magenta;
-                param.animation = texture::plasmaCell;
-                break;
-            case CellType::ANTI:
-                param.color = sf::Color(219, 112, 147);
-                param.animation = texture::antibody;
-                break;
-            default:
-                throw std::runtime_error("Undefined cell type");
-        }
-
         cellParams[cellType] = param;
         tokens.clear();
     }
