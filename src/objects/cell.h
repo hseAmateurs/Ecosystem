@@ -62,8 +62,6 @@ protected:
     int size;
     float speed;
 
-    sf::Text code;
-
     sf::Vector2f velocity;
 
     sf::Clock timer;
@@ -74,6 +72,7 @@ private:
     void initCode();
 
     CellType cellType;
+    sf::Text code;
     sf::Time randomMoveInterval;
     texture::CellTexture texture;
 };

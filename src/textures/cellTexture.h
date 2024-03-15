@@ -92,7 +92,7 @@ namespace texture {
 
         explicit CellTexture(const AnimationParameters &animation, const sf::Color &color,
                              const Assets::CellParam &cellParam, int pointsCount = 180)
-                : CellTexture(animation, color, cellParam.radius) { };
+                : CellTexture(animation, color, cellParam.radius, {0, 0}, pointsCount) { };
 
         void update(sf::Time elapsed);
 

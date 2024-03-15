@@ -33,7 +33,7 @@ public:
     // Отрисовка конкретного типа клетки
     void createCells(const Assets::CellParam &cellParam);
 
-    void updateBodyCell();
+    void updateBodyCell(sf::Time &deltaTime);
 
     std::vector<PathogenCell *> pathogens;
     std::vector<BodyCell *> bodies;
@@ -42,6 +42,10 @@ public:
     std::vector<BCell *> bCells;
     std::vector<PlasmaCell *> plasmas;
     std::vector<Antibody *> antis;
+
+private:
+    std::vector<BodyCell *> newBodies;
+    std::vector<PathogenCell *> newPathogens;
 };
 
 

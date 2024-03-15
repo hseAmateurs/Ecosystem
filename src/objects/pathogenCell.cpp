@@ -17,8 +17,10 @@ void PathogenCell::runScript(Field &field, sf::Time deltaTime) {
             closestBody = bodyPos;
         }
 
-        if (distance <= radius + otherCell->getRadius())
+        if (distance <= radius + otherCell->getRadius() && !otherCell->isDying()) {
+            otherCell->setKillerCode(getCode());
             otherCell->kill();
+        }
     }
 
     if (minDistance == INF)

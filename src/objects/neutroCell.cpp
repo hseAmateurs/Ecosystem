@@ -16,9 +16,8 @@ void NeutroCell::runScript(Field &field, sf::Time deltaTime) {
             minDistance = distance;
             closestBody = bodyPos;
         }
-        if (distance <= radius + otherCell->getRadius()) {
-            if (!otherCell->isDying())
-                size -= otherCell->getSize();
+        if (distance <= radius + otherCell->getRadius() && !otherCell->isDying()) {
+            size -= otherCell->getSize();
             if (size <= 0) kill();
             otherCell->kill();
         }

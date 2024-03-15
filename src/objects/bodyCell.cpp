@@ -15,6 +15,7 @@ void BodyCell::runScript(Field &field, sf::Time deltaTime) {
 }
 
 void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells) {
+    if (isDying()) return;
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
@@ -30,4 +31,13 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCe
         );
         lifeTime = sf::Time::Zero;
     }
+}
+
+void BodyCell::cellMutation(std::vector<PathogenCell *> &newPathogens) {
+    if (!killerCode) return;
+    auto newPathogen = new PathogenCell(Assets::instance().cellParams[CellType::PATHOGEN]);
+    newPathogen->setPosition(getPosition());
+    newPathogen->setCode(killerCode);
+    newPathogens.push_back(newPathogen);
+    killerCode = 0;
 }
