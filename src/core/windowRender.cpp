@@ -32,7 +32,7 @@ void WindowRender::render() {
 void WindowRender::drawField() {
     drawCells(m_field->pathogens);
 
-    m_field->updateBodyCell();
+    m_field->updateBodyCell(deltaTime);
     drawCells(m_field->bodies);
 
     drawCells(m_field->macroes);

@@ -27,7 +27,8 @@ void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
             do {
                 pos.x = rand() % (SCREEN_WIDTH - 2 * static_cast<int>(cellParam.radius));
                 pos.y = rand() % (SCREEN_HEIGHT - 2 * static_cast<int>(cellParam.radius));
-            } while ((pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <
+            } while ((pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) +
+                     (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <
                      BRAIN_RADIUS * BRAIN_RADIUS);
         }
         cell->setPosition(pos);
@@ -74,10 +75,15 @@ void Field::createCells(const Assets::CellParam &cellParam) {
     }
 }
 
-void Field::updateBodyCell() {
-//    for (BodyCell* bodyCell : bodies) {
-//        if(bodyCell)
-//    }
+void Field::updateBodyCell(sf::Time &deltaTime) {
+    newBodies.clear();
+    newPathogens.clear();
+    for (BodyCell *bodyCell: bodies) {
+        bodyCell->cellDivision(deltaTime, newBodies);
+        bodyCell->cellMutation(newPathogens);
+    }
+    bodies.insert(bodies.end(), newBodies.begin(), newBodies.end());
+    pathogens.insert(pathogens.end(), newPathogens.begin(), newPathogens.end());
 }
 
 Field::~Field() {
