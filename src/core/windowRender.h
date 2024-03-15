@@ -45,7 +45,6 @@ private:
 template<class T>
 void WindowRender::drawCells(std::vector<T *> &cells) {
     int cellsSize = cells.size();
-    std::vector<int> deadCells;
     for (int i = cellsSize - 1; i >= 0; --i) {
         auto &cell = cells[i];
         if (cell->isDead()) {
