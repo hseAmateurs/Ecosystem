@@ -10,12 +10,11 @@ Cell::Cell(const Assets::CellParam &cellParam, const texture::AnimationParameter
           cellType(cellParam.cellType),
           radius(cellParam.radius), size(cellParam.size), speed(cellParam.speed),
           velocity(0, 0),
-          randomMoveInterval(sf::seconds(2)),
+          randomMoveInterval(sf::seconds(0)),
           texture(animation, color, cellParam) {
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     timer.restart();
-    setRandomMovement();
 
     initCode();
 }

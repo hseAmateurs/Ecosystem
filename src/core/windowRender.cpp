@@ -63,6 +63,7 @@ void WindowRender::start() {
             if (event.type == sf::Event::Closed)
                 // Останавливаем поток и дожидаемся его завершения
                 stop();
+        sf::sleep(sf::milliseconds(80));
     }
 }
 
