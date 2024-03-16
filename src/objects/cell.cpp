@@ -15,6 +15,7 @@ Cell::Cell(const Assets::CellParam &cellParam, const texture::AnimationParameter
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     timer.restart();
+    setRandomMovement();
 
     initCode();
 }
