@@ -21,6 +21,7 @@ void texture::CellTexture::updateDying() {
     m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
 }
 
+
 void texture::CellTexture::update(sf::Time elapsed) {
     innerTimer += elapsed;
 
@@ -47,6 +48,11 @@ void texture::CellTexture::update(sf::Time elapsed) {
                 isBirthing = false;
             currentRadiusVector *= parameters.birthing.getBirthingOffset(innerTimer);
         }
+        if (isPulsation) {
+            if (parameters.pulsation.isEndOfPulsation(innerTimer))
+                isPulsation = false;
+            currentRadiusVector *= parameters.pulsation.getPulsationOffset(innerTimer);
+        }
         m_vertices[i].position = currentRadiusVector + center;
         m_vertices[i].color = color;
         angle += step;
@@ -64,15 +70,23 @@ sf::Vector2f texture::CellTexture::getRadiusVector(const float &angle, const flo
 }
 
 void texture::CellTexture::changeRadius(float newRadius) {
+    innerTimer = sf::Time::Zero;
     isChangingRadius = true;
-    parameters.radiusChangingStep = (newRadius - radius) / 160.f * parameters.radiusChangingSpeed;
-    parameters.newRadius = newRadius;
+    parameters.changingRadius.radiusChangingSpan = (newRadius - radius) / radius / 2.f;
+    parameters.changingRadius.newRadius = newRadius;
+    parameters.changingRadius.oldRadius = radius;
+}
+
+
+void texture::CellTexture::startPulsation() {
+    innerTimer = sf::Time::Zero;
+    isPulsation = true;
 }
 
 void texture::CellTexture::updateChangingRadius() {
-    radius += parameters.radiusChangingStep;
-    if(radius >= parameters.newRadius) {
+    radius = parameters.changingRadius.oldRadius * (parameters.changingRadius.getChangingRadiusOffset(innerTimer));
+    if (parameters.changingRadius.isEndOfChagingRadius(innerTimer)) {
+        radius = parameters.changingRadius.newRadius;
         isChangingRadius = false;
-        radius = parameters.newRadius;
     }
 }
