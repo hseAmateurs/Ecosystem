@@ -20,7 +20,7 @@ void texture::CellTexture::updateDying() {
     pointsCount -= parameters.dying.pointsLoss / 5.f;
     m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
 }
-#include <iostream>
+
 
 void texture::CellTexture::update(sf::Time elapsed) {
     innerTimer += elapsed;
@@ -78,14 +78,13 @@ void texture::CellTexture::changeRadius(float newRadius) {
 }
 
 
-
 void texture::CellTexture::startPulsation() {
     innerTimer = sf::Time::Zero;
     isPulsation = true;
 }
 
 void texture::CellTexture::updateChangingRadius() {
-    radius = parameters.changingRadius.oldRadius * (parameters.changingRadius.getChangingRadiusOffset(innerTimer) );
+    radius = parameters.changingRadius.oldRadius * (parameters.changingRadius.getChangingRadiusOffset(innerTimer));
     if (parameters.changingRadius.isEndOfChagingRadius(innerTimer)) {
         radius = parameters.changingRadius.newRadius;
         isChangingRadius = false;

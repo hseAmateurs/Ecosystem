@@ -12,12 +12,12 @@ namespace texture {
 
         float getChangingRadiusOffset(sf::Time time) const {
             float x = time.asSeconds() * radiusChangingSpeed;
-            return 1.f + x * powf(2,-x+2) * radiusChangingSpan;
+            return 1.f + x * powf(2, -x + 2) * radiusChangingSpan;
         }
 
         bool isEndOfChagingRadius(sf::Time time) const {
             float x = time.asSeconds() * radiusChangingSpeed;
-            return x>=2;
+            return x >= 2;
         }
 
         float radiusChangingSpeed;
@@ -30,7 +30,7 @@ namespace texture {
 
         float getPulsationOffset(sf::Time time) {
             float x = time.asSeconds() * pulsationSpeed;
-            return 1.f + ( powf(sinf(x), 2) + powf(sinf(2*x), 1) ) * pulsationSpan;
+            return 1.f + (powf(sinf(x), 2) + powf(sinf(2 * x), 1)) * pulsationSpan;
         }
 
         bool isEndOfPulsation(sf::Time time) {
@@ -105,8 +105,6 @@ namespace texture {
         // dynamic variables
         float delta;
         float currentPulsationAspect;
-
-
     };
 
 
@@ -121,7 +119,8 @@ namespace texture {
                 center(center), radius(radius), rotationDirection(rand() % 2 ? -1 : 1),
                 m_vertices(sf::TriangleFan, pointsCount + 2), pointsCount(pointsCount + 2), color(color),
                 parameters(animation), flag(false),
-                isDying(false), isBirthing(false), isChangingRadius(false), isPulsation(false), innerTimer(sf::Time::Zero) {
+                isDying(false), isBirthing(false), isChangingRadius(false), isPulsation(false),
+                innerTimer(sf::Time::Zero) {
             startBirthing();
         };
 
@@ -137,7 +136,7 @@ namespace texture {
 
         void changeRadius(float newRadius);
 
-        bool isDead() const { return pointsCount==0; }
+        bool isDead() const { return pointsCount == 0; }
 
         bool isAnimDying() const { return isDying; }
 
