@@ -10,7 +10,7 @@ void BodyCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     window.draw(texture);
 }
 
-void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCells) {
+void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells) {
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
@@ -30,11 +30,23 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell*> &bodyCel
 }
 
 void BodyCell::update(Field &field, sf::Time deltaTime) {
+    if (texture.isDead()) kill();
     setRandomMovement();
     reflectionControl();
     updateCollision(field.neutroes);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
-    if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
+}
+
+void BodyCell::createPathogen(PathogenCell *pathogen, std::vector<PathogenCell *> &newPathogens) {
+    if (texture.isAnimDying() && killerCode) {
+        auto *newPathogen = new PathogenCell(*pathogen);
+        newPathogen->setPosition(getPosition());
+        newPathogen->setCode(getKillerCode());
+        killerCode = 0;
+        std::cout << "Create pathogen\n";
+        newPathogen->texture.startBirthing();
+        newPathogens.push_back(newPathogen);
+    }
 }

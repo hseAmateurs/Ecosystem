@@ -38,6 +38,7 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
     window.setActive(true);
     sf::Clock clock;
     std::vector<BodyCell *> newBodies;
+    std::vector<PathogenCell *> newPathogens;
 
     // For debugging ---
     sf::CircleShape brain(BRAIN_RADIUS);
@@ -61,16 +62,13 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case BODY:
                     newBodies.clear();
+                    newPathogens.clear();
                     for (BodyCell *cell: field.bodies) {
-                        if (cell->texture.isDead()) {
-                            PathogenCell *newPathogen = new PathogenCell(*field.pathogens.front());
-                            newPathogen->setPosition(cell->getPosition());
-                            std::cout << "Create pathpgen\n";
-                            field.pathogens.push_back(newPathogen);
-                        }
+                        cell->createPathogen(field.pathogens[0], newPathogens);
                         cell->cellDivision(deltaTime, newBodies);
                     }
                     field.bodies.insert(field.bodies.end(), newBodies.begin(), newBodies.end());
+                    field.pathogens.insert(field.pathogens.end(), newPathogens.begin(), newPathogens.end());
                     drawing(field.bodies, field, window, deltaTime);
                     break;
                 case MACRO:
@@ -84,6 +82,9 @@ void renderingThread(sf::RenderWindow &window, Field &field) {
                     break;
                 case PLASMA:
                     drawing(field.plasmas, field, window, deltaTime);
+                    break;
+                case ANTI:
+                    drawing(field.antis, field, window, deltaTime);
                     break;
                 default:
                     std::cerr << "Undefined cell type\n";

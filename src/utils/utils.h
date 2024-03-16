@@ -24,6 +24,8 @@ class PlasmaCell;
 
 class NeutroCell;
 
+class Antibody;
+
 class Temperature;
 
 namespace utils {
@@ -49,6 +51,7 @@ namespace utils {
         std::vector<NeutroCell *> neutroes;
         std::vector<BCell *> bCells;
         std::vector<PlasmaCell *> plasmas;
+        std::vector<Antibody *> antis;
         Temperature temperature;
         GameMenu menu;
     };

@@ -11,5 +11,6 @@
 #include "../objects/neutroCell.h"
 #include "../objects/bCell.h"
 #include "../objects/plasmaCell.h"
+#include "../objects/antibody.h"
 
 #endif //ECOSYSTEM_CELLS_H

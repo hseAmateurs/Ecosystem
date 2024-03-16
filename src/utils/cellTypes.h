@@ -13,6 +13,7 @@ namespace utils {
         NEUTRO,
         BCELL,
         PLASMA,
+        ANTI,
         COUNT
     };
 }

@@ -1,54 +1,63 @@
-//
-// Created by Денис Громачихин on 19.02.2024.
-//
-
-#include "neutroCell.h"
+#include "antibody.h"
 #include <iostream>
 
-void NeutroCell::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
+void Antibody::drawTexture(sf::RenderWindow &window, sf::Time elapsed) {
     texture.changeCenter(getPosition());
     texture.update(elapsed);
     window.draw(texture);
+    code.setPosition(getPosition());
+    window.draw(code);
 }
 
-void NeutroCell::update(Field &field, sf::Time deltaTime) {
+void Antibody::antibodyDeath() {
+    if(!this->texture.isAnimDying()){
+        this->setCode(' ');
+        this->texture.startDying();
+    }
+}
+
+void Antibody::update(Field &field, sf::Time deltaTime) {
     const int INF = 30000;
 
     sf::Vector2f closestBody;
     float minDistance = INF;
     sf::Vector2f hunterPos = getPosition();
-
+    bool foundPathogen = false;
     for (PathogenCell *&otherCell: field.pathogens) {
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = std::sqrt((bodyPos.x - hunterPos.x) * (bodyPos.x - hunterPos.x) +
                                    (bodyPos.y - hunterPos.y) * (bodyPos.y - hunterPos.y));
-        if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
+        if (distance < minDistance && otherCell->getCode()==this->getCode()) {
             minDistance = distance;
             closestBody = bodyPos;
+            foundPathogen = true;
         }
-        if (distance <= radius + otherCell->getRadius()) {
+        if (distance <= radius + otherCell->getRadius() && otherCell->getCode()==this->getCode()) {
             if (!otherCell->texture.isAnimDying()) {
-                this->size = this->size - otherCell->getSize();
-                if (this->size <= 0 && !this->texture.isAnimDying()) {
-                    this->texture.startDying();
-                }
                 otherCell->setCode(' ');
                 otherCell->texture.startDying();
-                texture.changeRadius(radius + NEUTRO_RADIUS_DELTA);
             }
+            antibodyDeath();
         }
     }
 
-    if (minDistance == INF)
-        setRandomMovement();
-    else {
+    if (foundPathogen){
+        deathTimer.restart();
         velocity = closestBody - getPosition();
         normalizeVelocity();
     }
+    else {
+        setRandomMovement();
+        if(deathTimer.getElapsedTime()>=deathClock){
+            antibodyDeath();
+        }
+    }
     reflectionControl();
     updateCollision(field.neutroes);
+    updateCollision(field.antis);
     updateCollision(field.macroes);
     updateCollision(field.bodies);
     if (texture.isDead()) kill();
     move(velocity * deltaTime.asSeconds());
 }
+
