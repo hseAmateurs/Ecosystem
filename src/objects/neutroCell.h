@@ -14,7 +14,7 @@ public:
     explicit NeutroCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::neutrophil, color::NEUTRO) { }
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 };
 
 #endif //ECOSYSTEM_NEUTROCELL_H

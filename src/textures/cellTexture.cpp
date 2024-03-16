@@ -22,7 +22,7 @@ void texture::CellTexture::updateDying() {
     m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
 }
 
-void texture::CellTexture::update(sf::Time elapsed) {
+void texture::CellTexture::update(const sf::Time &elapsed) {
     innerTimer += elapsed;
 
     parameters.delta += rotationDirection * parameters.rotationSpeed * elapsed.asSeconds();

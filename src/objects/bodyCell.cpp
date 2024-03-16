@@ -5,7 +5,8 @@
 #include "bodyCell.h"
 
 
-void BodyCell::runScript(Field &field, sf::Time deltaTime) {
+void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
+    cellDivision(field, deltaTime);
     setRandomMovement();
     reflectionControl();
     updateCollision(field.neutroes);
@@ -14,7 +15,7 @@ void BodyCell::runScript(Field &field, sf::Time deltaTime) {
     move(velocity * deltaTime.asSeconds());
 }
 
-void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells) {
+void BodyCell::cellDivision(Field &field, const sf::Time &deltaTime) {
     if (isDying()) return;
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
@@ -26,18 +27,9 @@ void BodyCell::cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCe
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
         } while (x1 == 0 && y1 == 0);
 
-        bodyCells.push_back(
+        field.newBodies.push_back(
                 new BodyCell(*this, getPosition() + sf::Vector2f(x1, y1))
         );
         lifeTime = sf::Time::Zero;
     }
-}
-
-void BodyCell::cellMutation(std::vector<PathogenCell *> &newPathogens) {
-    if (!killerCode) return;
-    auto newPathogen = new PathogenCell(Assets::instance().cellParams[CellType::PATHOGEN]);
-    newPathogen->setPosition(getPosition());
-    newPathogen->setCode(killerCode);
-    newPathogens.push_back(newPathogen);
-    killerCode = 0;
 }

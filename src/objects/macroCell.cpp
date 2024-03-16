@@ -9,7 +9,7 @@
 using namespace brain;
 
 
-void MacroCell::runScript(Field &field, sf::Time deltaTime) {
+void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
     if (isDying()) return;
 
     if (m_status == HUNTING) {
@@ -131,18 +131,19 @@ void MacroCell::scrollBCells(Field &field) {
         field.bCells[i]->scrollPrepare(i, bCellAmount, nextStatuses[i]);
 }
 
-void MacroCell::hunting(Field &field, sf::Time deltaTime) {
+void MacroCell::hunting(Field &field, const sf::Time &deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
 
     for (PathogenCell *&otherCell: field.pathogens) {
+        if(otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
-        if (distance <= radius && !otherCell->isDying()) {
+        if (distance <= radius) {
             setCode(otherCell->getCode());
             m_status = DELIVERY;
             otherCell->kill();

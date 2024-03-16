@@ -24,7 +24,7 @@ public:
 
     virtual ~Cell() { };
 
-    void update(Field &field, sf::Time deltaTime, sf::RenderWindow &window);
+    void update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &window);
 
     CellType type() const { return cellType; }
 
@@ -46,7 +46,7 @@ public:
     bool isDying() const { return texture.isAnimDying(); }
 
 protected:
-    virtual void runScript(Field &field, sf::Time deltaTime) = 0;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) = 0;
 
     template<class T>
     void updateCollision(std::vector<T *> &cells);

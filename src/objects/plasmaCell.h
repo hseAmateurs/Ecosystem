@@ -14,7 +14,7 @@ public:
     explicit PlasmaCell(const Assets::CellParam &cellParam) :
             Cell(cellParam, texture::plasmaCell, color::PLASMA) { };
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 };
 
 

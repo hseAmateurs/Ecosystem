@@ -25,7 +25,7 @@ public:
 
     BCell(const BCell &right, const sf::Vector2f &newPos);
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
     void scrollPrepare(int index, int amount, Status nextStatus);
 

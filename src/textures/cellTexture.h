@@ -94,7 +94,7 @@ namespace texture {
                              const Assets::CellParam &cellParam, int pointsCount = 180)
                 : CellTexture(animation, color, cellParam.radius, {0, 0}, pointsCount) { };
 
-        void update(sf::Time elapsed);
+        void update(const sf::Time &elapsed);
 
         void startDying();
 

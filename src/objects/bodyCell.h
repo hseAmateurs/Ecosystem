@@ -13,24 +13,19 @@ class BodyCell : public Cell {
 public:
     explicit BodyCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::bodyCell, color::BODY),
-              lifeTime(sf::seconds(-(rand() % 20 + 15))), killerCode(0) { }
+              lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
 
     BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
             Cell(right), lifeTime(sf::seconds(-(rand() % 20 + 15))) {
         setPosition(newPos);
     }
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
-
-    void cellDivision(sf::Time &deltaTime, std::vector<BodyCell *> &bodyCells);
-
-    void cellMutation(std::vector<PathogenCell *> &newPathogens);
-
-    void setKillerCode(const char code) { killerCode = code; }
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
 private:
+    void cellDivision(Field &field, const sf::Time &deltaTime);
+
     sf::Time lifeTime;
-    char killerCode;
 };
 
 

@@ -24,7 +24,7 @@ public:
             : Cell(cellParam, texture::macrophage, color::MACRO),
               m_status(HUNTING), bCellIndex(0) { }
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
     Status getStatus() const { return m_status; }
 
@@ -35,7 +35,7 @@ private:
 
     void scrollBCells(Field &field);
 
-    void hunting(Field &field, sf::Time deltaTime);
+    void hunting(Field &field, const sf::Time &deltaTime);
 
     void moveNextPrepare(Field &field);
 

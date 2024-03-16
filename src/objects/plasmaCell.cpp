@@ -7,6 +7,6 @@
 #include "plasmaCell.h"
 
 
-void PlasmaCell::runScript(Field &field, sf::Time deltaTime) {
+void PlasmaCell::runScript(Field &field, const sf::Time &deltaTime) {
 
 }

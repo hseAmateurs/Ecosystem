@@ -23,6 +23,7 @@ void WindowRender::render() {
         deltaTime = clock.restart();
 
         m_window.draw(brain);
+        m_field->update();
         drawField();
 
         m_window.display();
@@ -30,10 +31,9 @@ void WindowRender::render() {
 }
 
 void WindowRender::drawField() {
-    drawCells(m_field->pathogens);
-
-    m_field->updateBodyCell(deltaTime);
     drawCells(m_field->bodies);
+
+    drawCells(m_field->pathogens);
 
     drawCells(m_field->macroes);
 

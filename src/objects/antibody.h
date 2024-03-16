@@ -12,7 +12,7 @@ public:
         setCode((char)(rand() % 31 + '@'));
     }
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
 private:
     sf::Time deathClock;

@@ -58,7 +58,7 @@ void Cell::normalizeVelocity() {
     velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
 }
 
-void Cell::update(Field &field, sf::Time deltaTime, sf::RenderWindow &window) {
+void Cell::update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &window) {
     runScript(field, deltaTime);
 
     texture.setPosition(getPosition());

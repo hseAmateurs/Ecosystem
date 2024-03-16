@@ -12,7 +12,12 @@ public:
         setCode(rand() % 31 + '@');
     }
 
-    virtual void runScript(Field &field, sf::Time deltaTime) override;
+    PathogenCell(const PathogenCell &right, const sf::Vector2f &newPos) :
+            Cell(right) {
+        setPosition(newPos);
+    }
+
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 };
 
 #endif //ECOSYSTEM_PATHOGENCELL_H

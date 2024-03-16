@@ -5,18 +5,19 @@
 #include "neutroCell.h"
 
 
-void NeutroCell::runScript(Field &field, sf::Time deltaTime) {
+void NeutroCell::runScript(Field &field, const sf::Time &deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
 
     for (PathogenCell *&otherCell: field.pathogens) {
+        if(otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
-        if (distance <= radius + otherCell->getRadius() && !otherCell->isDying()) {
+        if (distance <= radius + otherCell->getRadius()) {
             size -= otherCell->getSize();
             if (size <= 0) kill();
             otherCell->kill();

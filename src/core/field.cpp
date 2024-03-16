@@ -75,15 +75,11 @@ void Field::createCells(const Assets::CellParam &cellParam) {
     }
 }
 
-void Field::updateBodyCell(sf::Time &deltaTime) {
-    newBodies.clear();
-    newPathogens.clear();
-    for (BodyCell *bodyCell: bodies) {
-        bodyCell->cellDivision(deltaTime, newBodies);
-        bodyCell->cellMutation(newPathogens);
-    }
+void Field::update() {
     bodies.insert(bodies.end(), newBodies.begin(), newBodies.end());
     pathogens.insert(pathogens.end(), newPathogens.begin(), newPathogens.end());
+    newPathogens.clear();
+    newBodies.clear();
 }
 
 Field::~Field() {

@@ -14,7 +14,7 @@ BCell::BCell(const BCell &right, const sf::Vector2f &newPos) :
     setPosition(newPos);
 }
 
-void BCell::runScript(Field &field, sf::Time deltaTime) {
+void BCell::runScript(Field &field, const sf::Time &deltaTime) {
     if (m_status != MOVING) return;
 
     updateAngle(anim, timer);

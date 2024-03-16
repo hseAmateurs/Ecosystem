@@ -1,13 +1,13 @@
 #include "antibody.h"
 
-void Antibody::runScript(Field &field, sf::Time deltaTime) {
+void Antibody::runScript(Field &field, const sf::Time &deltaTime) {
     sf::Vector2f closestBody;
     float minDistance = INF;
     bool foundPathogen = false;
 
     for (PathogenCell *&otherCell: field.pathogens) {
+        if(otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
-
         float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && otherCell->getCode() == getCode()) {
             minDistance = distance;
