@@ -34,6 +34,13 @@ namespace settings {
     // Дельта, на которую увеличивается радиус при съедении патогена
     const float NEUTRO_RADIUS_DELTA = 2.f;
 
+    //Время между спавном macro и neutro
+    const sf::Time MACRO_SPAWN_TIME = sf::seconds(15);
+    const sf::Time NEUTRO_SPAWN_TIME = sf::seconds(8);
+
+    //const sf::Vector2f SPAWN_POS = sf::Vector2f(1620.f, -20.f);
+    const std::vector<sf::Vector2f> SPAWN_POS = {sf::Vector2f(1620.f, -20.f), sf::Vector2f(-20.f, -20.f), sf::Vector2f(-20.f, 920.f)};
+
     namespace color {
         const sf::Color PATHOGEN = sf::Color(180, 30 , 220);
         const sf::Color BODY     = sf::Color(245, 20 , 0  );
