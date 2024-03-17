@@ -19,11 +19,13 @@ void WindowRender::render() {
     brain.setPosition(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT);
     // ---
 
+
     while (isRun()) {
         m_window.clear(sf::Color::White);
         deltaTime = clock.restart();
 
         m_window.draw(brain);
+        m_field->spawnImmunCells(deltaTime);
         m_field->update();
         drawField();
 
