@@ -1,4 +1,6 @@
 #include <iomanip>
+#include <string>
+
 #include "controller.h"
 #include "assets.h"
 

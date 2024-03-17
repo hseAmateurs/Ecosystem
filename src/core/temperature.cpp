@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <string>
 
 #include "temperature.h"
 #include "assets.h"
