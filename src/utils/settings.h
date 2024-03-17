@@ -40,6 +40,9 @@ namespace settings {
         const sf::Color PLASMA = sf::Color::Magenta;
         const sf::Color ANTI = sf::Color(219, 112, 147);;
     }
+
+    const float NORMAL_TEMP = 36.6f;
+    const float CRITICAL_TEMP = 42.f;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

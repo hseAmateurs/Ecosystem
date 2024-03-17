@@ -3,6 +3,8 @@
 #include "core/assets.h"
 #include "core/field.h"
 #include "core/windowRender.h"
+#include "core/temperature.h"
+#include "core/controller.h"
 
 int main() {
     setbuf(stdout, nullptr);
@@ -14,8 +16,11 @@ int main() {
     Field field;
     field.init();
 
-    WindowRender windowRender(&field);
-    windowRender.start();
+    Temperature temperature(&field);
 
+    WindowRender windowRender(&field, &temperature);
+
+    Controller controller(&windowRender, &temperature);
+    controller.run();
     return 0;
 }

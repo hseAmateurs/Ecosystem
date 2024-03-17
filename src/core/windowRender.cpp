@@ -7,10 +7,11 @@
 #include "windowRender.h"
 #include "../utils/cells.h"
 
+#include "temperature.h"
+
 
 void WindowRender::render() {
     m_window.setActive(true);
-
     // For debugging ---
     sf::CircleShape brain(settings::BRAIN_RADIUS);
     brain.setFillColor(sf::Color::Black);
@@ -25,6 +26,9 @@ void WindowRender::render() {
         m_window.draw(brain);
         m_field->update();
         drawField();
+
+        m_temp->update();
+        m_window.draw(*m_temp);
 
         m_window.display();
     }
@@ -56,19 +60,9 @@ void WindowRender::init() {
 void WindowRender::start() {
     run = true;
     m_thread.launch();
-
-    while (m_window.isOpen()) {
-        sf::Event event;
-        while (m_window.pollEvent(event))
-            if (event.type == sf::Event::Closed)
-                // Останавливаем поток и дожидаемся его завершения
-                stop();
-        sf::sleep(sf::milliseconds(80));
-    }
 }
 
 void WindowRender::stop() {
     run = false;
     m_thread.wait();
-    m_window.close();
 }

@@ -9,12 +9,15 @@
 #include <vector>
 
 #include "field.h"
+#include "temperature.h"
 
 // Рендер игры
 class WindowRender {
 public:
-    explicit WindowRender(Field *field) :
-            m_field(field), m_thread(&WindowRender::render, this) { init(); };
+    explicit WindowRender(Field *field, Temperature *temp) :
+            m_field(field), m_temp(temp), m_thread(&WindowRender::render, this) { init(); };
+
+    sf::RenderWindow &window() { return m_window; };
 
     bool isRun() const { return run; };
 
@@ -35,6 +38,7 @@ private:
     bool run;
 
     Field *m_field;
+    Temperature *m_temp;
     sf::RenderWindow m_window;
     sf::Thread m_thread;
 
