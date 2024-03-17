@@ -84,7 +84,7 @@ private:
 template<class T>
 void Cell::updateCollision(std::vector<T *> &cells) {
     for (T *&otherCell: cells) {
-        if (otherCell == this) continue;
+        if (otherCell == this || otherCell->isDying()) continue;
         if (getGlobalBounds().intersects(otherCell->getGlobalBounds())) {
             velocity = (getPosition() - otherCell->getPosition());
             velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
