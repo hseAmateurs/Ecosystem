@@ -38,9 +38,10 @@ void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
 
 // Функция вне класса для удаления вектора клеток
 template<class T>
-void templateFree(std::vector<T *> cells) {
+void templateFree(std::vector<T *> &cells) {
     for (T *&cell: cells)
         delete cell;
+    cells.clear();
 }
 
 
@@ -83,6 +84,10 @@ void Field::update() {
 }
 
 Field::~Field() {
+    free();
+}
+
+void Field::free() {
     templateFree(bCells);
     templateFree(pathogens);
     templateFree(bodies);

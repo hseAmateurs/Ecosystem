@@ -25,6 +25,8 @@ public:
 
     void stop();
 
+    void restart();
+
 private:
     void init();
 

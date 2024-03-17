@@ -30,6 +30,8 @@ public:
 
     void init();
 
+    void free();
+
     // Отрисовка конкретного типа клетки
     void createCells(const Assets::CellParam &cellParam);
 

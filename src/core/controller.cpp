@@ -24,6 +24,11 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
     textTime.setFont(Assets::instance().font);
     textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.5f);
     textTime.setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
+
+    textInfo.setFont(Assets::instance().font);
+    textInfo.setString("Press ENTER to restart the game");
+    textInfo.setPosition(settings::SCREEN_WIDTH * 0.24, settings::SCREEN_HEIGHT * 0.7f);
+    textInfo.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 }
 
 void Controller::run() {
@@ -32,15 +37,24 @@ void Controller::run() {
     m_windowRender->start();
     while (m_windowRender->window().isOpen()) {
         if (m_temp->isCritical() && !runEnd) startEndGame();
-        while (m_windowRender->window().pollEvent(event))
+        while (m_windowRender->window().pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 // Останавливаем поток и дожидаемся его завершения
                 if (m_windowRender->isRun()) m_windowRender->stop();
                 if (runEnd) stopEndGame();
                 m_windowRender->window().close();
             }
+            if(event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Enter) restartGame();
+            }
+        }
         sf::sleep(sf::milliseconds(80));
     }
+}
+
+void Controller::restartGame() {
+    stopEndGame();
+    m_windowRender->restart();
 }
 
 void Controller::startEndGame() {
@@ -76,6 +90,7 @@ void Controller::endGame() {
 
         m_windowRender->window().draw(textMain);
         m_windowRender->window().draw(textTime);
+        m_windowRender->window().draw(textInfo);
 
         m_windowRender->window().display();
     }

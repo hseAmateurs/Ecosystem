@@ -66,3 +66,9 @@ void WindowRender::stop() {
     run = false;
     m_thread.wait();
 }
+
+void WindowRender::restart() {
+    m_field->free();
+    m_field->init();
+    start();
+}

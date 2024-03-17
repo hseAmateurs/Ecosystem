@@ -25,6 +25,8 @@ private:
 
     void stopEndGame();
 
+    void restartGame();
+
     bool runEnd;
 
     const Temperature *m_temp;
@@ -35,6 +37,7 @@ private:
 
     sf::Text textTime;
     sf::Text textMain;
+    sf::Text textInfo;
     texture::CellTexture pathogenTexture;
     texture::CellTexture bodyTexture;
     texture::CellTexture bcellTexture;
