@@ -35,8 +35,8 @@ namespace settings {
     const float NEUTRO_RADIUS_DELTA = 2.f;
 
     //Время между спавном macro и neutro
-    const sf::Time MACRO_SPAWN_TIME = sf::seconds(5);
-    const sf::Time NEUTRO_SPAWN_TIME = sf::seconds(3);
+    const sf::Time MACRO_SPAWN_TIME = sf::seconds(15);
+    const sf::Time NEUTRO_SPAWN_TIME = sf::seconds(8);
 
     //const sf::Vector2f SPAWN_POS = sf::Vector2f(1620.f, -20.f);
     const std::vector<sf::Vector2f> SPAWN_POS = {sf::Vector2f(1620.f, -20.f), sf::Vector2f(-20.f, -20.f), sf::Vector2f(-20.f, 920.f)};
