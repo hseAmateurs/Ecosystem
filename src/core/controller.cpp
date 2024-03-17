@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <string>
+#include <sstream>
 
 #include "controller.h"
 #include "assets.h"
