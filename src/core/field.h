@@ -37,6 +37,8 @@ public:
 
     void update();
 
+    void spawnImmuneCells(const sf::Time &deltaTime);
+
     std::vector<PathogenCell *> pathogens;
     std::vector<BodyCell *> bodies;
     std::vector<MacroCell *> macroes;
@@ -47,6 +49,12 @@ public:
 
     std::vector<PathogenCell *> newPathogens;
     std::vector<BodyCell *> newBodies;
+    std::vector<NeutroCell *> newNeutroes;
+    std::vector<MacroCell *> newMacroes;
+
+    // Время до следующей итерации спавна клеток
+    sf::Time macroSpawnTime;
+    sf::Time neutroSpawnTime;
 };
 
 
