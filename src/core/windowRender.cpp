@@ -25,7 +25,8 @@ void WindowRender::render() {
         deltaTime = clock.restart();
 
         m_window.draw(brain);
-        m_field->spawnImmunCells(deltaTime);
+
+        m_field->spawnImmuneCells(deltaTime);
         m_field->update();
         drawField();
 
