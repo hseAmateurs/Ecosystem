@@ -46,6 +46,9 @@ void templateFree(std::vector<T *> &cells) {
 
 
 void Field::init() {
+    macroSpawnTime = MACRO_SPAWN_TIME;
+    neutroSpawnTime = NEUTRO_SPAWN_TIME;
+
     for (auto &param: Assets::instance().cellParams)
         createCells(param);
 }

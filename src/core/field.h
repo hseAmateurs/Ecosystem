@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "../utils/settings.h"
 #include "assets.h"
 
 class BCell;
@@ -54,8 +53,8 @@ public:
     std::vector<MacroCell *> newMacroes;
 
     // Время до следующей итерации спавна клеток
-    sf::Time macroSpawnTime = settings::MACRO_SPAWN_TIME;
-    sf::Time neutroSpawnTime = settings::NEUTRO_SPAWN_TIME;
+    sf::Time macroSpawnTime;
+    sf::Time neutroSpawnTime;
 };
 
 
