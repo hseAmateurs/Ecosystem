@@ -6,6 +6,7 @@
 #define ECOSYSTEM_FIELD_H
 
 #include <vector>
+
 #include "../utils/settings.h"
 #include "assets.h"
 
@@ -37,6 +38,8 @@ public:
 
     void update();
 
+    void spawnImmuneCells(const sf::Time &deltaTime);
+
     std::vector<PathogenCell *> pathogens;
     std::vector<BodyCell *> bodies;
     std::vector<MacroCell *> macroes;
@@ -50,12 +53,9 @@ public:
     std::vector<NeutroCell *> newNeutroes;
     std::vector<MacroCell *> newMacroes;
 
-    //время до следующей итерации спавна клеток
+    // Время до следующей итерации спавна клеток
     sf::Time macroSpawnTime = settings::MACRO_SPAWN_TIME;
     sf::Time neutroSpawnTime = settings::NEUTRO_SPAWN_TIME;
-
-
-    void spawnImmunCells(sf::Time deltatime);
 };
 
 
