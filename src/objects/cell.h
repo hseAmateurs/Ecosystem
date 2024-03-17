@@ -33,6 +33,8 @@ public:
 
     void reflectionControl();
 
+    void setRadiusAnim(float new_radius);
+
     void setCode(const char new_code) { code.setString(new_code); };
 
     char getCode() const { return code.getString()[0]; };
@@ -52,6 +54,8 @@ protected:
     void updateCollision(std::vector<T *> &cells);
 
     void normalizeVelocity();
+
+    void generatePulse() { texture.startPulsation(); }
 
     static float getDistance(sf::Vector2f pos1, sf::Vector2f pos2) {
         return std::sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +

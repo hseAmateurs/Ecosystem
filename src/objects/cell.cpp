@@ -69,6 +69,11 @@ void Cell::update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &win
     window.draw(code);
 }
 
+void Cell::setRadiusAnim(const float new_radius) {
+    setRadius(new_radius);
+    texture.changeRadius(new_radius);
+}
+
 void Cell::kill() {
     if (isDying()) return;
     setCode(' ');
