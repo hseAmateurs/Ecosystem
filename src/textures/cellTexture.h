@@ -8,6 +8,42 @@
 
 namespace texture {
 
+    struct ChangingRadius {
+
+        ChangingRadius(float changingSpeed) : radiusChangingSpeed(changingSpeed) { };
+
+        float getChangingRadiusOffset(sf::Time time) const {
+            float x = time.asSeconds() * radiusChangingSpeed;
+            return 1.f + x * powf(2, -x + 2) * radiusChangingSpan;
+        }
+
+        bool isEndOfChagingRadius(sf::Time time) const {
+            float x = time.asSeconds() * radiusChangingSpeed;
+            return x >= 2;
+        }
+
+        float radiusChangingSpeed;
+        float radiusChangingSpan;
+        float newRadius;
+        float oldRadius;
+    };
+
+    struct Pulsation {
+
+        float getPulsationOffset(sf::Time time) {
+            float x = time.asSeconds() * pulsationSpeed;
+            return 1.f + (powf(sinf(x), 2) + powf(sinf(2 * x), 1)) * pulsationSpan;
+        }
+
+        bool isEndOfPulsation(sf::Time time) {
+            float x = time.asSeconds() * pulsationSpeed;
+            return (x >= M_PI);
+        }
+
+        float pulsationSpan;
+        float pulsationSpeed;
+    };
+
     struct Birthing {
         Birthing(float birthingSpeed) : birthingSpeed(birthingSpeed) { };
 
@@ -64,14 +100,13 @@ namespace texture {
 
         Dying dying;
         Birthing birthing;
-        float radiusChangingSpeed;
+        Pulsation pulsation;
+        ChangingRadius changingRadius;
+
 
         // dynamic variables
         float delta;
         float currentPulsationAspect;
-
-        float radiusChangingStep;
-        float newRadius;
     };
 
 
@@ -86,7 +121,7 @@ namespace texture {
                 m_vertices(sf::TriangleFan, pointsCount + 2),
                 rotationDirection(rand() % 2 ? -1 : 1),
                 innerTimer(sf::Time::Zero),
-                isDying(false), isBirthing(false), isChangingRadius(false) {
+                isDying(false), isBirthing(false), isChangingRadius(false), isPulsation(false) {
             setPosition(position);
             startBirthing();
         };
@@ -100,6 +135,8 @@ namespace texture {
         void startDying();
 
         void startBirthing();
+
+        void startPulsation();
 
         void changeRadius(float newRadius);
 
@@ -128,6 +165,7 @@ namespace texture {
         bool isDying;
         bool isBirthing;
         bool isChangingRadius;
+        bool isPulsation;
     };
 }
 
