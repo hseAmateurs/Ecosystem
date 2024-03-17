@@ -1,12 +1,21 @@
 #include "temperature.h"
+#include "assets.h"
 
 
-void Temperature::updateAndDraw(int numberOfPathogens, sf::RenderWindow &window, sf::Font font) {
-    temp = 36.6f + numberOfPathogens*0.05f;
-    tempText.setFillColor(sf::Color(numberOfPathogens*7.5f, 255.f - numberOfPathogens*7.5f, 0));
-    std::ostringstream ss;
-    ss << temp;
-    tempText.setString(ss.str() + endTempText);
-    tempText.setFont(font);
-    window.draw(tempText);
+Temperature::Temperature(const Field *field) :
+        m_field(field), temp(settings::NORMAL_TEMP) {
+    setFont(Assets::instance().font);
+    setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
+    setPosition(settings::SCREEN_WIDTH * 0.02f, settings::SCREEN_HEIGHT * 0.89f);
+    setFillColor(sf::Color::Green);
+}
+
+void Temperature::update() {
+    temp = settings::CRITICAL_TEMP - settings::NORMAL_TEMP *
+                                     ((float)m_field->bodies.size() / (float)m_field->pathogens.size());
+    int greenAspect = 255 - ((temp - settings::NORMAL_TEMP) / (settings::CRITICAL_TEMP - settings::NORMAL_TEMP)) * 255;
+    int redAspect = (temp - settings::NORMAL_TEMP) / (settings::CRITICAL_TEMP - settings::NORMAL_TEMP) * 255;
+    setFillColor(sf::Color(redAspect, greenAspect, 0));
+
+    setString(std::to_string(temp) + " °C");
 }

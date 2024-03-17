@@ -3,33 +3,22 @@
 
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <sstream>
+
 #include "../utils/settings.h"
+#include "field.h"
 
-
-class Temperature {
+class Temperature : public sf::Text {
 public:
 
-    Temperature(): temp(36.6) {
-        tempText.setCharacterSize(settings::SCREEN_HEIGHT*0.07f);
-        tempText.setPosition(settings::SCREEN_WIDTH*0.02f, settings::SCREEN_HEIGHT*0.89f);
-        tempText.setFillColor(sf::Color::Green);
+    explicit Temperature(const Field *field);
 
-        endTempText = " °C";
-        endTempText.erase(1);
-    };
+    bool isCritical() const { return temp > settings::CRITICAL_TEMP; }
 
-    void updateAndDraw(int numberOfPathogens, sf::RenderWindow &window, sf::Font font);
-
-    bool isCriticalTemp() const { return temp >= 40.f; }
+    void update();
 
 private:
-
-    sf::Text tempText;
-    sf::String endTempText;
+    const Field *m_field;
     float temp;
-
 };
 
 #endif //ECOSYSTEM_TEMPERATURE_H
