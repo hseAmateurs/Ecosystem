@@ -87,6 +87,7 @@ namespace texture {
                 rotationDirection(rand() % 2 ? -1 : 1),
                 innerTimer(sf::Time::Zero),
                 isDying(false), isBirthing(false), isChangingRadius(false) {
+            setPosition(position);
             startBirthing();
         };
 

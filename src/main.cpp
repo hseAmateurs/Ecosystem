@@ -22,5 +22,6 @@ int main() {
 
     Controller controller(&windowRender, &temperature);
     controller.run();
+
     return 0;
 }

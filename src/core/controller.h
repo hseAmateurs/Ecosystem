@@ -17,9 +17,7 @@ public:
     void run();
 
 private:
-    void setIngameTime() {
-        textTime.setString("Ingame Time = " + std::to_string(timeCounter.getElapsedTime().asSeconds()) + " seconds");
-    };
+    void setIngameTime();
 
     void endGame();
 

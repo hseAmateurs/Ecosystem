@@ -1,3 +1,5 @@
+#include <iomanip>
+
 #include "temperature.h"
 #include "assets.h"
 
@@ -11,11 +13,14 @@ Temperature::Temperature(const Field *field) :
 }
 
 void Temperature::update() {
-    temp = settings::CRITICAL_TEMP - settings::NORMAL_TEMP *
-                                     ((float)m_field->bodies.size() / (float)m_field->pathogens.size());
+    temp = settings::NORMAL_TEMP + m_field->pathogens.size() * 0.12f;
     int greenAspect = 255 - ((temp - settings::NORMAL_TEMP) / (settings::CRITICAL_TEMP - settings::NORMAL_TEMP)) * 255;
     int redAspect = (temp - settings::NORMAL_TEMP) / (settings::CRITICAL_TEMP - settings::NORMAL_TEMP) * 255;
     setFillColor(sf::Color(redAspect, greenAspect, 0));
 
-    setString(std::to_string(temp) + " °C");
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << temp;
+    std::string format = "°C";
+    format.erase(0, 1);
+    setString(ss.str() + format);
 }

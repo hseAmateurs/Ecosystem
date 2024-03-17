@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "controller.h"
 #include "assets.h"
 
@@ -21,15 +22,16 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
     textMain.setCharacterSize(settings::SCREEN_HEIGHT * 0.25f);
 
     textTime.setFont(Assets::instance().font);
-    textTime.setPosition(settings::SCREEN_WIDTH * 0.22, settings::SCREEN_HEIGHT * 0.5f);
+    textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.5f);
     textTime.setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
 }
 
 void Controller::run() {
+    sf::Event event;
     timeCounter.restart();
     m_windowRender->start();
     while (m_windowRender->window().isOpen()) {
-        sf::Event event;
+        if (m_temp->isCritical() && !runEnd) startEndGame();
         while (m_windowRender->window().pollEvent(event))
             if (event.type == sf::Event::Closed) {
                 // Останавливаем поток и дожидаемся его завершения
@@ -37,7 +39,6 @@ void Controller::run() {
                 if (runEnd) stopEndGame();
                 m_windowRender->window().close();
             }
-        if (m_temp->isCritical() && !runEnd) startEndGame();
         sf::sleep(sf::milliseconds(80));
     }
 }
@@ -58,6 +59,7 @@ void Controller::endGame() {
     m_windowRender->window().setActive(true);
     sf::Time elapsed;
     while (runEnd) {
+        m_windowRender->window().clear(sf::Color(0, 100, 100));
         elapsed = timeCounter.restart();
 
         pathogenTexture.update(elapsed);
@@ -74,5 +76,13 @@ void Controller::endGame() {
 
         m_windowRender->window().draw(textMain);
         m_windowRender->window().draw(textTime);
+
+        m_windowRender->window().display();
     }
+}
+
+void Controller::setIngameTime() {
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << timeCounter.getElapsedTime().asSeconds();
+    textTime.setString("Ingame Time = " + ss.str() + " seconds");
 }
