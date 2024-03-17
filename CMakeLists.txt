@@ -32,22 +32,14 @@ set(OBJECTS
         src/objects/plasmaCell.cpp
         src/objects/bCell.h
         src/objects/bCell.cpp
-        src/objects/temperature.h
-        src/objects/temperature.cpp
-        src/objects/gameMenu.cpp
-        src/objects/gameMenu.h
         src/objects/antibody.h
         src/objects/antibody.cpp
 )
 
 set(UTILS
-        src/utils/initialization.h
-        src/utils/initialization.cpp
-        src/utils/utils.h
         src/utils/cellTypes.h
         src/utils/settings.h
         src/utils/cells.h
-        src/utils/freeMemory.h
         src/utils/brain.cpp
         src/utils/brain.h
 )
@@ -57,12 +49,27 @@ set(SOURCE_FILES
         src/main.cpp
 )
 
+# Файлы основной логики игры
+set(CORE
+        src/core/assets.cpp
+        src/core/assets.h
+        src/core/windowRender.cpp
+        src/core/windowRender.h
+        src/core/field.cpp
+        src/core/field.h
+        src/core/temperature.h
+        src/core/temperature.cpp
+        src/core/controller.cpp
+        src/core/controller.h
+)
+
 # Название исполняемого файла
 add_executable(Ecosystem
         ${SOURCE_FILES}
         ${TEXTURES}
         ${UTILS}
         ${OBJECTS}
+        ${CORE}
 )
 
 # Для платформы windows используем статическую библиотеку sfml

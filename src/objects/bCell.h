@@ -8,7 +8,6 @@
 
 #include "cell.h"
 #include "../utils/cells.h"
-#include "../textures/cellTexture.h"
 
 #include "../utils/brain.h"
 
@@ -21,27 +20,18 @@ public:
         AWAIT
     };
 
-    BCell(texture::AnimationParameters animation, float radius, int size, float speed,
-          sf::Vector2f center, sf::Color color)
-            : Cell(animation, radius, size,
-                   speed,
-                   center, color), m_status(FREE) { }
+    explicit BCell(const Assets::CellParam &cellParam)
+            : Cell(cellParam, texture::bCell, color::BCELL), m_status(FREE) { }
 
-    BCell(const BCell &right) : Cell(right), m_status(FREE) { code.setString(std::string()); }
+    BCell(const BCell &right, const sf::Vector2f &newPos);
 
-    int type() const override { return CellType::BCELL; }
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
-    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
+    void scrollPrepare(int index, int amount, Status nextStatus);
 
     Status getStatus() const { return m_status; }
 
     void setStatus(Status status) { m_status = status; };
-
-    void scrollPrepare(int index, int amount, Status nextStatus);
-
-    void update(Field &field, sf::Time deltaTime) override;
-
-    ~BCell() override;
 
 private:
     Status m_nextStatus;

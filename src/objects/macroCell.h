@@ -8,7 +8,6 @@
 
 #include "cell.h"
 #include "../utils/cells.h"
-#include "../textures/cellTexture.h"
 
 #include "../utils/brain.h"
 
@@ -21,17 +20,11 @@ public:
         MOVING
     };
 
-    MacroCell(texture::AnimationParameters animation, float radius, int size, float speed,
-              sf::Vector2f center, sf::Color color)
-            : Cell(animation, radius, size,
-                   speed,
-                   center, color), m_status(HUNTING), bCellIndex(0) { }
+    MacroCell(const Assets::CellParam &cellParam)
+            : Cell(cellParam, texture::macrophage, color::MACRO),
+              m_status(HUNTING), bCellIndex(0) { }
 
-    int type() const override { return CellType::MACRO; }
-
-    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
-
-    void update(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
     Status getStatus() const { return m_status; }
 
@@ -42,7 +35,7 @@ private:
 
     void scrollBCells(Field &field);
 
-    void hunting(Field &field, sf::Time deltaTime);
+    void hunting(Field &field, const sf::Time &deltaTime);
 
     void moveNextPrepare(Field &field);
 

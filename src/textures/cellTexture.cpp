@@ -1,5 +1,6 @@
-#include <cmath>
 #include "cellTexture.h"
+
+#include <cmath>
 
 
 void texture::CellTexture::startDying() {
@@ -16,13 +17,12 @@ void texture::CellTexture::startBirthing() {
 }
 
 void texture::CellTexture::updateDying() {
-    m_vertices[0].position = center + getRadiusVector(0, radius);
+    m_vertices[0].position = getRadiusVector(0, radius);
     pointsCount -= parameters.dying.pointsLoss / 5.f;
     m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
 }
 
-
-void texture::CellTexture::update(sf::Time elapsed) {
+void texture::CellTexture::update(const sf::Time &elapsed) {
     innerTimer += elapsed;
 
     parameters.delta += rotationDirection * parameters.rotationSpeed * elapsed.asSeconds();
@@ -31,7 +31,7 @@ void texture::CellTexture::update(sf::Time elapsed) {
     float angle = 0, step = (float)(2 * M_PI / (pointsCount - 2));
 
     m_vertices[0].color = color;
-    m_vertices[0].position = center;
+    m_vertices[0].position = {0, 0};
 
     if (isDying)
         updateDying();
@@ -53,7 +53,7 @@ void texture::CellTexture::update(sf::Time elapsed) {
                 isPulsation = false;
             currentRadiusVector *= parameters.pulsation.getPulsationOffset(innerTimer);
         }
-        m_vertices[i].position = currentRadiusVector + center;
+        m_vertices[i].position = currentRadiusVector;
         m_vertices[i].color = color;
         angle += step;
     }

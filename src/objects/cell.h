@@ -6,72 +6,79 @@
 #include <ctime>
 #include <cmath>
 
+#include "../textures/animations.h"
 #include "../textures/cellTexture.h"
 #include "../utils/cellTypes.h"
 #include "../utils/settings.h"
 
-#include "../utils/utils.h"
+#include "../core/field.h"
+#include "../core/assets.h"
 
 using utils::CellType;
-using utils::Field;
 using namespace settings;
 
 class Cell : public sf::CircleShape {
 public:
-    explicit Cell(texture::AnimationParameters texture, float radius, int size, float speed, sf::Vector2f center,
-                  sf::Color color);
+    explicit Cell(const Assets::CellParam &cellParam, const texture::AnimationParameters &animation,
+                  const sf::Color &color);
 
-    // установка случайного вектора движения + обновление времени
+    virtual ~Cell() { };
+
+    void update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &window);
+
+    CellType type() const { return cellType; }
+
+    // Установка случайного вектора движения + обновление времени
     void setRandomMovement();
 
     void reflectionControl();
 
-    // Означает, что эта функция должна быть обязательно переопределена в производных классах
-    virtual void drawTexture(sf::RenderWindow &window, sf::Time elapsed) = 0;
+    void setRadiusAnim(float new_radius);
 
-    void setCode(const char new_code) { code.setString(std::string{new_code}); };
+    void setCode(const char new_code) { code.setString(new_code); };
 
     char getCode() const { return code.getString()[0]; };
 
-    void setSize(const int &new_size) { size = new_size; };
-
-    void setFont(const sf::Font &font) { code.setFont(font); };
-
-    virtual int type() const = 0;
-
-    virtual void update(Field &field, sf::Time deltaTime) = 0;
-
-    sf::Color getColor() const { return color; }
-
     int getSize() const { return size; }
 
-    float getSpeed() const { return speed; }
+    void kill();
 
-    bool isDead() const { return m_isDead; }
+    bool isDead() const { return texture.isDead(); }
 
-    texture::CellTexture texture;
+    bool isDying() const { return texture.isAnimDying(); }
 
 protected:
+    virtual void runScript(Field &field, const sf::Time &deltaTime) = 0;
+
     template<class T>
     void updateCollision(std::vector<T *> &cells);
 
     void normalizeVelocity();
 
-    void kill() { m_isDead = true; }
- 
-    sf::Text code;
+    void generatePulse() { texture.startPulsation(); }
+
+    static float getDistance(sf::Vector2f pos1, sf::Vector2f pos2) {
+        return std::sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +
+                         (pos1.y - pos2.y) * (pos1.y - pos2.y));
+    }
+
     float radius;
     int size;
-    sf::Color color;
-    sf::Vector2f center;
-    sf::Vector2f velocity;
     float speed;
+
+    sf::Vector2f velocity;
+
     sf::Clock timer;
-    sf::Time randomMoveInterval;
+
+    const float INF = 30000;
 
 private:
-    bool m_isDead;
-    sf::Time interval;
+    void initCode();
+
+    CellType cellType;
+    sf::Text code;
+    sf::Time randomMoveInterval;
+    texture::CellTexture texture;
 };
 
 template<class T>

@@ -3,24 +3,19 @@
 
 #include "cell.h"
 #include "../utils/cells.h"
-#include "../textures/cellTexture.h"
 
 class Antibody : public Cell {
 public:
-    Antibody(texture::AnimationParameters animation, float radius, int size, float speed,
-                 sf::Vector2f center, sf::Color color)
-            : Cell(animation, radius, size,
-                   speed,
-                   center, color) { setCode(rand() % 31 + '@'); }
+    Antibody(const Assets::CellParam &cellParam)
+            : Cell(cellParam, texture::antibody, color::ANTI),
+              deathClock(sf::seconds(static_cast<float>(rand() % 5 + 2))) {
+        setCode((char)(rand() % 31 + '@'));
+    }
 
-    int type() const override { return CellType::ANTI; }
-
-    void drawTexture(sf::RenderWindow &window, sf::Time elapsed) override;
-    void antibodyDeath();
-    void update(Field &field, sf::Time deltaTime) override;
+    virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
 private:
-    sf::Time deathClock=sf::seconds(static_cast<float>(std::rand() % 5 + 2));
+    sf::Time deathClock;
     sf::Clock deathTimer;
 };
 

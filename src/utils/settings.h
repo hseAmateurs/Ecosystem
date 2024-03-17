@@ -5,6 +5,8 @@
 #ifndef ECOSYSTEM_SETTINGS_H
 #define ECOSYSTEM_SETTINGS_H
 
+#include <SFML/Graphics.hpp>
+
 namespace settings {
     // Разрешение экрана
     const unsigned int SCREEN_WIDTH = 1600;
@@ -31,6 +33,19 @@ namespace settings {
 
     // Дельта, на которую увеличивается радиус при съедении патогена
     const float NEUTRO_RADIUS_DELTA = 2.f;
+
+    namespace color {
+        const sf::Color PATHOGEN = sf::Color(139, 0, 255);
+        const sf::Color BODY = sf::Color::Red;
+        const sf::Color MACRO = sf::Color::Yellow;
+        const sf::Color NEUTRO = sf::Color::Green;
+        const sf::Color BCELL = sf::Color::Cyan;
+        const sf::Color PLASMA = sf::Color::Magenta;
+        const sf::Color ANTI = sf::Color(219, 112, 147);;
+    }
+
+    const float NORMAL_TEMP = 36.6f;
+    const float CRITICAL_TEMP = 42.f;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

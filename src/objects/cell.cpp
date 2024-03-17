@@ -4,25 +4,29 @@
 using namespace settings;
 
 
-Cell::Cell(texture::AnimationParameters animation, float radius, int size, float speed, sf::Vector2f center,
-           sf::Color color)
-        : sf::CircleShape(radius), speed(speed), size(size), radius(radius), center(center),
-          velocity(0, 0), interval(sf::seconds(5)),
-          randomMoveInterval(sf::seconds(2)), color(color),
-          texture(animation, center, radius, 180, color),
-          m_isDead(false) {
+Cell::Cell(const Assets::CellParam &cellParam, const texture::AnimationParameters &animation,
+           const sf::Color &color)
+        : sf::CircleShape(cellParam.radius),
+          cellType(cellParam.cellType),
+          radius(cellParam.radius), size(cellParam.size), speed(cellParam.speed),
+          velocity(0, 0),
+          randomMoveInterval(sf::seconds(0)),
+          texture(animation, color, cellParam) {
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
-    setPosition(center);
-    setFillColor(sf::Color::Transparent);
     timer.restart();
 
+    initCode();
+}
+
+void Cell::initCode() {
     int fontSize = radius * 0.8;
     code.setFillColor(sf::Color::Black);
     code.setCharacterSize(fontSize);
     code.setOrigin(fontSize / 3.f,
                    fontSize / 1.5f);
-    code.setString(std::string());
+    code.setFont(Assets::instance().font);
+    code.setString(' ');
 }
 
 
@@ -44,7 +48,7 @@ void Cell::reflectionControl() {
     if (pos.x <= -BORDER_OFFSET || pos.x >= SCREEN_WIDTH + BORDER_OFFSET ||
         pos.y <= -BORDER_OFFSET || pos.y >= SCREEN_HEIGHT + BORDER_OFFSET ||
         (pos.y - SCREEN_HEIGHT) * (pos.y - SCREEN_HEIGHT) + (pos.x - SCREEN_WIDTH) * (pos.x - SCREEN_WIDTH) <=
-                (BRAIN_RADIUS + brainOffset) * BRAIN_RADIUS + brainOffset) {
+        (BRAIN_RADIUS + brainOffset) * BRAIN_RADIUS + brainOffset) {
         velocity = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) - getPosition();
         normalizeVelocity();
     }
@@ -52,4 +56,26 @@ void Cell::reflectionControl() {
 
 void Cell::normalizeVelocity() {
     velocity = velocity / std::sqrt(velocity.x * velocity.x + velocity.y * velocity.y) * speed;
+}
+
+void Cell::update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &window) {
+    runScript(field, deltaTime);
+
+    texture.setPosition(getPosition());
+    texture.update(deltaTime);
+    window.draw(texture);
+
+    code.setPosition(getPosition());
+    window.draw(code);
+}
+
+void Cell::setRadiusAnim(const float new_radius) {
+    setRadius(new_radius);
+    texture.changeRadius(new_radius);
+}
+
+void Cell::kill() {
+    if (isDying()) return;
+    setCode(' ');
+    texture.startDying();
 }
