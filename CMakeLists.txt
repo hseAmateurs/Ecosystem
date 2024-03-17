@@ -32,10 +32,6 @@ set(OBJECTS
         src/objects/plasmaCell.cpp
         src/objects/bCell.h
         src/objects/bCell.cpp
-        src/core/temperature.h
-        src/core/temperature.cpp
-        src/core/gameMenu.cpp
-        src/core/gameMenu.h
         src/objects/antibody.h
         src/objects/antibody.cpp
 )
@@ -61,6 +57,10 @@ set(CORE
         src/core/windowRender.h
         src/core/field.cpp
         src/core/field.h
+        src/core/temperature.h
+        src/core/temperature.cpp
+        src/core/controller.cpp
+        src/core/controller.h
 )
 
 # Название исполняемого файла
