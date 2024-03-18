@@ -16,6 +16,7 @@ void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void BodyCell::cellDivision(Field &field, const sf::Time &deltaTime) {
+    if (isDying()) return;
     lifeTime += deltaTime;
     sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 

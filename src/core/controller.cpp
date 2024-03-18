@@ -1,7 +1,4 @@
 #include <iomanip>
-#include <string>
-#include <sstream>
-
 #include "controller.h"
 #include "assets.h"
 
@@ -25,12 +22,17 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
     textMain.setCharacterSize(settings::SCREEN_HEIGHT * 0.25f);
 
     textTime.setFont(Assets::instance().font);
-    textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.5f);
+    textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.48f);
     textTime.setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
+
+    textDifc.setFont(Assets::instance().font);
+    textDifc.setPosition(settings::SCREEN_WIDTH * 0.28, settings::SCREEN_HEIGHT * 0.58f);
+    textDifc.setFillColor(sf::Color(240,180,0));
+    textDifc.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 
     textInfo.setFont(Assets::instance().font);
     textInfo.setString("Press ENTER to restart the game");
-    textInfo.setPosition(settings::SCREEN_WIDTH * 0.24, settings::SCREEN_HEIGHT * 0.7f);
+    textInfo.setPosition(settings::SCREEN_WIDTH * 0.24, settings::SCREEN_HEIGHT * 0.8f);
     textInfo.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 }
 
@@ -63,6 +65,7 @@ void Controller::restartGame() {
 void Controller::startEndGame() {
     m_windowRender->stop();
     setIngameTime();
+    setReachedDifficult();
     runEnd = true;
     m_thread.launch();
 }
@@ -94,6 +97,7 @@ void Controller::endGame() {
         m_windowRender->window().draw(textMain);
         m_windowRender->window().draw(textTime);
         m_windowRender->window().draw(textInfo);
+        m_windowRender->window().draw(textDifc);
 
         m_windowRender->window().display();
     }
@@ -103,4 +107,8 @@ void Controller::setIngameTime() {
     std::stringstream ss;
     ss << std::fixed << std::setprecision(2) << timeCounter.getElapsedTime().asSeconds();
     textTime.setString("Ingame Time = " + ss.str() + " seconds");
+}
+
+void Controller::setReachedDifficult() {
+    textDifc.setString("Pathogens evolution " + std::to_string(Field::getDifficult() - '!') + '/' + std::to_string('~'-'!'));
 }

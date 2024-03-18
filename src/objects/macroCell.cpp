@@ -10,6 +10,8 @@ using namespace brain;
 
 
 void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
+    if (isDying()) return;
+
     if (m_status == HUNTING) {
         hunting(field, deltaTime);
         return;

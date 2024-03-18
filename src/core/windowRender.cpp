@@ -20,12 +20,10 @@ void WindowRender::render() {
     // ---
 
     while (isRun()) {
-        m_window.clear(sf::Color::White);
+        m_window.clear(sf::Color(230,245,255));
         deltaTime = clock.restart();
 
         m_window.draw(brain);
-
-        m_field->spawnImmuneCells(deltaTime);
         m_field->update();
         drawField();
 

@@ -59,8 +59,7 @@ void Cell::normalizeVelocity() {
 }
 
 void Cell::update(Field &field, const sf::Time &deltaTime, sf::RenderWindow &window) {
-    if (!isDying())
-        runScript(field, deltaTime);
+    runScript(field, deltaTime);
 
     texture.setPosition(getPosition());
     texture.update(deltaTime);

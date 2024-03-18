@@ -1,6 +1,4 @@
 #include <iomanip>
-#include <string>
-#include <sstream>
 
 #include "temperature.h"
 #include "assets.h"

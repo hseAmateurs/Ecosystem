@@ -34,13 +34,6 @@ namespace settings {
     // Дельта, на которую увеличивается радиус при съедении патогена
     const float NEUTRO_RADIUS_DELTA = 2.f;
 
-    //Время между спавном macro и neutro
-    const sf::Time MACRO_SPAWN_TIME = sf::seconds(15);
-    const sf::Time NEUTRO_SPAWN_TIME = sf::seconds(8);
-
-    //const sf::Vector2f SPAWN_POS = sf::Vector2f(1620.f, -20.f);
-    const std::vector<sf::Vector2f> SPAWN_POS = {sf::Vector2f(1620.f, -20.f), sf::Vector2f(-20.f, -20.f), sf::Vector2f(-20.f, 920.f)};
-
     namespace color {
         const sf::Color PATHOGEN = sf::Color(139, 0, 255);
         const sf::Color BODY = sf::Color::Red;
@@ -53,6 +46,12 @@ namespace settings {
 
     const float NORMAL_TEMP = 36.6f;
     const float CRITICAL_TEMP = 42.f;
+
+    // В среднем количество итераций для рандомного спавна патогена
+    const int RAND_SPAWN_PATHOGEN_ITER = 600;
+
+    // В среднем количество рандомных спавнов патогенов для увеличение сложности на 1
+    const int RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN = 4;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

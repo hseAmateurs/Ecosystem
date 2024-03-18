@@ -9,6 +9,8 @@
 
 using namespace settings;
 
+int Field::DIFFICULT = '!';
+
 // Функция вне класса для создания клеток
 template<class T>
 void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
@@ -46,14 +48,17 @@ void templateFree(std::vector<T *> &cells) {
 
 
 void Field::init() {
-    macroSpawnTime = MACRO_SPAWN_TIME;
-    neutroSpawnTime = NEUTRO_SPAWN_TIME;
-
     for (auto &param: Assets::instance().cellParams)
         createCells(param);
 }
 
-void Field::createCells(const Assets::CellParam &cellParam) {
+void Field::createCells(Assets::CellParam &cellParam, int amount) {
+    cellParam.amount = amount;
+    createCells(cellParam);
+}
+
+
+void Field::createCells(Assets::CellParam &cellParam) {
     switch (cellParam.cellType) {
         case utils::PATHOGEN:
             templateInit(pathogens, cellParam);
@@ -80,15 +85,12 @@ void Field::createCells(const Assets::CellParam &cellParam) {
 }
 
 void Field::update() {
+    randomlyPathogenSpawn();
+
     bodies.insert(bodies.end(), newBodies.begin(), newBodies.end());
     pathogens.insert(pathogens.end(), newPathogens.begin(), newPathogens.end());
-    neutroes.insert(neutroes.end(), newNeutroes.begin(), newNeutroes.end());
-    macroes.insert(macroes.end(), newMacroes.begin(), newMacroes.end());
-
     newPathogens.clear();
     newBodies.clear();
-    newNeutroes.clear();
-    newMacroes.clear();
 }
 
 Field::~Field() {
@@ -104,23 +106,14 @@ void Field::free() {
     templateFree(plasmas);
     templateFree(antis);
 }
+#include <iostream>
+void Field::randomlyPathogenSpawn() {
+    if(rand()%settings::RAND_SPAWN_PATHOGEN_ITER) return;
+
+    if(DIFFICULT < '~' && rand()%settings::RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN==0)
+        ++DIFFICULT;
 
 
-void Field::spawnImmuneCells(const sf::Time &deltaTime) {
-    if (macroSpawnTime <= sf::Time::Zero) {
-        auto *newMacro = new MacroCell(Assets::instance().cellParams[CellType::MACRO]);
-        newMacro->setPosition(SPAWN_POS[rand() % 3]);
-        newMacroes.push_back(newMacro);
-        macroSpawnTime = MACRO_SPAWN_TIME;
-    }
-
-    if (neutroSpawnTime <= sf::Time::Zero) {
-        auto *newNeutro = new NeutroCell(Assets::instance().cellParams[CellType::NEUTRO]);
-        newNeutro->setPosition(SPAWN_POS[rand() % 3]);
-        newNeutroes.push_back(newNeutro);
-        neutroSpawnTime = NEUTRO_SPAWN_TIME;
-    }
-
-    macroSpawnTime -= deltaTime;
-    neutroSpawnTime -= deltaTime;
+    createCells(Assets::instance().cellParams[CellType::PATHOGEN], 1);
+    pathogens.back()->setCode((char)('!' + rand()%(DIFFICULT-'!'+1)));
 }

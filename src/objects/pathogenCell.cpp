@@ -13,7 +13,7 @@ void PathogenCell::runScript(Field &field, const sf::Time &deltaTime) {
         if(otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = getDistance(bodyPos, getPosition());
-        if (distance < minDistance && distance < PATH_HUNT_TRIGGER) {
+        if (!otherCell->isDying() && distance < minDistance && distance < PATH_HUNT_TRIGGER) {
             minDistance = distance;
             closestBody = bodyPos;
         }
