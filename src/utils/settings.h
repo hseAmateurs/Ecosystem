@@ -48,10 +48,10 @@ namespace settings {
     const float CRITICAL_TEMP = 42.f;
 
     // В среднем количество итераций для рандомного спавна патогена
-    const int RAND_SPAWN_PATHOGEN_ITER = 600;
+    const int RAND_SPAWN_PATHOGEN_ITER = 1000000000;
 
     // В среднем количество рандомных спавнов патогенов для увеличение сложности на 1
-    const int RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN = 4;
+    const int RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN = 1;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

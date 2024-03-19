@@ -6,7 +6,7 @@
 void texture::CellTexture::startDying() {
     isDying = true;
     m_vertices.setPrimitiveType(sf::Points);
-    pointsCount *= parameters.dying.pointsMultAtExplosion;
+    pointsCount = (pointsCount-2) * parameters.dying.pointsMultAtExplosion + 2;
     m_vertices.resize(pointsCount);
     innerTimer = sf::Time::Zero;
 }
@@ -28,7 +28,6 @@ void texture::CellTexture::update(const sf::Time &elapsed) {
     parameters.delta += rotationDirection * parameters.rotationSpeed * elapsed.asSeconds();
     parameters.updatePulsationAspect(&parameters);
 
-    float angle = 0, step = (float)(2 * M_PI / (pointsCount - 2));
 
     m_vertices[0].color = color;
     m_vertices[0].position = {0, 0};
@@ -37,6 +36,8 @@ void texture::CellTexture::update(const sf::Time &elapsed) {
         updateDying();
     if (isChangingRadius)
         updateChangingRadius();
+
+    float angle = 0, step = (float)(2 * M_PI / (pointsCount - 2));
 
     for (int i = 1; i < pointsCount; ++i) {
         sf::Vector2f currentRadiusVector = getRadiusVector(angle, radius);
