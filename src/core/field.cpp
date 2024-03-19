@@ -18,12 +18,7 @@ void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam, c
     for (int i = 0; i < amount; ++i) {
         T *cell = new T(cellParam);
 
-        if (cell->type() == CellType::PLASMA) {
-            pos.x = std::cos(M_PI / 4) * (PLASMA_DISTANCE * BRAIN_RADIUS);
-            pos.y = SCREEN_HEIGHT - pos.x;
-            pos.x = SCREEN_WIDTH - pos.x;
-        }
-        else if (cell->type() == CellType::BCELL)
+        if (cell->type() == CellType::BCELL)
             pos = brain::getXY(i, amount);
         else {
             do {
@@ -71,9 +66,6 @@ void Field::createCells(const Assets::CellParam &cellParam, int amount) {
         case utils::BCELL:
             templateInit(bCells, cellParam, amount);
             break;
-        case utils::PLASMA:
-            templateInit(plasmas, cellParam, amount);
-            break;
         case utils::ANTI:
             templateInit(antis, cellParam, amount);
             break;
@@ -88,11 +80,13 @@ void Field::update() {
     pathogens.insert(pathogens.end(), newPathogens.begin(), newPathogens.end());
     neutroes.insert(neutroes.end(), newNeutroes.begin(), newNeutroes.end());
     macroes.insert(macroes.end(), newMacroes.begin(), newMacroes.end());
+    antis.insert(antis.end(), newAntis.begin(), newAntis.end());
 
     newPathogens.clear();
     newBodies.clear();
     newNeutroes.clear();
     newMacroes.clear();
+    newAntis.clear();
 }
 
 Field::~Field() {

@@ -27,7 +27,7 @@ void Antibody::runScript(Field &field, const sf::Time &deltaTime) {
     }
     else {
         setRandomMovement();
-        if (timer.getElapsedTime() >= deathTime)
+        if (timer.getElapsedTime() >= ANTI_LIFETIME)
             kill();
     }
     reflectionControl();

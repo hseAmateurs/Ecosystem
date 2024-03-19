@@ -38,8 +38,6 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
 
     if ((m_status == CHECKING || m_status == SEARCH) && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
-        if(bCell->getStatus() == BCell::MOVING)
-            std::cerr << "error\n";
         bCell->setStatus(BCell::BUSY);
 
         // Запуск анимированного подбора
@@ -54,8 +52,8 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
             runPlasma(field);
             return;
         }
-        if(m_status == SEARCH) {
-            if(timer.getElapsedTime() < SEARCH_CODE_DELAY) return;
+        if (m_status == SEARCH) {
+            if (timer.getElapsedTime() < SEARCH_CODE_DELAY) return;
             bCell->setCode((char)(bCell->getCode() + 1));
             timer.restart();
             return;
@@ -83,9 +81,22 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void MacroCell::runPlasma(Field &field) {
+    bool isExist = false;
+    for (PlasmaCell *plasma: field.plasmas) {
+        // Если среди плазмы уже есть с нужным кодом, то сбрасываем её счётчик
+        if (plasma->getCode() == getCode()) {
+            plasma->resetReleasedAnti();
+            isExist = true;
+            break;
+        }
+    }
+    if (!isExist) {
+        // Иначе создаём новую (ограничения на кол-во работающей плазмы пока нет)
+        auto *newPlasma = new PlasmaCell(Assets::instance().cellParams[CellType::PLASMA]);
+        newPlasma->setCode(getCode());
+        field.plasmas.push_back(newPlasma);
+    }
     kill();
-    // run plasma
-    // current delete cell
 }
 
 bool MacroCell::isBCellReady(const Field &field) const {
@@ -146,7 +157,7 @@ void MacroCell::hunting(Field &field, const sf::Time &deltaTime) {
     float minDistance = INF;
 
     for (PathogenCell *&otherCell: field.pathogens) {
-        if(otherCell->isDying()) continue;
+        if (otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {
