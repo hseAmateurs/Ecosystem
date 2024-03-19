@@ -37,13 +37,13 @@ void WindowRender::drawField() {
 
     drawCells(m_field->pathogens);
 
-    drawCells(m_field->macroes);
-
     drawCells(m_field->neutroes);
 
-    drawCells(m_field->bCells);
+    drawCells(m_field->macroes);
 
     drawCells(m_field->plasmas);
+
+    drawCells(m_field->bCells);
 
     drawCells(m_field->antis);
 }
