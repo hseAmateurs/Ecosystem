@@ -14,13 +14,13 @@ void WindowRender::render() {
     m_window.setActive(true);
     // For debugging ---
     sf::CircleShape brain(settings::BRAIN_RADIUS);
-    brain.setFillColor(sf::Color::Black);
+    brain.setFillColor(sf::Color(0,0,0,10) );
     brain.setOrigin(settings::BRAIN_RADIUS, settings::BRAIN_RADIUS);
     brain.setPosition(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT);
     // ---
 
     while (isRun()) {
-        m_window.clear(sf::Color(230,245,255));
+        m_window.clear(settings::color::BACKGROUND);
         deltaTime = clock.restart();
 
         m_window.draw(brain);

@@ -1,8 +1,8 @@
 ;radius;size;speed;amount
-pathogen;13;1;30;0
-body;18;0;50;0
-macro;35;0;40;0
-neutro;22;5;60;0
+pathogen;13;1;30;20
+body;18;0;50;100
+macro;35;0;40;10
+neutro;22;5;60;10
 bcell;40;0;50;5
 plasma;120;0;0;1
-anti;15;1;65;1
+anti;15;1;65;15

@@ -35,23 +35,25 @@ namespace settings {
     const float NEUTRO_RADIUS_DELTA = 2.f;
 
     namespace color {
-        const sf::Color PATHOGEN = sf::Color(139, 0, 255);
-        const sf::Color BODY = sf::Color::Red;
-        const sf::Color MACRO = sf::Color::Yellow;
-        const sf::Color NEUTRO = sf::Color::Green;
-        const sf::Color BCELL = sf::Color::Cyan;
-        const sf::Color PLASMA = sf::Color::Magenta;
-        const sf::Color ANTI = sf::Color(219, 112, 147);;
+        const sf::Color PATHOGEN = sf::Color(180, 30 , 220);
+        const sf::Color BODY     = sf::Color(245, 20 , 0  );
+        const sf::Color MACRO    = sf::Color(225, 200, 0  );
+        const sf::Color NEUTRO   = sf::Color(20 , 150, 20 );
+        const sf::Color BCELL    = sf::Color(50 , 200, 215);
+        const sf::Color PLASMA   = sf::Color(225, 10 , 10 );
+        const sf::Color ANTI     = sf::Color(219, 112, 147);
+
+        const sf::Color BACKGROUND = sf::Color(210,225,220);
     }
 
     const float NORMAL_TEMP = 36.6f;
     const float CRITICAL_TEMP = 42.f;
 
     // В среднем количество итераций для рандомного спавна патогена
-    const int RAND_SPAWN_PATHOGEN_ITER = 1000000000;
+    const int RAND_SPAWN_PATHOGEN_ITER = 500;
 
     // В среднем количество рандомных спавнов патогенов для увеличение сложности на 1
-    const int RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN = 1;
+    const int RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN = 10;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H

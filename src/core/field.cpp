@@ -106,14 +106,12 @@ void Field::free() {
     templateFree(plasmas);
     templateFree(antis);
 }
-#include <iostream>
+
 void Field::randomlyPathogenSpawn() {
     if(rand()%settings::RAND_SPAWN_PATHOGEN_ITER) return;
 
     if(DIFFICULT < '~' && rand()%settings::RAND_INC_DIFFICULT_AFTER_PATHOGEN_SPAWN==0)
         ++DIFFICULT;
 
-
     createCells(Assets::instance().cellParams[CellType::PATHOGEN], 1);
-    pathogens.back()->setCode((char)('!' + rand()%(DIFFICULT-'!'+1)));
 }

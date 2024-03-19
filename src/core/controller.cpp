@@ -4,15 +4,15 @@
 
 
 Controller::Controller(WindowRender *windowRender, const Temperature *temperature) :
-        pathogenTexture(texture::pathogen, sf::Color(139, 0, 255), 80,
+        pathogenTexture(texture::pathogen, settings::color::PATHOGEN, 80,
                         {settings::SCREEN_WIDTH * 0.1, settings::SCREEN_HEIGHT * 0.9}, 720),
-        bodyTexture(texture::bodyCell, sf::Color::Red,
+        bodyTexture(texture::bodyCell, settings::color::BODY,
                     70, {settings::SCREEN_WIDTH * 0.1, settings::SCREEN_HEIGHT * 0.1}, 720),
-        bcellTexture(texture::bCell, sf::Color::Cyan,
+        bcellTexture(texture::bCell, settings::color::BCELL,
                      70, {settings::SCREEN_WIDTH * 0.44, settings::SCREEN_HEIGHT * 0.4}, 720),
-        macroTexture(texture::macrophage, sf::Color::Yellow,
+        macroTexture(texture::macrophage, settings::color::MACRO,
                      120, {settings::SCREEN_WIDTH * 0.9, settings::SCREEN_HEIGHT * 0.9}, 720),
-        plasmaTexture(texture::plasmaCell, sf::Color::Magenta,
+        plasmaTexture(texture::plasmaCell, settings::color::PLASMA,
                       150, {settings::SCREEN_WIDTH * 0.8, settings::SCREEN_HEIGHT * 0.1}, 720),
         m_temp(temperature), m_windowRender(windowRender),
         m_thread(&Controller::endGame, this) {
