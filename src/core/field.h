@@ -37,11 +37,11 @@ public:
 
     void createCells(const Assets::CellParam &cellParam, int amount);
 
-    static int getDifficult() { return DIFFICULT; }
+    static int getDifficult() { return difficult; }
 
     void update();
 
-    void spawnImmuneCells(const sf::Time &deltaTime);
+    void spawnImmuneCells();
 
     void spawnPathogens();
 
@@ -58,12 +58,9 @@ public:
     std::vector<NeutroCell *> newNeutroes;
     std::vector<MacroCell *> newMacroes;
 
-    // Время до следующей итерации спавна клеток
-    sf::Time macroSpawnTime;
-    sf::Time neutroSpawnTime;
-
+private:
     // 33 -> 126
-    static int DIFFICULT;
+    static int difficult;
 };
 
 

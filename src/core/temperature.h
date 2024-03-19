@@ -12,7 +12,7 @@ public:
 
     explicit Temperature(const Field *field);
 
-    bool isCritical() const { return temp >= settings::CRITICAL_TEMP; }
+    bool isCritical() const { return temp > settings::CRITICAL_TEMP; }
 
     void update();
 

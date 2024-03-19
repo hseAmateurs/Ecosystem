@@ -1,4 +1,7 @@
 #include <iomanip>
+#include <string>
+#include <sstream>
+
 #include "controller.h"
 #include "assets.h"
 
@@ -22,7 +25,7 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
     textMain.setCharacterSize(settings::SCREEN_HEIGHT * 0.25f);
 
     textTime.setFont(Assets::instance().font);
-    textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.48f);
+    textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.5f);
     textTime.setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
 
     textDifc.setFont(Assets::instance().font);
@@ -32,7 +35,7 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
 
     textInfo.setFont(Assets::instance().font);
     textInfo.setString("Press ENTER to restart the game");
-    textInfo.setPosition(settings::SCREEN_WIDTH * 0.24, settings::SCREEN_HEIGHT * 0.8f);
+    textInfo.setPosition(settings::SCREEN_WIDTH * 0.24, settings::SCREEN_HEIGHT * 0.7f);
     textInfo.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 }
 

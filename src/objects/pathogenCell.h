@@ -10,7 +10,7 @@ class PathogenCell : public Cell {
 public:
     explicit PathogenCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::pathogen, color::PATHOGEN) {
-        setCode((char)('!' + rand()%(Field::getDifficult()-'!'+1)));
+        setCode((char)('!' + rand() % (Field::getDifficult() - '!' + 1)));
     }
 
     PathogenCell(const PathogenCell &right, const sf::Vector2f &newPos) :
