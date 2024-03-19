@@ -48,7 +48,7 @@ void templateFree(std::vector<T *> &cells) {
 
 
 void Field::init() {
-    difficult = '!';
+    difficult = INIT_CODE;
 
     for (auto &param: Assets::instance().cellParams)
         createCells(param);
