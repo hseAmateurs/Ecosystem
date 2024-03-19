@@ -17,7 +17,7 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
                      120, {settings::SCREEN_WIDTH * 0.9, settings::SCREEN_HEIGHT * 0.9}, 720),
         plasmaTexture(texture::plasmaCell, settings::color::PLASMA,
                       150, {settings::SCREEN_WIDTH * 0.8, settings::SCREEN_HEIGHT * 0.1}, 720),
-        m_temp(temperature), m_windowRender(windowRender),
+        m_temp(temperature), m_windowRender(windowRender), runEnd(false),
         m_thread(&Controller::endGame, this) {
     textMain.setFont(Assets::instance().font);
     textMain.setString("GAME OVER");

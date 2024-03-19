@@ -9,7 +9,7 @@
 
 using namespace settings;
 
-int Field::difficult = '!';
+int Field::difficult;
 
 // Функция вне класса для создания клеток
 template<class T>
@@ -48,6 +48,8 @@ void templateFree(std::vector<T *> &cells) {
 
 
 void Field::init() {
+    difficult = '!';
+
     for (auto &param: Assets::instance().cellParams)
         createCells(param);
 }

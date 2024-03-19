@@ -11,7 +11,7 @@
 void WindowRender::render() {
     m_window.setActive(true);
 
-    sf::CircleShape brain(settings::BRAIN_RADIUS);
+    sf::CircleShape brain(settings::BRAIN_RADIUS, 180);
     brain.setFillColor(settings::color::BRAIN_BACKGROUND);
     brain.setOrigin(settings::BRAIN_RADIUS, settings::BRAIN_RADIUS);
     brain.setPosition(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT);
