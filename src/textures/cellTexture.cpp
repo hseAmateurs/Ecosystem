@@ -6,7 +6,7 @@
 void texture::CellTexture::startDying() {
     isDying = true;
     m_vertices.setPrimitiveType(sf::Points);
-    pointsCount *= parameters.dying.pointsMultAtExplosion;
+    pointsCount = (pointsCount-2) * parameters.dying.pointsMultAtExplosion + 2;
     m_vertices.resize(pointsCount);
     innerTimer = sf::Time::Zero;
 }
@@ -19,7 +19,7 @@ void texture::CellTexture::startBirthing() {
 void texture::CellTexture::updateDying() {
     m_vertices[0].position = getRadiusVector(0, radius);
     pointsCount -= parameters.dying.pointsLoss / 5.f;
-    m_vertices.resize(pointsCount > 0 ? pointsCount : 0);
+    m_vertices.resize(pointsCount = pointsCount > 0 ? pointsCount : 0);
 }
 
 void texture::CellTexture::update(const sf::Time &elapsed) {
