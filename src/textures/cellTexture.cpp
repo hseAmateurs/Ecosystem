@@ -6,7 +6,7 @@
 void texture::CellTexture::startDying() {
     isDying = true;
     m_vertices.setPrimitiveType(sf::Points);
-    pointsCount = (pointsCount-2) * parameters.dying.pointsMultAtExplosion + 2;
+    pointsCount *= parameters.dying.pointsMultAtExplosion;
     m_vertices.resize(pointsCount);
     innerTimer = sf::Time::Zero;
 }
