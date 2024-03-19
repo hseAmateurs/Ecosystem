@@ -2,8 +2,6 @@
 // Created by Shon on 13.03.2024.
 //
 
-#include <iostream>
-
 #include "windowRender.h"
 #include "../utils/cells.h"
 
@@ -12,20 +10,18 @@
 
 void WindowRender::render() {
     m_window.setActive(true);
-    // For debugging ---
-    sf::CircleShape brain(settings::BRAIN_RADIUS);
-    brain.setFillColor(sf::Color::Black);
+
+    sf::CircleShape brain(settings::BRAIN_RADIUS, 180);
+    brain.setFillColor(settings::color::BRAIN_BACKGROUND);
     brain.setOrigin(settings::BRAIN_RADIUS, settings::BRAIN_RADIUS);
     brain.setPosition(settings::SCREEN_WIDTH, settings::SCREEN_HEIGHT);
-    // ---
 
     while (isRun()) {
-        m_window.clear(sf::Color::White);
+        m_window.clear(settings::color::BACKGROUND);
         deltaTime = clock.restart();
 
         m_window.draw(brain);
 
-        m_field->spawnImmuneCells(deltaTime);
         m_field->update();
         drawField();
 

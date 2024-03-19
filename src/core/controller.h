@@ -9,6 +9,7 @@
 #include "../textures/cellTexture.h"
 #include "windowRender.h"
 #include "temperature.h"
+#include "field.h"
 
 class Controller {
 public:
@@ -18,6 +19,8 @@ public:
 
 private:
     void setIngameTime();
+
+    void setReachedDifficult();
 
     void endGame();
 
@@ -38,6 +41,8 @@ private:
     sf::Text textTime;
     sf::Text textMain;
     sf::Text textInfo;
+    sf::Text textDifc;
+
     texture::CellTexture pathogenTexture;
     texture::CellTexture bodyTexture;
     texture::CellTexture bcellTexture;

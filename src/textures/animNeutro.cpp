@@ -31,7 +31,7 @@ namespace texture {
             pulsationNeutro,
             13,
             0.46f,
-            3.5f,
+            2.5f,
             0.04f,
             0.1f,
 

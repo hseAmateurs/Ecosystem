@@ -7,17 +7,17 @@
 
 
 Controller::Controller(WindowRender *windowRender, const Temperature *temperature) :
-        pathogenTexture(texture::pathogen, sf::Color(139, 0, 255), 80,
+        pathogenTexture(texture::pathogen, settings::color::PATHOGEN, 80,
                         {settings::SCREEN_WIDTH * 0.1, settings::SCREEN_HEIGHT * 0.9}, 720),
-        bodyTexture(texture::bodyCell, sf::Color::Red,
+        bodyTexture(texture::bodyCell, settings::color::BODY,
                     70, {settings::SCREEN_WIDTH * 0.1, settings::SCREEN_HEIGHT * 0.1}, 720),
-        bcellTexture(texture::bCell, sf::Color::Cyan,
+        bcellTexture(texture::bCell, settings::color::BCELL,
                      70, {settings::SCREEN_WIDTH * 0.44, settings::SCREEN_HEIGHT * 0.4}, 720),
-        macroTexture(texture::macrophage, sf::Color::Yellow,
+        macroTexture(texture::macrophage, settings::color::MACRO,
                      120, {settings::SCREEN_WIDTH * 0.9, settings::SCREEN_HEIGHT * 0.9}, 720),
-        plasmaTexture(texture::plasmaCell, sf::Color::Magenta,
+        plasmaTexture(texture::plasmaCell, settings::color::PLASMA,
                       150, {settings::SCREEN_WIDTH * 0.8, settings::SCREEN_HEIGHT * 0.1}, 720),
-        m_temp(temperature), m_windowRender(windowRender),
+        m_temp(temperature), m_windowRender(windowRender), runEnd(false),
         m_thread(&Controller::endGame, this) {
     textMain.setFont(Assets::instance().font);
     textMain.setString("GAME OVER");
@@ -27,6 +27,11 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
     textTime.setFont(Assets::instance().font);
     textTime.setPosition(settings::SCREEN_WIDTH * 0.20, settings::SCREEN_HEIGHT * 0.5f);
     textTime.setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
+
+    textDifc.setFont(Assets::instance().font);
+    textDifc.setPosition(settings::SCREEN_WIDTH * 0.28, settings::SCREEN_HEIGHT * 0.58f);
+    textDifc.setFillColor(sf::Color(240,180,0));
+    textDifc.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 
     textInfo.setFont(Assets::instance().font);
     textInfo.setString("Press ENTER to restart the game");
@@ -63,6 +68,7 @@ void Controller::restartGame() {
 void Controller::startEndGame() {
     m_windowRender->stop();
     setIngameTime();
+    setReachedDifficult();
     runEnd = true;
     m_thread.launch();
 }
@@ -94,6 +100,7 @@ void Controller::endGame() {
         m_windowRender->window().draw(textMain);
         m_windowRender->window().draw(textTime);
         m_windowRender->window().draw(textInfo);
+        m_windowRender->window().draw(textDifc);
 
         m_windowRender->window().display();
     }
@@ -103,4 +110,8 @@ void Controller::setIngameTime() {
     std::stringstream ss;
     ss << std::fixed << std::setprecision(2) << timeCounter.getElapsedTime().asSeconds();
     textTime.setString("Ingame Time = " + ss.str() + " seconds");
+}
+
+void Controller::setReachedDifficult() {
+    textDifc.setString("Pathogens evolution " + std::to_string(Field::getDifficult() - '!') + '/' + std::to_string('~'-'!'));
 }

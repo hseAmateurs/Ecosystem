@@ -12,6 +12,7 @@ Temperature::Temperature(const Field *field) :
     setCharacterSize(settings::SCREEN_HEIGHT * 0.07f);
     setPosition(settings::SCREEN_WIDTH * 0.02f, settings::SCREEN_HEIGHT * 0.89f);
     setFillColor(sf::Color::Green);
+    setOutlineThickness(2);
 }
 
 void Temperature::update() {

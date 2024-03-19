@@ -9,11 +9,13 @@
 
 using namespace settings;
 
+int Field::difficult;
+
 // Функция вне класса для создания клеток
 template<class T>
-void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
+void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam, const int amount) {
     sf::Vector2f pos;
-    for (int i = 0; i < cellParam.amount; ++i) {
+    for (int i = 0; i < amount; ++i) {
         T *cell = new T(cellParam);
 
         if (cell->type() == CellType::PLASMA) {
@@ -22,7 +24,7 @@ void templateInit(std::vector<T *> &cells, const Assets::CellParam &cellParam) {
             pos.x = SCREEN_WIDTH - pos.x;
         }
         else if (cell->type() == CellType::BCELL)
-            pos = brain::getXY(i, cellParam.amount);
+            pos = brain::getXY(i, amount);
         else {
             do {
                 pos.x = rand() % (SCREEN_WIDTH - 2 * static_cast<int>(cellParam.radius));
@@ -46,40 +48,42 @@ void templateFree(std::vector<T *> &cells) {
 
 
 void Field::init() {
-    macroSpawnTime = MACRO_SPAWN_TIME;
-    neutroSpawnTime = NEUTRO_SPAWN_TIME;
+    difficult = '!';
 
     for (auto &param: Assets::instance().cellParams)
         createCells(param);
 }
 
-void Field::createCells(const Assets::CellParam &cellParam) {
+void Field::createCells(const Assets::CellParam &cellParam, int amount) {
     switch (cellParam.cellType) {
         case utils::PATHOGEN:
-            templateInit(pathogens, cellParam);
+            templateInit(pathogens, cellParam, amount);
             break;
         case utils::BODY:
-            templateInit(bodies, cellParam);
+            templateInit(bodies, cellParam, amount);
             break;
         case utils::MACRO:
-            templateInit(macroes, cellParam);
+            templateInit(macroes, cellParam, amount);
             break;
         case utils::NEUTRO:
-            templateInit(neutroes, cellParam);
+            templateInit(neutroes, cellParam, amount);
             break;
         case utils::BCELL:
-            templateInit(bCells, cellParam);
+            templateInit(bCells, cellParam, amount);
             break;
         case utils::PLASMA:
-            templateInit(plasmas, cellParam);
+            templateInit(plasmas, cellParam, amount);
             break;
         case utils::ANTI:
-            templateInit(antis, cellParam);
+            templateInit(antis, cellParam, amount);
             break;
     }
 }
 
 void Field::update() {
+    spawnImmuneCells();
+    spawnPathogens();
+
     bodies.insert(bodies.end(), newBodies.begin(), newBodies.end());
     pathogens.insert(pathogens.end(), newPathogens.begin(), newPathogens.end());
     neutroes.insert(neutroes.end(), newNeutroes.begin(), newNeutroes.end());
@@ -105,22 +109,25 @@ void Field::free() {
     templateFree(antis);
 }
 
-
-void Field::spawnImmuneCells(const sf::Time &deltaTime) {
-    if (macroSpawnTime <= sf::Time::Zero) {
+void Field::spawnImmuneCells() {
+    if (!(rand() % settings::RAND_SPAWN_NEUTRO_ITER)) {
         auto *newMacro = new MacroCell(Assets::instance().cellParams[CellType::MACRO]);
         newMacro->setPosition(SPAWN_POS[rand() % 3]);
         newMacroes.push_back(newMacro);
-        macroSpawnTime = MACRO_SPAWN_TIME;
     }
 
-    if (neutroSpawnTime <= sf::Time::Zero) {
+    if (!(rand() % settings::RAND_SPAWN_MACRO_ITER)) {
         auto *newNeutro = new NeutroCell(Assets::instance().cellParams[CellType::NEUTRO]);
         newNeutro->setPosition(SPAWN_POS[rand() % 3]);
         newNeutroes.push_back(newNeutro);
-        neutroSpawnTime = NEUTRO_SPAWN_TIME;
     }
+}
 
-    macroSpawnTime -= deltaTime;
-    neutroSpawnTime -= deltaTime;
+void Field::spawnPathogens() {
+    if (rand() % settings::RAND_SPAWN_PATHOGEN_ITER) return;
+
+    if (difficult < '~' && rand() % settings::RAND_PATHOGEN_MUTATION == 0)
+        difficult++;
+
+    createCells(Assets::instance().cellParams[CellType::PATHOGEN], 1);
 }

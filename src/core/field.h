@@ -33,11 +33,17 @@ public:
     void free();
 
     // Отрисовка конкретного типа клетки
-    void createCells(const Assets::CellParam &cellParam);
+    void createCells(const Assets::CellParam &cellParam) { createCells(cellParam, cellParam.amount); }
+
+    void createCells(const Assets::CellParam &cellParam, int amount);
+
+    static int getDifficult() { return difficult; }
 
     void update();
 
-    void spawnImmuneCells(const sf::Time &deltaTime);
+    void spawnImmuneCells();
+
+    void spawnPathogens();
 
     std::vector<PathogenCell *> pathogens;
     std::vector<BodyCell *> bodies;
@@ -52,9 +58,9 @@ public:
     std::vector<NeutroCell *> newNeutroes;
     std::vector<MacroCell *> newMacroes;
 
-    // Время до следующей итерации спавна клеток
-    sf::Time macroSpawnTime;
-    sf::Time neutroSpawnTime;
+private:
+    // 33 -> 126
+    static int difficult;
 };
 
 
