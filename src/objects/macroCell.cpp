@@ -17,7 +17,7 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
 
     if (m_status == DELIVERY) {
         // Первая клетка свободна
-        BCell::Status firstStatus = field.bCells.front()->getStatus();
+        BCell::Status firstStatus = BCell::statuses[0];
         if (firstStatus == BCell::FREE) {
             const sf::Vector2f targetPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
             velocity = targetPos - getPosition();
@@ -38,7 +38,7 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
 
     if ((m_status == CHECKING || m_status == SEARCH) && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
-        bCell->setStatus(BCell::BUSY);
+        BCell::statuses[bCellIndex] = BCell::BUSY;
 
         // Запуск анимированного подбора
         if (bCell->getCode() == ' ') {
@@ -49,7 +49,7 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
         }
         if (bCell->getCode() == getCode()) {
             bCell->generatePulse();
-            bCell->setStatus(BCell::FREE);
+            BCell::statuses[bCellIndex] = BCell::FREE;
             runPlasma(field);
             return;
         }
@@ -64,7 +64,7 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
             return;
         }
         // Запуск анимации перемещения (нельзя переместиться на клетку с AWAIT, т.к. у неё уже есть пара)
-        if (field.bCells[bCellIndex + 1]->getStatus() == BCell::FREE)
+        if (BCell::statuses[bCellIndex + 1] == BCell::FREE)
             moveNextPrepare(field);
         return;
     }
@@ -101,7 +101,7 @@ void MacroCell::runPlasma(Field &field) {
 
 bool MacroCell::isBCellReady(const Field &field) const {
     for (BCell *cell: field.bCells) {
-        if (cell->getStatus() == BCell::MOVING)
+        if (cell->getStatus() == BCell::MOVING || cell->isDying())
             return false;
     }
     return true;
@@ -110,8 +110,8 @@ bool MacroCell::isBCellReady(const Field &field) const {
 void MacroCell::moveNextPrepare(Field &field) {
     m_status = MOVING;
     std::cout << "Start moveNext (from " << bCellIndex << "): " << getCode() << "\n";
-    field.bCells[bCellIndex + 1]->setStatus(BCell::BUSY);
-    field.bCells[bCellIndex]->setStatus(BCell::FREE);
+    BCell::statuses[bCellIndex + 1] = BCell::BUSY;
+    BCell::statuses[bCellIndex] = BCell::FREE;
     bCellIndex++;
     sf::Vector2f nextPos = getXY(bCellIndex, field.bCells.size(), MACRO_DISTANCE);
     sf::Vector2f curPos = getXY(bCellIndex - 1, field.bCells.size(), MACRO_DISTANCE);
@@ -126,30 +126,20 @@ void MacroCell::moveNextPrepare(Field &field) {
 
 void MacroCell::scrollBCells(Field &field) {
     // Защита от одновременного смещения и B-клеток, и макрофагов по ним
-    for (MacroCell *&cell: field.macroes)
+    for (MacroCell *cell: field.macroes)
         if (cell->getStatus() == MOVING || cell->getStatus() == SEARCH)
             return;
     std::cout << "Run scroll: " << getCode() << "\n";
-    auto firstBCell = field.bCells.front();
-    field.bCells.push_back(
-            new BCell(*firstBCell, getXY((int)field.bCells.size(), (int)field.bCells.size()))
-    );
+
+    auto newBCell = new BCell(Assets::instance().cellParams[CellType::BCELL]);
+    newBCell->setPosition(getXY((int)field.bCells.size(), (int)field.bCells.size()));
+    field.bCells.push_back(newBCell);
 
     // Простановка ожидаемых статусов, чтобы клетки,
     // которые находятся раньше в массиве, не сломали очередь следования в кругу
     int bCellAmount = field.bCells.size();
-    std::vector<BCell::Status> nextStatuses(bCellAmount);
-    nextStatuses[0] = BCell::BUSY;
-    for (int i = 1; i < bCellAmount; ++i) {
-        BCell::Status nextStatus = field.bCells[i - 1]->getStatus();
-        if (nextStatus == BCell::BUSY) nextStatus = BCell::AWAIT;
-        nextStatuses[i] = nextStatus;
-    }
-    for (int i = 0; i < bCellAmount; ++i) {
-        field.bCells[i]->scrollPrepare(i, bCellAmount, nextStatuses[i]);
-        std::cout << nextStatuses[i] << " ";
-    }
-    std::cout << "\n";
+    for (int i = 0; i < bCellAmount; ++i)
+        field.bCells[i]->scrollPrepare(i, bCellAmount);
 }
 
 void MacroCell::hunting(Field &field, const sf::Time &deltaTime) {
