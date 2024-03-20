@@ -23,6 +23,8 @@ private:
     void cellDivision(Field &field);
 
     sf::Time lifeTime;
+    sf::Clock divisionTimer;
+    sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 };
 
 
