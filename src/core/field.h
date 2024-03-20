@@ -57,6 +57,7 @@ public:
     std::vector<BodyCell *> newBodies;
     std::vector<NeutroCell *> newNeutroes;
     std::vector<MacroCell *> newMacroes;
+    std::vector<Antibody *> newAntis;
 
 private:
     // 33 -> 126

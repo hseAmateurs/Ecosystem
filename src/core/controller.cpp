@@ -30,7 +30,7 @@ Controller::Controller(WindowRender *windowRender, const Temperature *temperatur
 
     textDifc.setFont(Assets::instance().font);
     textDifc.setPosition(settings::SCREEN_WIDTH * 0.28, settings::SCREEN_HEIGHT * 0.58f);
-    textDifc.setFillColor(sf::Color(240,180,0));
+    textDifc.setFillColor(sf::Color(240, 180, 0));
     textDifc.setCharacterSize(settings::SCREEN_HEIGHT * 0.05f);
 
     textInfo.setFont(Assets::instance().font);
@@ -52,8 +52,8 @@ void Controller::run() {
                 if (runEnd) stopEndGame();
                 m_windowRender->window().close();
             }
-            if(event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Enter) restartGame();
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Enter) restartGame();
             }
         }
         sf::sleep(sf::milliseconds(80));
@@ -113,5 +113,6 @@ void Controller::setIngameTime() {
 }
 
 void Controller::setReachedDifficult() {
-    textDifc.setString("Pathogens evolution " + std::to_string(Field::getDifficult() - '!') + '/' + std::to_string('~'-'!'));
+    textDifc.setString("Pathogens evolution " + std::to_string(Field::getDifficult() - settings::INIT_CODE) + '/' +
+                       std::to_string('~' - settings::INIT_CODE));
 }

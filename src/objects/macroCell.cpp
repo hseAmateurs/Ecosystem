@@ -36,15 +36,15 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
         return;
     }
 
-    if (m_status == CHECKING && isBCellReady(field)) {
+    if ((m_status == CHECKING || m_status == SEARCH) && isBCellReady(field)) {
         auto &bCell = field.bCells[bCellIndex];
         bCell->setStatus(BCell::BUSY);
 
-        // Добавить задержку для чекинга (можно анимировать радиус ещё)
+        // Запуск анимированного подбора
         if (bCell->getCode() == ' ') {
-            bCell->setCode(getCode()); // Вместо set будет анимированный подбор
-            bCell->setStatus(BCell::FREE);
-            runPlasma(field);
+            m_status = SEARCH;
+            bCell->setCode(INIT_CODE);
+            timer.restart();
             return;
         }
         if (bCell->getCode() == getCode()) {
@@ -52,6 +52,13 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
             runPlasma(field);
             return;
         }
+        if (m_status == SEARCH) {
+            if (timer.getElapsedTime() < SEARCH_CODE_DELAY) return;
+            bCell->setCode((char)(bCell->getCode() + 1));
+            timer.restart();
+            return;
+        }
+        generatePulse();
         if (bCellIndex + 1 == field.bCells.size()) {
             scrollBCells(field);
             return;
@@ -74,9 +81,22 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void MacroCell::runPlasma(Field &field) {
+    bool isExist = false;
+    for (PlasmaCell *plasma: field.plasmas) {
+        // Если среди плазмы уже есть с нужным кодом, то сбрасываем её счётчик
+        if (plasma->getCode() == getCode()) {
+            plasma->resetReleasedAnti();
+            isExist = true;
+            break;
+        }
+    }
+    if (!isExist) {
+        // Иначе создаём новую (ограничения на кол-во работающей плазмы пока нет)
+        auto *newPlasma = new PlasmaCell(Assets::instance().cellParams[CellType::PLASMA]);
+        newPlasma->setCode(getCode());
+        field.plasmas.push_back(newPlasma);
+    }
     kill();
-    // run plasma
-    // current delete cell
 }
 
 bool MacroCell::isBCellReady(const Field &field) const {
@@ -107,7 +127,7 @@ void MacroCell::moveNextPrepare(Field &field) {
 void MacroCell::scrollBCells(Field &field) {
     // Защита от одновременного смещения и B-клеток, и макрофагов по ним
     for (MacroCell *&cell: field.macroes)
-        if (cell->getStatus() == MOVING)
+        if (cell->getStatus() == MOVING || cell->getStatus() == SEARCH)
             return;
     std::cout << "Run scroll: " << getCode() << "\n";
     auto firstBCell = field.bCells.front();
@@ -125,8 +145,11 @@ void MacroCell::scrollBCells(Field &field) {
         if (nextStatus == BCell::BUSY) nextStatus = BCell::AWAIT;
         nextStatuses[i] = nextStatus;
     }
-    for (int i = 0; i < bCellAmount; ++i)
+    for (int i = 0; i < bCellAmount; ++i) {
         field.bCells[i]->scrollPrepare(i, bCellAmount, nextStatuses[i]);
+        std::cout << nextStatuses[i] << " ";
+    }
+    std::cout << "\n";
 }
 
 void MacroCell::hunting(Field &field, const sf::Time &deltaTime) {
@@ -134,7 +157,7 @@ void MacroCell::hunting(Field &field, const sf::Time &deltaTime) {
     float minDistance = INF;
 
     for (PathogenCell *&otherCell: field.pathogens) {
-        if(otherCell->isDying()) continue;
+        if (otherCell->isDying()) continue;
         sf::Vector2f bodyPos = otherCell->getPosition();
         float distance = getDistance(bodyPos, getPosition());
         if (distance < minDistance && distance < IMMUNE_HUNT_TRIGGER) {

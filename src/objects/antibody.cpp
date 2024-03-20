@@ -21,13 +21,13 @@ void Antibody::runScript(Field &field, const sf::Time &deltaTime) {
     }
 
     if (foundPathogen) {
-        deathTimer.restart();
+        timer.restart();
         velocity = closestBody - getPosition();
         normalizeVelocity();
     }
     else {
         setRandomMovement();
-        if (deathTimer.getElapsedTime() >= deathClock)
+        if (timer.getElapsedTime() >= ANTI_LIFETIME)
             kill();
     }
     reflectionControl();

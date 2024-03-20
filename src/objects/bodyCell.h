@@ -23,7 +23,7 @@ public:
     virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
 private:
-    void cellDivision(Field &field, const sf::Time &deltaTime);
+    void cellDivision(Field &field);
 
     sf::Time lifeTime;
 };

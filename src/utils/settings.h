@@ -48,6 +48,16 @@ namespace settings {
     // В среднем количество рандомных спавнов патогенов для увеличение сложности на 1
     const int RAND_PATHOGEN_MUTATION = 10;
 
+    const char INIT_CODE = '!';
+
+    const sf::Time SEARCH_CODE_DELAY = sf::seconds(0.2f);
+
+    const sf::Time PLASMA_ANTI_DELAY = sf::seconds(0.4f);
+
+    const int ANTI_COUNT = 15;
+
+    const sf::Time ANTI_LIFETIME = sf::seconds(15);
+
     namespace color {
         const sf::Color PATHOGEN = sf::Color(180, 30, 220);
         const sf::Color BODY = sf::Color(245, 20, 0);

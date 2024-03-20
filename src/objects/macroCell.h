@@ -11,13 +11,16 @@
 
 #include "../utils/brain.h"
 
+#include <iostream>
+
 class MacroCell : public Cell {
 public:
     enum Status {
         HUNTING,
         DELIVERY,
         CHECKING,
-        MOVING
+        MOVING,
+        SEARCH
     };
 
     MacroCell(const Assets::CellParam &cellParam)
@@ -27,8 +30,6 @@ public:
     virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
     Status getStatus() const { return m_status; }
-
-    void setStatus(Status status) { m_status = status; };
 
 private:
     void runPlasma(Field &field);
