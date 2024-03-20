@@ -16,18 +16,19 @@ void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void BodyCell::cellDivision(Field &field) {
-    sf::Time randomTime = sf::seconds(rand() % 20 + 15);
 
-    if (timer.getElapsedTime() >= randomTime) {
+
+    if (divisionTimer.getElapsedTime() >= randomTime) {
         float x1, y1;
         do {
             x1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
+            randomTime = sf::seconds(rand() % 20 + 15);
         } while (x1 == 0 && y1 == 0);
 
         field.newBodies.push_back(
                 new BodyCell(*this, getPosition() + sf::Vector2f(x1, y1))
         );
-        timer.restart();
+        divisionTimer.restart();
     }
 }
