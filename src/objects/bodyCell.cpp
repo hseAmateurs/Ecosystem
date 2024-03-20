@@ -5,6 +5,12 @@
 #include "bodyCell.h"
 
 
+BodyCell::BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
+        Cell(right), lifeTime(sf::seconds(rand() % 20 + 15)) {
+    timer.restart();
+    setPosition(newPos);
+}
+
 void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
     cellDivision(field);
     setRandomMovement();
@@ -16,19 +22,17 @@ void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void BodyCell::cellDivision(Field &field) {
-
-
-    if (divisionTimer.getElapsedTime() >= randomTime) {
+    if (timer.getElapsedTime() >= lifeTime) {
         float x1, y1;
         do {
             x1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
             y1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
-            randomTime = sf::seconds(rand() % 20 + 15);
         } while (x1 == 0 && y1 == 0);
 
         field.newBodies.push_back(
                 new BodyCell(*this, getPosition() + sf::Vector2f(x1, y1))
         );
-        divisionTimer.restart();
+        lifeTime = sf::seconds(rand() % 20 + 15);
+        timer.restart();
     }
 }

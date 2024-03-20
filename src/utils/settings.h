@@ -22,7 +22,7 @@ namespace settings {
     const float PATH_HUNT_TRIGGER = 350.f;
 
     // Минимальная дистанция для триггера на цель для иммунных клеток
-    const float IMMUNE_HUNT_TRIGGER = 150.f;
+    const float IMMUNE_HUNT_TRIGGER = 500.f;
 
     // Процент удаления статичных клетки от центра "мозгового" круга
     const double PLASMA_DISTANCE = 0.4;
@@ -56,7 +56,7 @@ namespace settings {
 
     const int ANTI_COUNT = 15;
 
-    const sf::Time ANTI_LIFETIME = sf::seconds(15);
+    const sf::Time ANTI_LIFETIME = sf::seconds(10);
 
     namespace color {
         const sf::Color PATHOGEN = sf::Color(180, 30, 220);
