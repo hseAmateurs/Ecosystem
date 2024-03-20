@@ -48,6 +48,7 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
             return;
         }
         if (bCell->getCode() == getCode()) {
+            bCell->generatePulse();
             bCell->setStatus(BCell::FREE);
             runPlasma(field);
             return;
@@ -58,7 +59,6 @@ void MacroCell::runScript(Field &field, const sf::Time &deltaTime) {
             timer.restart();
             return;
         }
-        generatePulse();
         if (bCellIndex + 1 == field.bCells.size()) {
             scrollBCells(field);
             return;
