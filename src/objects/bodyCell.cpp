@@ -5,6 +5,12 @@
 #include "bodyCell.h"
 
 
+BodyCell::BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
+        Cell(right), lifeTime(sf::seconds(rand() % 20 + 15)) {
+    timer.restart();
+    setPosition(newPos);
+}
+
 void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
     cellDivision(field);
     setRandomMovement();
