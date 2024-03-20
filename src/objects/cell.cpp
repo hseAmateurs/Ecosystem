@@ -15,6 +15,7 @@ Cell::Cell(const Assets::CellParam &cellParam, const texture::AnimationParameter
     setFillColor(sf::Color::Transparent);
     setOrigin(getRadius(), getRadius());
     timer.restart();
+    movementTimer.restart();
 
     initCode();
 }
@@ -32,14 +33,14 @@ void Cell::initCode() {
 
 // генерация случайного вектора движения + обновление времени
 void Cell::setRandomMovement() {
-    if (timer.getElapsedTime() <= randomMoveInterval) return;
+    if (movementTimer.getElapsedTime() <= randomMoveInterval) return;
 
     double angle = (rand() % 360) * M_PI / 180;
     velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * speed;
 
     auto randomSeconds = static_cast<float>(std::rand() % 5 + 1); // Случайное число от 1 до 5
     randomMoveInterval = sf::seconds(randomSeconds);
-    timer.restart();
+    movementTimer.restart();
 }
 
 void Cell::reflectionControl() {

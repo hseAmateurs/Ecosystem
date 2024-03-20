@@ -79,6 +79,7 @@ private:
     sf::Text code;
     sf::Time randomMoveInterval;
     texture::CellTexture texture;
+    sf::Clock movementTimer;
 };
 
 template<class T>
