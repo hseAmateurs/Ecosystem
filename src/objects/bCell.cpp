@@ -8,6 +8,7 @@
 
 using namespace brain;
 
+
 std::vector<BCell::Status> BCell::statuses;
 
 void BCell::runScript(Field &field, const sf::Time &deltaTime) {
