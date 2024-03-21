@@ -72,7 +72,7 @@ namespace settings {
     }
 
     const float NORMAL_TEMP = 36.6f;
-    const float CRITICAL_TEMP = 420.f;
+    const float CRITICAL_TEMP = 42.f;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H
