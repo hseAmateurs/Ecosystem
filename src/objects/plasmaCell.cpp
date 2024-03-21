@@ -42,7 +42,7 @@ void PlasmaCell::spawnPlasmaCell() {
 void PlasmaCell::plasmaReflectionControl(){
     const int radius = BRAIN_RADIUS - 4 * Assets::instance().cellParams[CellType::BCELL].radius;
     if (sqrt(pow(getPosition().x-SCREEN_WIDTH, 2)+ pow(getPosition().y - SCREEN_HEIGHT, 2)) > radius || getPosition().x > SCREEN_WIDTH || getPosition().y > SCREEN_HEIGHT){
-        sf::Vector2f center(SCREEN_WIDTH-1.5*radius, SCREEN_HEIGHT-1.5*radius);
+        sf::Vector2f center(SCREEN_WIDTH-0.5*radius, SCREEN_HEIGHT-0.5*radius);
         velocity = center - getPosition();
         normalizeVelocity();
     }
