@@ -6,7 +6,7 @@
 
 
 BodyCell::BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
-        Cell(right), lifeTime(sf::seconds(rand() % 20 + 15)) {
+        Cell(right), randomTime(sf::seconds(rand() % 20 + 15)) {
     timer.restart();
     setPosition(newPos);
 }
@@ -22,7 +22,7 @@ void BodyCell::runScript(Field &field, const sf::Time &deltaTime) {
 }
 
 void BodyCell::cellDivision(Field &field) {
-    if (timer.getElapsedTime() >= lifeTime) {
+    if (timer.getElapsedTime() >= randomTime) {
         float x1, y1;
         do {
             x1 = static_cast<float>(rand()) / RAND_MAX * 2 - 1;
@@ -32,7 +32,7 @@ void BodyCell::cellDivision(Field &field) {
         field.newBodies.push_back(
                 new BodyCell(*this, getPosition() + sf::Vector2f(x1, y1))
         );
-        lifeTime = sf::seconds(rand() % 20 + 15);
+        randomTime = sf::seconds(rand() % 20 + 15);
         timer.restart();
     }
 }
