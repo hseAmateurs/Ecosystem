@@ -38,6 +38,10 @@ namespace texture {
 
     void pulsationPlasma(AnimationParameters *parameters);
 
+    float offsetBrain(float angle, AnimationParameters *parameters);
+
+    void pulsationBrain(AnimationParameters *parameters);
+
 
 
 
@@ -54,5 +58,7 @@ namespace texture {
     extern AnimationParameters bCell;
 
     extern AnimationParameters plasmaCell;
+
+    extern AnimationParameters brain;
 }
 #endif //ECOSYSTEM_ANIMATIONS_H

@@ -15,6 +15,7 @@ set(TEXTURES
         src/textures/animAntibody.cpp
         src/textures/animNeutro.cpp
         src/textures/animBCell.cpp
+        src/textures/animBrain.cpp
 )
 
 set(OBJECTS

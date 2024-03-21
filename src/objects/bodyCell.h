@@ -13,7 +13,7 @@ class BodyCell : public Cell {
 public:
     explicit BodyCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::bodyCell, color::BODY),
-              lifeTime(sf::seconds(rand() % 20 + 15)) { }
+              randomTime(sf::seconds(rand() % 20 + 15)) { }
 
     BodyCell(const BodyCell &right, const sf::Vector2f &newPos);
 
@@ -22,9 +22,7 @@ public:
 private:
     void cellDivision(Field &field);
 
-    sf::Time lifeTime;
-    sf::Clock divisionTimer;
-    sf::Time randomTime = sf::seconds(rand() % 20 + 15);
+    sf::Time randomTime;
 };
 
 
