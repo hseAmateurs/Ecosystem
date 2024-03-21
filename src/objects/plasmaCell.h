@@ -13,7 +13,7 @@ class PlasmaCell : public Cell {
 public:
     explicit PlasmaCell(const Assets::CellParam &cellParam) :
             Cell(cellParam, texture::plasmaCell, color::PLASMA),
-            releasedAnti(0) { setPosition(1500, 800); };
+            releasedAnti(0) { spawnPlasmaCell(); };
 
     virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
@@ -21,6 +21,10 @@ public:
 
 private:
     int releasedAnti;
+    sf::Clock plasmaTimer;
+
+    void spawnPlasmaCell();
+    void plasmaReflectionControl();
 };
 
 

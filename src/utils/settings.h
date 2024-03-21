@@ -52,7 +52,7 @@ namespace settings {
 
     const sf::Time SEARCH_CODE_DELAY = sf::seconds(0.2f);
 
-    const sf::Time PLASMA_ANTI_DELAY = sf::seconds(0.4f);
+    const sf::Time PLASMA_ANTI_DELAY = sf::seconds(1.f);
 
     const int ANTI_COUNT = 15;
 
@@ -72,7 +72,7 @@ namespace settings {
     }
 
     const float NORMAL_TEMP = 36.6f;
-    const float CRITICAL_TEMP = 42.f;
+    const float CRITICAL_TEMP = 420.f;
 }
 
 #endif //ECOSYSTEM_SETTINGS_H
