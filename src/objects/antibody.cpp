@@ -29,11 +29,12 @@ void Antibody::runScript(Field &field, const sf::Time &deltaTime) {
         setRandomMovement();
         if (timer.getElapsedTime() >= ANTI_LIFETIME)
             kill();
+
+        updateCollision(field.neutroes);
+        updateCollision(field.antis);
+        updateCollision(field.macroes);
+        updateCollision(field.bodies);
     }
     reflectionControl();
-    updateCollision(field.neutroes);
-    updateCollision(field.antis);
-    updateCollision(field.macroes);
-    updateCollision(field.bodies);
     move(velocity * deltaTime.asSeconds());
 }
