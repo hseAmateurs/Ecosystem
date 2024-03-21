@@ -21,7 +21,6 @@ private:
     void plasmaReflectionControl();
 
     int releasedAnti;
-    sf::Clock plasmaTimer;
 };
 
 
