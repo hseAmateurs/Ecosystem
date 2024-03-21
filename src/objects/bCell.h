@@ -23,18 +23,15 @@ public:
     explicit BCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::bCell, color::BCELL), m_status(FREE) { }
 
-    BCell(const BCell &right, const sf::Vector2f &newPos);
-
     virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 
-    void scrollPrepare(int index, int amount, Status nextStatus);
+    void scrollPrepare(int index, int amount);
 
     Status getStatus() const { return m_status; }
 
-    void setStatus(Status status) { m_status = status; };
+    static std::vector<Status> statuses;
 
 private:
-    Status m_nextStatus;
     Status m_status;
     brain::Animation anim;
     int m_index; // Индекс в field.bCells

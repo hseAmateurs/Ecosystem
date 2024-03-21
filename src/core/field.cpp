@@ -44,6 +44,7 @@ void templateFree(std::vector<T *> &cells) {
 
 void Field::init() {
     difficult = INIT_CODE;
+    BCell::statuses.resize(Assets::instance().cellParams[CellType::BCELL].amount, BCell::FREE);
 
     for (auto &param: Assets::instance().cellParams)
         createCells(param);

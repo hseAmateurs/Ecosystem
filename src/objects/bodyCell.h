@@ -13,12 +13,9 @@ class BodyCell : public Cell {
 public:
     explicit BodyCell(const Assets::CellParam &cellParam)
             : Cell(cellParam, texture::bodyCell, color::BODY),
-              lifeTime(sf::seconds(-(rand() % 20 + 15))) { }
+              lifeTime(sf::seconds(rand() % 20 + 15)) { }
 
-    BodyCell(const BodyCell &right, const sf::Vector2f &newPos) :
-            Cell(right), lifeTime(sf::seconds(-(rand() % 20 + 15))) {
-        setPosition(newPos);
-    }
+    BodyCell(const BodyCell &right, const sf::Vector2f &newPos);
 
     virtual void runScript(Field &field, const sf::Time &deltaTime) override;
 

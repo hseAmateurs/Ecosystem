@@ -47,6 +47,8 @@ public:
 
     bool isDying() const { return texture.isAnimDying(); }
 
+    void generatePulse() { texture.startPulsation(); }
+
 protected:
     virtual void runScript(Field &field, const sf::Time &deltaTime) = 0;
 
@@ -54,8 +56,6 @@ protected:
     void updateCollision(std::vector<T *> &cells);
 
     void normalizeVelocity();
-
-    void generatePulse() { texture.startPulsation(); }
 
     static float getDistance(sf::Vector2f pos1, sf::Vector2f pos2) {
         return std::sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +
@@ -79,6 +79,7 @@ private:
     sf::Text code;
     sf::Time randomMoveInterval;
     texture::CellTexture texture;
+    sf::Clock movementTimer;
 };
 
 template<class T>
