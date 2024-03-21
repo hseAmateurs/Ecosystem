@@ -16,7 +16,7 @@ namespace settings {
     const float BORDER_OFFSET = 100.f;
 
     // Радиус левого нижнего круга, в котором выпускаются антитела
-    const float BRAIN_RADIUS = 490.f;
+    const float BRAIN_RADIUS = 500.f;
 
     // Минимальная дистанция для триггера на цель для патогена
     const float PATH_HUNT_TRIGGER = 350.f;
